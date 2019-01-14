@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Reservation
+comment0.text=\n\ Write\ a\ description\ of\ class\ Reservation\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=numberGuests\ g\ rm
+comment1.target=Reservation(int,\ Guest,\ Room)
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Reservation\n
+comment2.params=g\ rm
+comment2.target=Reservation(Guest,\ Room)
+comment3.params=
+comment3.target=void\ cancelReservation()
+comment4.params=
+comment4.target=int\ getNumberGuests()
+comment5.params=
+comment5.target=Guest\ getGuest()
+comment6.params=
+comment6.target=Room\ getRoom()
+comment7.params=
+comment7.target=java.lang.String\ getRoomNumber()
+comment8.params=
+comment8.target=java.lang.String\ getReserver()
+numComments=9

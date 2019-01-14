@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Suite
+comment0.text=\n\ Write\ a\ description\ of\ class\ Suite\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=roomNum\ floor\ guestNum\ price\ capacity\ bedType\ roomType\ guestName\ isAvailable
+comment1.target=Suite(int,\ int,\ int,\ double,\ int,\ BedType,\ RoomType,\ java.lang.String,\ boolean)
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Suite\n
+numComments=2
