@@ -1,9 +1,0 @@
-#BlueJ class context
-comment0.target=LargeRoom
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Suite\ here.\r\n\r\n\ @author\ Nick\ Coyle\r\n\ @version\ 1/14/2019\r\n
-comment1.params=roomNum\ floor\ capacity\ bedType\ roomType
-comment1.target=LargeRoom(java.lang.String,\ int,\ int,\ BedType,\ RoomType)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ LargeRoom\r\n
-comment2.params=
-comment2.target=double\ getRate()
-numComments=3
