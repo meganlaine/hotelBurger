@@ -1,12 +1,15 @@
 ------------------------------------------------------------------------
-This is the project README file. Here, you should describe your project.
-Tell the reader (someone who does not know anything about this project)
-all he/she needs to know. The comments should usually include at least:
+Hotel Burger software for your hotel.
 ------------------------------------------------------------------------
 
+
 PROJECT TITLE:
+ CSC143 Project 1
 PURPOSE OF PROJECT:
-VERSION or DATE:
+ To practice OOP programming with a group project
+DATE:
+
+1/15/2019
 HOW TO START THIS PROJECT:
-AUTHORS:
-USER INSTRUCTIONS:
+ clone the git repo
+AUTHORS: Megan, Steve, Dale, Nick
