@@ -2,8 +2,8 @@
 /**
  * The class of the room object.
  *
- * @author Xingyu Liu
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/15/2019
  */
 public abstract class Room
 {

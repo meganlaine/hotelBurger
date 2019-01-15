@@ -1,8 +1,8 @@
 /**
  * Write a description of class Invoice here.
  *
- * @Xingyu Liu
- * @alpha test
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/15/2019
  */
 public class Invoice
 {

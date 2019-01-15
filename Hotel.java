@@ -1,69 +1,119 @@
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.ArrayList;
+/**
+ * Hotel class.
+ * This class represents a Hotel object.
+ * A hotel has Guest objects, Room objects, Reservation objects, and Invoice objects.
+ * This hotel stores those objects in ArrayLists.
+ * A hotel also has a way to collect guest information (GuestHandler).
+ *
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/15/2019
+ */
 public class Hotel
 {
-
     private String name;
     private String address;
     private String phoneNumber;
-    
+    private ArrayList<Room> rooms;
     private ArrayList<Guest> guests;
-    public ArrayList<Room> rooms;
     private ArrayList<Reservation> reservations;
     private ArrayList<Invoice> invoices;
     private GuestHandler gh;
 
     /**
+     * Constructor for objects of class Hotel.
      * 
+     * @param fileName (String) representing a .txt file containing hotel information.
+     * @throws FileNotFoundException if the file cannot be read or doesn't exist.
      */
-    public Hotel() {
-        name = "Burger Hotel!";
-        address = "North Seattle College";
-        phoneNumber = "8675309";
-        
+    public Hotel( String fileName ) throws FileNotFoundException
+    {
         guests = new ArrayList<Guest>();
-        rooms = new ArrayList<Room>();
-        reservations = new ArrayList<Reservation>();
-        invoices = new ArrayList<Invoice>();
-        gh = new GuestHandler();
-    }
-    
-    public Hotel(String hotelName, String hotelAddress, String phoneNumber, ArrayList<Room> rms) {
-        name = hotelName;
-        address = hotelAddress;
-        phoneNumber = phoneNumber;
         
-        rooms = rms;
-        guests = new ArrayList<Guest>();
         reservations = new ArrayList<Reservation>();
+        
         invoices = new ArrayList<Invoice>();
+        
         gh = new GuestHandler();
+        
+        // read data from the hotel text file, instantiate the ArrayList<Room>,
+        // and populate the ArrayList<Room>
+        fillRoomArrayList(fileName);
     }
 
     /**
-    * Nick's constructor
-    */
-    public Hotel(String name, String address, String phoneNumber) {
-        setName(name);
-        setAddress(address);
-        setPhoneNumber(phoneNumber);
+     * Reads data from a .txt file and stores it in this Room-object ArrayList.
+     * Assumes that the text file is in a correct template. (Assume no mistakes in .txt file)
+     *
+     * @param fileName (String) representing a .txt file.
+     * @throws FileNotFoundException if the file doesn't exist or cannot be read.
+     * @throws IllegalArgumentException if the file doesn't match expected format.
+     */
+    public void fillRoomArrayList( String fileName ) throws FileNotFoundException
+    {
+        File inFile = new File(fileName);
 
-        guests = new ArrayList<Guest>();
-        rooms = new ArrayList<Room>();
-        reservations = new ArrayList<Reservation>();
-        invoices = new ArrayList<Invoice>();
-        gh = new GuestHandler();
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
+        if (!inFile.canRead()) {
+            throw new FileNotFoundException("File doesn't exist or can't be read.");
+        }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+        Scanner input = new Scanner(inFile);
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if (!input.hasNext()) {
+            throw new IllegalArgumentException("File doesn't match expected format.");
+        }
+
+        // We expect line 1 to have the name of the hotel
+        this.name = input.nextLine();
+
+        // We expect line 2 to have the address of the hotel
+        this.address = input.nextLine();
+
+        // We expect line 3 to have the phone number of the hotel
+        this.phoneNumber = input.nextLine();
+
+        // We expect line 4 to have an int representing # of rooms in the hotel
+        if (!input.hasNextInt()) {
+            throw new IllegalArgumentException("File doesn't match expected format.");
+        }
+        int numberOfRooms = input.nextInt();
+        input.nextLine();
+
+        // Instantiate this Room-object ArrayList.
+        this.rooms = new ArrayList<Room>();
+
+        // Loop thru these lines to create Room objects to store in the ArrayList
+        for (int i = 0; i < numberOfRooms; i++)
+        {
+            // We expect String roomNum.
+            String roomNum = input.next();
+
+            // We expect int floor.
+            int floor = input.nextInt();
+
+            // We expect double pricePerNight.
+            double pricePerNight = input.nextDouble();
+
+            // We expect int capacity.
+            int capacity = input.nextInt();
+
+            // We expect BedType BEDTYPE. SEE NOTE above for parsing Strings as enum values
+            BedType bedtype = BedType.valueOf( input.next() );
+
+            // We expect RoomType ROOMTYPE. SEE NOTE above for parsing Strings as enum values
+            RoomType roomtype = RoomType.valueOf( input.next() );
+
+            input.nextLine();
+
+            // Construct a Room object and store it in this ArrayList<Room>.
+            // since we decided numebr beds won't be included, i removed this from the call
+            this.rooms.add(new RegularRoom( roomNum, floor, capacity, bedtype, roomtype ));
+        }
+
+        input.close();
     }
 
     public String getName() {
@@ -76,19 +126,17 @@ public class Hotel
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }  
-    
-    public void addRoom(Room room)
-    {
-        rooms.add(room);
     }
     
-    // I'm not sure we need guest number and capactiy here, but for now, i'll leave it as is.
-    public void addRoom(String roomNum, int floor,int capacity, BedType bedType, RoomType roomType)
-    {
-        rooms.add( new RegularRoom(roomNum, floor,capacity, bedType, roomType));
-    }   
-
+    public ArrayList<Room> getRoomList() {
+        return rooms;
+    }
+    
+    /**
+     * 1/3 overloaded methods for adding guests to the hotel object
+     * 
+     * parameters: all; the most comprehensive guest registration option
+     */    
     public void addGuest(String first, String middle, String last, String bDay, String phoneNum,
     String guestEmail, boolean isMil, boolean isGov,
     boolean isMem, boolean isCheckedIn, String roomReserved) {
@@ -96,13 +144,24 @@ public class Hotel
                 guestEmail, isMil, isGov,isCheckedIn, roomReserved));
     }
     
+    /**
+     * 2/3 overloaded methods for adding guests to the hotel object
+     * 
+     * parameters: Guest g
+     */
     public void addGuest(Guest g) {
         guests.add(g);
     }
-
+    
+    /**
+     * 3/3 overloaded methods for adding guests to the hotel object
+     * 
+     * parameters: Guest g
+     */
     public void addGuest(String first, String middle, String last) {
         guests.add(new Guest(first, middle, last));
     }
+    
     //this is only for testing, it makes our life easier.
     public void addReservation(Reservation r) {
         reservations.add(r);
@@ -242,14 +301,7 @@ public class Hotel
         }
         return null;
     }
-
-    /**
-     * This gives the entire rooms list
-     */
-    public ArrayList<Room> getRoomList() {
-        return rooms;
-    }
-
+    
     public int getNumReservations() {
         return reservations.size();
     }

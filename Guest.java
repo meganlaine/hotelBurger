@@ -2,8 +2,8 @@ import java.util.*;
 /**
  * Write a description of class Guest here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/15/2019
  */
 public class Guest
 {
@@ -32,7 +32,7 @@ public class Guest
         isGovernment = false;
         isCheckedIn = false;
         // membershipNumber = Membership.getNewNumber();
-        //membershipNumber = -1;
+        // membershipNumber = -1;
         roomReserved = "";
         history = new ArrayList<>(); 
     }
@@ -70,7 +70,6 @@ public class Guest
         return name;
     }
     
-
     public String getEmail() {
         return email;
     }
@@ -98,12 +97,7 @@ public class Guest
     public void setCheckedIn(boolean checkedIn) {
         isCheckedIn = checkedIn;
     }
-    
-    // we should have something for this when 
-    public void makeMember() {
-        
-        }
-   
+       
     // simple method to add room to history
     public  void addRoomToHistory(Room rm) {
         history.add(rm);
@@ -114,7 +108,6 @@ public class Guest
         System.out.println("Birthday: " + birthday);
         System.out.println("Phone Number: " + phoneNumber);
         System.out.println("Email: " + email);
-        System.out.println("Room reserved: " + roomReserved);
-        
+        System.out.println("Room reserved: " + roomReserved);        
     }
 }

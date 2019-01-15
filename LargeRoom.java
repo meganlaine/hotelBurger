@@ -2,8 +2,8 @@
 /**
  * Write a description of class Suite here.
  *
- * @author Nick Coyle
- * @version 1/14/2019
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/15/2019
  */
 public class LargeRoom extends Room
 {       

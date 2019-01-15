@@ -2,8 +2,8 @@ import java.util.*;
 /**
  * Write a description of class GuestHandler here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/15/2019
  */
 public class GuestHandler
 {

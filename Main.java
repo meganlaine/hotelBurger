@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 /**
  * Main class. Opens a file and scans the contents to create hotel object. Then has the console app.
  *
- * @author Nick Coyle
- * @version 1/13/2019
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/15/2019
  */
 public class Main
 {
