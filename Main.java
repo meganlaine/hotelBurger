@@ -150,9 +150,11 @@ public class Main
         System.out.println();
         System.out.println(" Press 0 to exit");
         selection = input.next();
-        if(isInt(selection) && Integer.parseInt(selection) == 0) {
-            invoiceMenu();
-        }    
+        while(!isInt(selection)) {
+            selection = input.next();  
+        }        
+        
+        invoiceMenu();            
     }
     
     private static void helpMenu() {    
