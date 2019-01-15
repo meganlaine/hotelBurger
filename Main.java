@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * Main class. Opens a file and scans the contents to create hotel object. Then has the console app.
+ * Main class. Opens a file and scans the contents to create hotel object. And has the console app.
  *
  * @author Nick Coyle
  * @version 1/13/2019
@@ -48,7 +48,7 @@ public class Main
             }
             hotelBurger.addRoom(room);           
         }
-
+        input = new Scanner(System.in);
         mainMenu();        
     }
 
@@ -63,21 +63,19 @@ public class Main
     }
 
     private static void mainMenu() {    
-        input = new Scanner(System.in);
+        
         selection  = "";
-
+        
+        System.out.println();
         System.out.println(" Please make a selection from the following options and press enter");
-        System.out.println(" 1. Make a reservation/ check guest in");
-        System.out.println(" 2. Cancel reservation, check guest out");
-        System.out.println(" 3. Modify existing reservation");
-        System.out.println(" 4. See available rooms"); 
-        System.out.println(" 5. See current guest occupancy");
-        System.out.println(" 6. Look up an invoice");
-        System.out.println(" 7. Look up a room");
-        System.out.println(" 8. See all unpaid invoices");
-        System.out.println(" 9. See help menu");
-        System.out.println(" 10. Add guest");
-        System.out.println(" 11. Quit/close +  save state");
+        System.out.println(" 1. Make a reservation and checkin");
+        System.out.println(" 2. Change a reservation or checkout"); 
+        System.out.println(" 3. Cancel a reservation"); 
+        System.out.println(" 4. Register a new guest"); 
+        System.out.println(" 5. View all available rooms");
+        System.out.println(" 6. Show invoice");        
+        System.out.println(" 7. See help menu");        
+        System.out.println(" 8. Quit/close +  save state");
 
         selection = input.next();        
 
@@ -90,37 +88,81 @@ public class Main
         switch(selectionInt)
         {
             case 1:
-                //reservation menu
+                //makeReservationMenu();
                 break;
             case 2:
-                //
+                //changeReservationMenu();
                 break;
             case 3:
-                //
+                //cancelReservationMenu();
                 break;
             case 4:
-                //
+                //registerNewGuestMenu();
                 break;
             case 5:
-                //
+                //roomsMenu();
+                break;
+            case 6:
+                invoiceMenu();
                 break;
             case 7:
-                //
-                break;
+                helpMenu();
+                break;            
             case 8:
-                //
-                break;
-            case 9:
-                //
-                break;
-            case 10:
-                //
-                break;
-            case 11:
                 input.close();
                 System.exit(0);                
                 break;
         }
-    }  
+    }
+    
+    private static void invoiceMenu() {                 
+        
+        System.out.println(" Invoice Menu");        
+        System.out.println(" 1. Search invoices on Guest Last Name");        
+        System.out.println(" 2. See all unpaid invoices");
+        System.out.println(" 0. Return to the main menu");
+        
+    
+        selection = input.next();        
 
-}
+        while(!isInt(selection) || Integer.parseInt(selection) < 0 || Integer.parseInt(selection) > 2) {
+            System.out.println("Input not recognized, please try again");
+            selection = input.next();  
+        }
+        
+        int selectionInt = Integer.parseInt(selection); 
+        switch(selectionInt)
+        {
+            case 0:
+                mainMenu();
+                break;
+            case 1:
+                System.out.println();
+                System.out.println(" Enter Guest's Last Name");
+                selection = input.next();                
+                //System.out.println(getInvoice(selection)); //returns a String
+                break;
+            case 2:
+                //System.out.println(getUnpaidInvoices()); //returns a String                            
+                break;
+        }
+        
+        System.out.println();
+        System.out.println(" Press 0 to exit");
+        selection = input.next();
+        if(isInt(selection) && Integer.parseInt(selection) == 0) {
+            invoiceMenu();
+        }    
+    }
+    
+    private static void helpMenu() {    
+            
+        System.out.println(" Help Menu");
+        System.out.println(" Press any key to return to the main menu");
+    
+        if(input.hasNext()) {
+            selection = input.next();
+            mainMenu();
+        }
+    }
+ }
