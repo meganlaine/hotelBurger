@@ -168,11 +168,11 @@ public abstract class Room
     public void setPrice(int price){
         this.price = price;
     }
-    
+     */
     public void setGuestLastName(String name) {
         guestLastName = name;
     }
-    */
+   
     
     /**
      * check the availability of the room 

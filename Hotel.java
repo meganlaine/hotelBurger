@@ -440,4 +440,13 @@ public class Hotel
             }
         }   
     }
+    
+     @Override
+    public String toString() {
+        String hotelString = "Hotel: ";
+        hotelString += name + "\n";
+        hotelString += address + "\n";
+        hotelString += phoneNumber + "\n";
+        return hotelString;
+    }
 }
