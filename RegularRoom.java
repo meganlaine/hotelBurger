@@ -5,19 +5,18 @@
  * @author Nick Coyle
  * @version 1/14/2019
  */
-public class Suite extends Room
+public class RegularRoom extends Room
 {   
-    /**
-     * Constructor for objects of class Suite
+     /**
+     * Constructor for objects of class RegularRoom
      */
-    public Suite(String roomNum, int floor,int numBeds, BedType bedType, RoomType roomType) {
+    public RegularRoom(String roomNum, int floor,int numBeds, BedType bedType, RoomType roomType) {
         super(roomNum, floor, numBeds, 
               bedType, roomType);
     }
     
     @Override
     public double getRate() {
-        return super.getBaseRate() + 40.00;
+        return super.getBaseRate() + 00.00;
     }
 }
-

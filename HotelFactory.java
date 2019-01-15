@@ -29,7 +29,6 @@ public class HotelFactory
      */
     public HotelFactory( String fileName ) throws FileNotFoundException
     {
-        
         fillArray(fileName);
     }
 

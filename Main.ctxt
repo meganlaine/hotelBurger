@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Main
+comment0.text=\r\n\ Main\ class.\ Opens\ a\ file\ and\ scans\ the\ contents\ to\ create\ hotel\ object.\ Then\ has\ the\ console\ app.\r\n\r\n\ @author\ Nick\ Coyle\r\n\ @version\ 1/13/2019\r\n
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment2.params=s
+comment2.target=boolean\ isInt(java.lang.String)
+comment3.params=
+comment3.target=void\ mainMenu()
+numComments=4

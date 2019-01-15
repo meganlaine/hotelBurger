@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -16,7 +15,13 @@ public class Simulator
 
         HotelFactory hotelFactory = new HotelFactory("hotelburger.txt");
 
-            
+        Hotel hotel = new Hotel(hotelFactory.getName(), hotelFactory.getAddress(), hotelFactory.getPhneNumber(), hotelFactory.getRoomList());
+        
+        for(int i = 0; i < hotel.getNumberRooms(); i++) {
+            Room rm = hotel.rooms.get(i);
+            rm.showRoomInfo();
+            System.out.println();
+            System.out.println();
     }
 
     // public static void main(String[] args) {
@@ -50,5 +55,6 @@ public class Simulator
     // //h.makeReservation();
     // }
 
+}
 }
 

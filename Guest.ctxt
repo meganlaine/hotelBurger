@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=Guest
-comment0.text=\n\ Write\ a\ description\ of\ class\ Guest\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Guest\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=first\ middle\ last
 comment1.target=Guest(java.lang.String,\ java.lang.String,\ java.lang.String)
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Guest\n
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Guest\r\n
 comment10.params=
 comment10.target=boolean\ isGovernment()
 comment11.params=

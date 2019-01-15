@@ -1,10 +1,4 @@
- 
-
-
-
 import java.util.*;
-
-
 public class Hotel
 {
 
@@ -13,7 +7,7 @@ public class Hotel
     private String phoneNumber;
     
     private ArrayList<Guest> guests;
-    private ArrayList<Room> rooms;
+    public ArrayList<Room> rooms;
     private ArrayList<Reservation> reservations;
     private ArrayList<Invoice> invoices;
     private GuestHandler gh;
@@ -32,19 +26,68 @@ public class Hotel
         invoices = new ArrayList<Invoice>();
         gh = new GuestHandler();
     }
+    
+    public Hotel(String hotelName, String hotelAddress, String phoneNumber, ArrayList<Room> rms) {
+        name = hotelName;
+        address = hotelAddress;
+        phoneNumber = phoneNumber;
+        
+        rooms = rms;
+        guests = new ArrayList<Guest>();
+        reservations = new ArrayList<Reservation>();
+        invoices = new ArrayList<Invoice>();
+        gh = new GuestHandler();
+    }
 
-    // I'm not sure we need guest number and capactiy here, but for now, i'll leave it as is.
-    public void addRoom(String roomNum, int floor,int guestNum,
-    double price, BedType bedType, RoomType roomType,
-    String guestName, boolean isAvailable)
-    {
-        rooms.add( new Room(roomNum, floor, guestNum, price, bedType,
-                roomType, guestName, isAvailable));
+    /**
+    * Nick's constructor
+    */
+    public Hotel(String name, String address, String phoneNumber) {
+        setName(name);
+        setAddress(address);
+        setPhoneNumber(phoneNumber);
+
+        guests = new ArrayList<Guest>();
+        rooms = new ArrayList<Room>();
+        reservations = new ArrayList<Reservation>();
+        invoices = new ArrayList<Invoice>();
+        gh = new GuestHandler();
     }
     
-    public void addRoom(Room room) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }  
+    
+    public void addRoom(Room room)
+    {
         rooms.add(room);
     }
+    
+    // I'm not sure we need guest number and capactiy here, but for now, i'll leave it as is.
+    public void addRoom(String roomNum, int floor,int capacity, BedType bedType, RoomType roomType)
+    {
+        rooms.add( new RegularRoom(roomNum, floor,capacity, bedType, roomType));
+    }   
 
     public void addGuest(String first, String middle, String last, String bDay, String phoneNum,
     String guestEmail, boolean isMil, boolean isGov,

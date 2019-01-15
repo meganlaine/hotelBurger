@@ -5,8 +5,9 @@
  * @author Xingyu Liu
  * @version (a version number or a date)
  */
-public class Room
+public abstract class Room
 {
+    private static final double BASE_RATE = 150.00;
     private String roomNum;
     private int floor;
     private double price;
@@ -114,6 +115,23 @@ public class Room
     public double getPrice(){
         return price;
     }
+    
+     /**
+     * Get the base rate plus extra charge for rooms on higher floors
+     * 
+     * @return the price of the room
+     */
+    protected double getBaseRate() {
+        double baseRate = BASE_RATE;
+        
+        if(floor > 5) {
+            baseRate += (BASE_RATE * 1.03);
+        }
+        
+        return baseRate;
+    }
+    
+    public abstract double getRate();
     
     public String getGuestLastName() {
         return guestLastName;
