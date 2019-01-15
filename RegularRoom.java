@@ -10,9 +10,8 @@ public class RegularRoom extends Room
      /**
      * Constructor for objects of class RegularRoom
      */
-    public RegularRoom(String roomNum, int floor,int numBeds, BedType bedType, RoomType roomType) {
-        super(roomNum, floor, numBeds, 
-              bedType, roomType);
+    public RegularRoom(String roomNum, int floor,int capacity, BedType bedType, RoomType roomType) {
+        super(roomNum, floor, capacity, bedType, roomType);
     }
     
     @Override

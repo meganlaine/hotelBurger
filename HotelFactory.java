@@ -85,8 +85,8 @@ public class HotelFactory
             // We expect double pricePerNight.
             double pricePerNight = input.nextDouble();
 
-            // We expect int numberBeds.
-            int numberBeds = input.nextInt();
+            // We expect int capacity.
+            int capacity = input.nextInt();
 
             // We expect BedType BEDTYPE. SEE NOTE above for parsing Strings as enum values
             BedType bedtype = BedType.valueOf( input.next() );
@@ -98,7 +98,7 @@ public class HotelFactory
 
             // Construct a Room object and store it in this ArrayList<Room>.
             // since we decided numebr beds won't be included, i removed this from the call
-            this.rooms.add(new Room( roomNum, floor, pricePerNight, bedtype, roomtype ));
+            this.rooms.add(new RegularRoom( roomNum, floor, capacity, bedtype, roomtype ));
         }
 
         input.close();

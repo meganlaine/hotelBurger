@@ -10,9 +10,8 @@ public class Suite extends Room
     /**
      * Constructor for objects of class Suite
      */
-    public Suite(String roomNum, int floor,int numBeds, BedType bedType, RoomType roomType) {
-        super(roomNum, floor, numBeds, 
-              bedType, roomType);
+    public Suite(String roomNum, int floor,int capacity, BedType bedType, RoomType roomType) {
+        super(roomNum, floor, capacity, bedType, roomType);
     }
     
     @Override

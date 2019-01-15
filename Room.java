@@ -10,7 +10,7 @@ public abstract class Room
     private static final double BASE_RATE = 150.00;
     private String roomNum;
     private int floor;
-    private double price;
+    //private double price;
     private BedType bedType;
     private RoomType roomType;
     private String guestLastName;
@@ -38,7 +38,7 @@ public abstract class Room
         
         this.roomNum = roomNum;
         this.floor = floor;
-        this.price = price;
+        //this.price = price;
         this.bedType = bedType;
         this.roomType = roomType;
         this.guestLastName = guestLastName;
@@ -60,7 +60,7 @@ public abstract class Room
     {
         this.roomNum = roomNum;
         this.floor = floor;
-        this.price = price;
+        //this.price = price;
         this.bedType = bedType;
         this.roomType = roomType;
         this.guestLastName =  "";
@@ -71,7 +71,7 @@ public abstract class Room
     public Room( String roomNum, int floor, double pricePerNight, BedType bedType, RoomType roomType) {
         this.roomNum = roomNum;
         this.floor = floor;
-        this.price = pricePerNight;
+        //this.price = pricePerNight;
         this.bedType = bedType;
         this.roomType = roomType;
         this.guestLastName = " ";
@@ -113,7 +113,7 @@ public abstract class Room
      * @return the price of the room
      */
     public double getPrice(){
-        return price;
+        return BASE_RATE;
     }
     
      /**
@@ -164,7 +164,7 @@ public abstract class Room
      * set the price of the room
      * 
      * @param price the price of the room
-     */
+     
     public void setPrice(int price){
         this.price = price;
     }
@@ -172,6 +172,7 @@ public abstract class Room
     public void setGuestLastName(String name) {
         guestLastName = name;
     }
+    */
     
     /**
      * check the availability of the room 
@@ -254,7 +255,7 @@ public abstract class Room
     
     public void showRoomInfo() {
         System.out.println("Room number " + roomNum);
-        System.out.println("Room price: " + price);
+        System.out.println("Room price: " + getPrice());
         System.out.println("Room bed type: " + bedType);
         System.out.println("Room Type: " + roomType);
         System.out.println("Current Occupant: " + guestLastName);
