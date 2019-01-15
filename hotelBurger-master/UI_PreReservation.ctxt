@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=UI_PreReservation
+comment1.params=h
+comment1.target=void\ main(Hotel)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ UI_PreReservation\r\n
+comment2.params=h
+comment2.target=UI_PreReservation(Hotel)
+comment3.params=e
+comment3.target=void\ itemStateChanged(java.awt.event.ItemEvent)
+comment4.params=e
+comment4.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment5.params=e
+comment5.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment6.params=str
+comment6.target=boolean\ isInt(java.lang.String)
+numComments=7
