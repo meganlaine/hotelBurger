@@ -9,7 +9,7 @@ public class Invoice
     private double charges, tendered, extracharges, discount; 
     //private String dateCreated, invoiceNumber;
     private boolean paid;
-    private String guest;
+    private Guest guest;
     //private int length;
     private int invoiceNumber = 100000;
     /**
@@ -20,7 +20,7 @@ public class Invoice
     public Invoice(Reservation reservation)
     {
         //dateCreated = reservation.getCheckinDate();
-        guest = reservation.getReserver();
+        guest = reservation.getGuest();
         charges = reservation.getRoom().getPrice();
         //invoiceNumber = dateCreated + toString();
         discount = 1.0;
@@ -139,4 +139,3 @@ public class Invoice
         invoiceNumber++;
     }
 }
-
