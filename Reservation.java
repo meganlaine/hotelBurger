@@ -11,7 +11,7 @@ public class Reservation
     private int numberGuests;
     private Guest guest;
     private Room room;
-
+    private Status status;
     /**
      * Constructor for objects of class Reservation
      */
@@ -21,6 +21,7 @@ public class Reservation
         room = rm;
         guest.setCheckedIn(true);
         room.setAvailable(false);
+        status = Status.CHECKEDIN;
         rm.setGuestLastName(g.getLastName());
     }
     
@@ -31,6 +32,16 @@ public class Reservation
         room = rm;
         guest.setCheckedIn(true);
         room.setAvailable(false);
+        rm.setGuestLastName(g.getLastName());
+    }
+    
+    public Reservation(int numberGuests, Guest g, Room rm, Status status) {
+        numberGuests = numberGuests;
+        guest = g;
+        room = rm;
+        guest.setCheckedIn(true);
+        room.setAvailable(false);
+        this.status = status;
         rm.setGuestLastName(g.getLastName());
     }
     
