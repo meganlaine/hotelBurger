@@ -1,8 +1,8 @@
 /**
  * Write a description of class Invoice here.
  *
- * @Xingyu Liu
- * @alpha test
+ * @author Xingyu Liu
+ * @version alpha test
  */
 public class Invoice
 {
@@ -10,7 +10,7 @@ public class Invoice
     //private String dateCreated, invoiceNumber;
     private boolean paid;
     private String guest;
-    private int length;
+    //private int length;
     private int invoiceNumber = 100000;
     /**
      * Constructor for objects of class Invoice
@@ -99,8 +99,13 @@ public class Invoice
      * 
      * @param discount discount of the invoice.
      */
-    public void setDiscount(double discount){
-        this.discount = discount;
+    public void setDiscount(){
+        if(guest.isGovernment()){
+            discount = 0.85;
+        }
+        else if(guest.isMilitary()){
+            discount = 0.93;
+        }
     }
     
     /**
@@ -127,7 +132,7 @@ public class Invoice
      * @return the final invoice
      */
     public double getInvoice(){
-        return charges * length * discount + extracharges - tendered;
+        return charges * discount + extracharges - tendered;
     }
     
     private void incrementor() {
