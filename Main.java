@@ -13,7 +13,7 @@ public class Main
     private static Scanner input;
     private static String selection; //should be a String, if it's hardcoded as an int, then the program will crash if in int is not entered.
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static Hotel main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File("HotelBurgerwithRooms.txt"));
         String name = scanner.nextLine();
         String address = scanner.nextLine();
@@ -49,7 +49,8 @@ public class Main
             hotelBurger.addRoom(room);           
         }
         input = new Scanner(System.in);
-        mainMenu();        
+        mainMenu();  
+        return hotelBurger;
     }
 
     private static boolean isInt(String s) {
@@ -167,4 +168,5 @@ public class Main
             mainMenu();
         }
     }
+    
  }
