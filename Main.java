@@ -49,7 +49,7 @@ public class Main
             hotelBurger.addRoom(room);           
         }
         input = new Scanner(System.in);
-        mainMenu();  
+        mainMenu(hotelBurger);  
         return hotelBurger;
     }
 
@@ -63,7 +63,7 @@ public class Main
         }        
     }
 
-    private static void mainMenu() {    
+    private static void mainMenu(Hotel h) {    
         
         selection  = "";
         
@@ -104,10 +104,10 @@ public class Main
                 //roomsMenu();
                 break;
             case 6:
-                invoiceMenu();
+                invoiceMenu(h);
                 break;
             case 7:
-                helpMenu();
+                helpMenu(h);
                 break;            
             case 8:
                 input.close();
@@ -116,7 +116,7 @@ public class Main
         }
     }
     
-    private static void invoiceMenu() {                 
+    private static void invoiceMenu(Hotel h) {                 
         
         System.out.println(" Invoice Menu");        
         System.out.println(" 1. Search invoices on Guest Last Name");        
@@ -135,7 +135,7 @@ public class Main
         switch(selectionInt)
         {
             case 0:
-                mainMenu();
+                mainMenu(h);
                 break;
             case 1:
                 System.out.println();
@@ -155,17 +155,17 @@ public class Main
             selection = input.next();  
         }        
         
-        invoiceMenu();            
+        invoiceMenu(h);            
     }
     
-    private static void helpMenu() {    
+    private static void helpMenu(Hotel h) {    
             
         System.out.println(" Help Menu");
         System.out.println(" Press any key to return to the main menu");
     
         if(input.hasNext()) {
             selection = input.next();
-            mainMenu();
+            mainMenu(h);
         }
     }
     
