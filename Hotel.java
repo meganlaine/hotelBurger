@@ -449,4 +449,25 @@ public class Hotel
         hotelString += phoneNumber + "\n";
         return hotelString;
     }
+    
+    public ArrayList<Integer> getEmptyRoomNum() {
+        ArrayList<Integer> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(!rm.isAvailable()) {
+                rms.add(Integer.parseInt(rm.getRoomNumber()));
+            }
+        }
+        return rms;
+    }
+    
+    public ArrayList<Integer> getOccupiedRoomNum() {
+        ArrayList<Integer> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(rm.isAvailable()) {
+                rms.add(Integer.parseInt(rm.getRoomNumber()));
+            }
+        }
+        return rms;
+    }
+    
 }
