@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Simulator
 {
-    public static void main(String[] args )throws FileNotFoundException {
+    public static Hotel main(String[] args )throws FileNotFoundException {
 
         HotelFactory hotelFactory = new HotelFactory("hotelburger.txt");
 
@@ -54,7 +54,7 @@ public class Simulator
     // h.displayMenu();
     // //h.makeReservation();
     // }
-
+    return hotel;
 }
 }
 
