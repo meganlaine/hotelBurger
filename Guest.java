@@ -117,4 +117,8 @@ public class Guest
         System.out.println("Room reserved: " + roomReserved);
         
     }
+       
+    public String getPhoneNum(){
+        return phoneNumber;
+    }
 }
