@@ -87,21 +87,21 @@ public abstract class Room
         return this.bedType;
     }
     
-    /**
-     * Returns the base rate after changes to it based on what floor the * room is on (higher floor adjusts to a higher price).
-     * 
-     * @return (double) the price of the room per night
-     */
-    protected double getBaseRate() {
+    // /**
+     // * Returns the base rate after changes to it based on what floor the * room is on (higher floor adjusts to a higher price).
+     // * 
+     // * @return (double) the price of the room per night
+     // */
+    // protected double getBaseRate() {
         
-        double baseRate = BASE_RATE;
+        // double baseRate = BASE_RATE;
         
-        if (floor > 5 && < 11) {
-            baseRate += (BASE_RATE * 1.03);
-        }
+        // if (floor > 5 && < 11) {
+            // baseRate += (BASE_RATE * 1.03);
+        // }
         
-        return baseRate;
-    }
+        // return baseRate;
+    // }
     
     /**
      * Returns true if the Room passed as an argument is available.
