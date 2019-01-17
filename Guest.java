@@ -1,81 +1,75 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.lang.IllegalArgumentException;
 /**
  * Write a description of class Guest here.
  *
- * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/15/2019
+ * @author (your name)
+ * @version (a version number or a date)
  */
 public class Guest
 {
     private String firstName;
     private String lastName;
-    private String middleInitial;
-    private String birthday;
     private String phoneNumber;
-    private String email;
+    private int partySize;
+    private int nights;
     private boolean isMilitary;
     private boolean isGovernment;
-    private boolean isCheckedIn;
-    private String roomReserved;
-    private ArrayList<Room> history;
+    private boolean isMember;
 
-    /**
-     * Constructor for objects of class Guest
-     */
-
-    // most basic constructor - mostly for testing and emergency registration
-    public Guest(String first, String middle, String last) {
+    /** this is a constructor for testing, so that we don't have to create a full guest object
+     * eveytime we make a new reservation. We can take it out before submission.
+     **/
+    public Guest(String first, String last) {
         firstName = first;
         lastName = last;
-        middleInitial = middle;
+        phoneNumber = "";
+        partySize = -1;
+        nights = -1;
         isMilitary = false;
         isGovernment = false;
-        isCheckedIn = false;
-        // membershipNumber = Membership.getNewNumber();
-        // membershipNumber = -1;
-        roomReserved = "";
-        history = new ArrayList<>(); 
+        isMember = false;
+
     }
 
-    // most comprehensive constructor - best case scenario
-    public Guest(String first, String middle, String last,String bDay, String phoneNum,
-                 String guestEmail, boolean isMil, boolean isGov, boolean checkedIn, String roomReserved)
+    // more comprehensive constructor 
+    public Guest(String first, String last, String phoneNum,
+    int partySize, int nights, boolean isMil, boolean isGov, boolean member)
     {
         firstName = first;
-        middleInitial = middle;
         lastName = last;
-        birthday = bDay;
         phoneNumber = phoneNum;
-        email = guestEmail;
+        this.partySize = partySize;
+        this.nights = nights;
+        phoneNumber = phoneNum;
         isMilitary = isMil;
         isGovernment = isGov;
-        isCheckedIn = checkedIn;
-        history = new ArrayList<>();
+        isMember = member;
     }
 
-    public String getFirst() {
+    public String getFirstName() {
         return firstName;
-    }
-
-    public String getMiddleInitial() {
-        return middleInitial;
     }
 
     public String getLastName() {
         return lastName;
     }
 
+    public String getPhoneNum() {
+        return phoneNumber;
+    }
+
     public String getFullName() {
-        String name = firstName + " " + middleInitial + ". " + lastName;
+        String name = firstName + " " + lastName;
         return name;
     }
-    
-    public String getEmail() {
-        return email;
+
+    public int getPartySize() {
+        return partySize;
     }
-    
-    public String getRoomReserved() {
-        return roomReserved;
+
+    public int getNights() {
+        return nights;
     }
 
     public boolean isMilitary() {
@@ -85,29 +79,69 @@ public class Guest
     public boolean isGovernment() {
         return isGovernment;
     }
-    
-    public boolean isCheckedIn() {
-        return isCheckedIn;
+
+    public boolean isMember() {
+        return isMember;
     }
 
-    public void setRoomReserved(String rmNum) {
-        roomReserved = rmNum;
+    // sets first name, if String is empty, throws exception
+    public void setFirstName(String first) {
+        if(first.isEmpty()) {
+            throw new IllegalArgumentException("Empty String");
+        }
+        firstName = first;
     }
-    
-    public void setCheckedIn(boolean checkedIn) {
-        isCheckedIn = checkedIn;
+
+    public void setLastName(String last) {
+        if(last.isEmpty()) {
+            throw new IllegalArgumentException("Empty String");
+        }
+        lastName = last;
     }
-       
-    // simple method to add room to history
-    public  void addRoomToHistory(Room rm) {
-        history.add(rm);
+
+    // This checks if every character is an integer and if the number is 10 digits.
+    // If it is, the method sets the phone number field to the argument provided
+    public void setPhoneNum(String phoneNum) {
+        for (char c : phoneNum.toCharArray())
+        {
+            if (!Character.isDigit(c)) {
+                throw new IllegalArgumentException("String is not numeric");
+            }
+        }
+        if(phoneNum.length() != 10) {
+            throw new IllegalArgumentException("Too many/ too few numbers");
+        }
+
+        phoneNumber = phoneNum;
     }
-    
-    public void showGuestInfo() {
-        System.out.println("Name: " + firstName + " " + middleInitial + " " + lastName);
-        System.out.println("Birthday: " + birthday);
-        System.out.println("Phone Number: " + phoneNumber);
-        System.out.println("Email: " + email);
-        System.out.println("Room reserved: " + roomReserved);        
+
+    public void setPartySize(int num) {
+        if(num < 1 || num > 6) {
+            throw new IllegalArgumentException("The number must be between 1 and 6");
+        }
+
+        partySize = num;
     }
-}
+
+    public void setMil(boolean m) {
+        isMilitary = m;
+    }
+
+    public void setGovt(boolean g) {
+        isGovernment = g;
+    }
+
+    public void setMembership(boolean m) {
+        isMember = m;
+    }
+
+    public void setNights(int nights) {
+        this.nights = nights;
+    }
+
+    public String toString() {
+        return firstName + " " + lastName + " , " + phoneNumber + "\n" +
+        "Party: " + partySize + ", nights: " + nights +  "\n" + 
+        "Military: " + isMilitary + " , " + "Government: " + isGovernment + "\n" +
+        "Member: " + isMember;
+    }
