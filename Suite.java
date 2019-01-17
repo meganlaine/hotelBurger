@@ -36,7 +36,7 @@ public class Suite extends Room
      @Override
      public double getRate()
      {
-        return = super.getBaseRate() + 40.0;
+        return super.getBaseRate() + 40.0;
     
     }
     
