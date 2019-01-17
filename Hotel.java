@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.ArrayList;
 public class Hotel
 {
 
@@ -23,7 +22,6 @@ public class Hotel
         
         rooms = new ArrayList<Room>();
         reservations = new ArrayList<Reservation>();
-       // invoices = new ArrayList<Invoice>();
     }
 
     /**
