@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=LargeRoom
+comment0.text=\n\ Class\ Large\ Room\ for\ Hotel\ Burger.\n\ Price\ is\ $20.00/night\ more\ than\ abstract\ class\ Room\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 01/17/2019\n
+comment1.params=roomNum\ floor\ capacity\ bedType
+comment1.target=LargeRoom(java.lang.String,\ int,\ int,\ java.lang.String)
+comment1.text=\n\ Constructor\ for\ LargeRoom\ object\n\ Calls\ super\ method\ to\ construct\ Room\ object\n\ \n\ @param\ roomNum\ (String)\ the\ room\ number\ of\ the\ room\n\ @param\ floor\ (int)\ the\ floor\ where\ room\ located\n\ @param\ capacity\ (int)\ the\ human\ capacity\ of\ the\ room\n\ @param\ bedType\ (String)\ the\ bedtype\ of\ the\ room\n
+comment2.params=
+comment2.target=double\ getRate()
+comment2.text=\n\ Returns\ the\ price\ of\ the\ room\ per\ night,\ accounting\ for\ \n\ which\ floor\ the\ room\ is\ on\ and\ any\ special\ charges\ based\ on\n\ Room\ -\ Large\ (Large\ room\ costs\ 20.0/night\ more\ than\ base\ Room).\n\ \n\ @return\ double\ representing\ nightly\ price\ of\ LargeRoom\n
+comment3.params=
+comment3.target=java.lang.String\ toString()
+comment3.text=\n\ Overrides\ the\ abstract\ Room\ Class's\ toString()\ method.\ \n\ For\ example\:\ 'Large\ Room\:\ 805,\ Floor\:\ 8,\ BedType\:\ DOUBLE,\ Capacity\:\ 4,\n\ Available?\:\ true,\ PricePerNight\:\ XXX.00'\n\ \n\ @return\ String\ representing\ information\ about\ this\ Room\n
+numComments=4

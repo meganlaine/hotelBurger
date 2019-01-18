@@ -1,0 +1,4 @@
+#BlueJ class context
+comment0.target=Status
+comment0.text=\n\ Enumeration\ class\ Status.\ A\ reservation\ object\ can\ have\ different\ statuses\:\ \n\ WAITING\=\ reservation\ is\ made,\ but\ guest\ not\ yet\ in\ hotel\n\ IN\=\ reservation\ exists,\ guest\ 'checked\ in'\ to\ hotel\n\ OUT\=\ reservation\ close,\ guest\ 'checked\ out'\ of\ hotel\n\ CANCELED\=\ reservation\ was\ made,\ but\ canceled.\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 01/17/2019\n
+numComments=1
