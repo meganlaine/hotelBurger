@@ -215,7 +215,7 @@ public class Hotel
      public ArrayList<Reservation> getActiveReservations() {
         ArrayList<Reservation> arr = new ArrayList<>();
         for(Reservation r : reservations) {
-            if(r.isActive()) {
+            if(r.getStatus() == Status.IN || r.getStatus() == Status.WAITING) {
                 arr.add(r);
             }
         }
@@ -225,12 +225,13 @@ public class Hotel
     public ArrayList<Reservation> getInactiveReservations() {
          ArrayList<Reservation> arr = new ArrayList<>();
         for(Reservation r : reservations) {
-            if(!r.isActive()) {
+            if(r.getStatus() == Status.OUT || r.getStatus() == Status.CANCELED) {
                 arr.add(r);
             }
         }
         return arr;
     }
+
 
     @Override
     public String toString() {
