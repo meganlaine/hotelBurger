@@ -69,6 +69,17 @@ public class Hotel
     public ArrayList<Room> getEmptyRooms() {
         ArrayList<Room> rms = new ArrayList<>();
         for(Room rm: rooms) {
+            if(rm.isAvailable()) {
+                rms.add(rm);
+            }
+        }
+        return rms;
+    }
+    
+        // Checks every room and returns how many are empty
+    public ArrayList<Room> getOccupiedRooms() {
+        ArrayList<Room> rms = new ArrayList<>();
+        for(Room rm: rooms) {
             if(!rm.isAvailable()) {
                 rms.add(rm);
             }
@@ -77,7 +88,7 @@ public class Hotel
     }
 
     // Checks every room and returns how many are full
-    public int getNumOccupiedRooms() {
+    public int getOccupiedRooms() {
         int accum = 0;
         for(Room rm : rooms) {
             if(!rm.isAvailable()) { // check if room is occupied
@@ -87,8 +98,8 @@ public class Hotel
         return accum;
     }
 
-    public int getNumberRooms() {
-        return rooms.size();
+    public ArrayList<Room> getAllRooms() {
+        return rooms;
     }
 
     // this is a method which allows us to search rooms by room number
@@ -118,24 +129,24 @@ public class Hotel
         return hotelString;
     }
     
-    public ArrayList<Integer> getEmptyRoomNum() {
-        ArrayList<Integer> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(!rm.isAvailable()) {
-                rms.add(Integer.parseInt(rm.getRoomNumber()));
-            }
-        }
-        return rms;
-    }
+ //   public ArrayList<Integer> getEmptyRoomNum() {
+   //     ArrayList<Integer> rms = new ArrayList<>();
+     //   for(Room rm: rooms) {
+       //     if(!rm.isAvailable()) {
+         //       rms.add(Integer.parseInt(rm.getRoomNumber()));
+           // }
+        //}
+        //return rms;
+   // }
     
-    public ArrayList<Integer> getOccupiedRoomNum() {
-        ArrayList<Integer> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(rm.isAvailable()) {
-                rms.add(Integer.parseInt(rm.getRoomNumber()));
-            }
-        }
-        return rms;
-    }
+  //  public ArrayList<Integer> getOccupiedRoomNum() {
+    //    ArrayList<Integer> rms = new ArrayList<>();
+      //  for(Room rm: rooms) {
+        //    if(rm.isAvailable()) {
+          //      rms.add(Integer.parseInt(rm.getRoomNumber()));
+          //  }
+        //}
+        //return rms;
+    //}
 
 }
