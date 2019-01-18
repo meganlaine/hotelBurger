@@ -211,6 +211,26 @@ public class Hotel
     public int getNumReservations() {
         return reservations.size();
     }
+    
+     public ArrayList<Reservation> getActiveReservations() {
+        ArrayList<Reservation> arr = new ArrayList<>();
+        for(Reservation r : reservations) {
+            if(r.isActive()) {
+                arr.add(r);
+            }
+        }
+        return arr;
+    }
+
+    public ArrayList<Reservation> getInactiveReservations() {
+         ArrayList<Reservation> arr = new ArrayList<>();
+        for(Reservation r : reservations) {
+            if(!r.isActive()) {
+                arr.add(r);
+            }
+        }
+        return arr;
+    }
 
     @Override
     public String toString() {
@@ -220,24 +240,4 @@ public class Hotel
         hotelString += phoneNumber + "\n";
         return hotelString;
     }
-
-    //   public ArrayList<Integer> getEmptyRoomNum() {
-    //     ArrayList<Integer> rms = new ArrayList<>();
-    //   for(Room rm: rooms) {
-    //     if(!rm.isAvailable()) {
-    //       rms.add(Integer.parseInt(rm.getRoomNumber()));
-    // }
-    //}
-    //return rms;
-    // }
-
-    //  public ArrayList<Integer> getOccupiedRoomNum() {
-    //    ArrayList<Integer> rms = new ArrayList<>();
-    //  for(Room rm: rooms) {
-    //    if(rm.isAvailable()) {
-    //      rms.add(Integer.parseInt(rm.getRoomNumber()));
-    //  }
-    //}
-    //return rms;
-    //}
 }
