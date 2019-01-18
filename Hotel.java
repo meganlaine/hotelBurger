@@ -215,7 +215,7 @@ public class Hotel
      public ArrayList<Reservation> getActiveReservations() {
         ArrayList<Reservation> arr = new ArrayList<>();
         for(Reservation r : reservations) {
-            if(r.getStatus() == Status.IN || r.getStatus() == Status.WAITING) {
+            if(r.getStatus().equals(Status.IN) || r.getStatus().equals(Status.WAITING)) {
                 arr.add(r);
             }
         }
@@ -225,7 +225,7 @@ public class Hotel
     public ArrayList<Reservation> getInactiveReservations() {
          ArrayList<Reservation> arr = new ArrayList<>();
         for(Reservation r : reservations) {
-            if(r.getStatus() == Status.OUT || r.getStatus() == Status.CANCELED) {
+            if(r.getStatus().equals(Status.OUT) || r.getStatus().equals(Status.CANCELED)) {
                 arr.add(r);
             }
         }
