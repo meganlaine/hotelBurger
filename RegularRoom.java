@@ -36,7 +36,7 @@ public class RegularRoom extends Room
      @Override
      public double getRate()
      {
-        return = super.getBaseRate();
+        return super.getBaseRate();
     
     }
     

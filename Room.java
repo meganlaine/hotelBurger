@@ -96,7 +96,7 @@ public abstract class Room
         
         double baseRate = BASE_RATE;
         
-        if (floor > 5 && < 11) {
+        if (floor > 5 && floor < 11) {
             baseRate += (BASE_RATE * 1.03);
         }
         

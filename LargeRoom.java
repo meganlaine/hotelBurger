@@ -1,7 +1,7 @@
 
 /**
  * Class Large Room for Hotel Burger.
- * $20.00/night more than abstract class Room
+ * Price is $20.00/night more than abstract class Room
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
  * @version 01/17/2019
@@ -36,7 +36,7 @@ public class LargeRoom extends Room
      @Override
      public double getRate()
      {
-        return = super.getBaseRate() + 20.0;
+        return super.getBaseRate() + 20.0;
     
     }
     

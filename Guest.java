@@ -1,10 +1,13 @@
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
+
 /**
- * Write a description of class Guest here.
+ * Guest class models a customer of a hotel. The guest is a person with a name and various personal information. 
+ * Guests might have discounts applied based on membership to the hotel or status as a veteran or senior citizen so
+ * we have fields for those data.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/17/2019
  */
 public class Guest
 {
@@ -145,3 +148,4 @@ public class Guest
         "Military: " + isMilitary + " , " + "Government: " + isGovernment + "\n" +
         "Member: " + isMember;
     }
+}

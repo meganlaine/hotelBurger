@@ -1,8 +1,12 @@
 import java.lang.IllegalArgumentException;
 
 /**
- * Class Reservation.
- * Allows creation of a Reservation object, modification of a Reservation object
+ * Reservation class models a reservation in a hotel. A reservation is a guarantee to a guest that they will have a room set aside 
+ * for them during a specified range of dates. When they come to the hotel, they can checkin using that reservation. Then, they 
+ * get the room key and can stay in the hotel for as many nights as they agreed to in the reservation. Modifying a reservation means
+ * the guest can cancel the reservation, change any parameters about it, or checkout.
+ * 
+ * This class allows creation of a Reservation object, modification of a Reservation object
  * (you can change its status from WAITING, IN, OUT, or CANCELED).
  * Allows access to see information about the Reservation state, and invoice-like
  * information.
@@ -77,7 +81,7 @@ public class Reservation
      * 
      * @return double representing nightly price of Room
      */
-    public String getPaymentDue() {
+    public double getPaymentDue() {
     
         return this.paymentDue;
         
@@ -89,7 +93,7 @@ public class Reservation
      * 
      * @return (String) the reservation status.
      */
-    public String getStatus() {
+    public Status getStatus() {
     
         return this.status;
         
@@ -106,6 +110,17 @@ public class Reservation
         
         this.g = g;
         
+    }
+    
+    /**
+     * Mutator being used to set paymentDue to 0.0 if the reservation gets cancelled.
+     */
+    private void setPaymentDue(double amount) {
+        if(amount < 0) {
+            throw new IllegalArgumentException("Amount due cannot be less than 0");
+        }
+        
+        this.paymentDue = amount;
     }
     
     /**
@@ -133,7 +148,7 @@ public class Reservation
         }
         
         // if guest is member only (not govt, not mil), apply the lowest discount (5%)
-        else ( !g.isGovernment && !g.isMilitary && g.isMember ) {
+        else if ( !g.isGovernment() && !g.isMilitary() && g.isMember() ) {
             
             result *= 0.95;
             
@@ -155,7 +170,7 @@ public class Reservation
     public void setStatus( Status s ) {
         
         // validate first that the Reservation status is not already what the user wants to change it to.
-        if (this.Status == s) {
+        if (this.status == s) {
                 
             throw new IllegalArgumentException("The reservation status is already what you're trying to change it to.");
                 
@@ -186,7 +201,7 @@ public class Reservation
         }
         
         // if you've made it here, it means you can safely change the status of the reservation
-        this.Status = s;
+        this.status = s;
         
     }
     
@@ -199,7 +214,7 @@ public class Reservation
     public void setRoom( Room r ) {
     
         if ( !r.isAvailable() ) {
-            throw new IllegalArgumentException("You can't make a reservation for this room; it is not available.")
+            throw new IllegalArgumentException("You can't make a reservation for this room; it is not available.");
         }
         
         this.r = r;
@@ -219,7 +234,7 @@ public class Reservation
     public void changeRoom( Room other ) {
     
         if ( !other.isAvailable() ) {
-            throw new IllegalArgumentException("You can't change to the room you requested; it is not available.")
+            throw new IllegalArgumentException("You can't change to the room you requested; it is not available.");
         }
         
         // free up this Room for other guests.

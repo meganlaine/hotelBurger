@@ -34,7 +34,7 @@ public class GuestHandler
         }
 
         if(!guestFound) {
-            currGuest = new Guest(nameArr[0],nameArr[1],nameArr[2]); // makes new guest
+            currGuest = new Guest(nameArr[0],nameArr[2]); // makes new guest
             guests.add(currGuest); // adds the new guest to our ArrayList of guests
             System.out.println("We added this guest to our database!");
             System.out.println();
