@@ -111,7 +111,7 @@ public abstract class Room
      */
     public boolean isAvailable() {
         
-        return isAvailable();
+        return this.isAvailable;
         
     }
     
@@ -129,6 +129,19 @@ public abstract class Room
     }
     
     /* OTHER METHODS */
+    
+    @Override
+    public boolean equals(Object other)
+    {
+        boolean equals = false;
+
+        if (other != null && other instanceof Room)
+        {
+            equals = this.roomNum == ((Room) other).roomNum;
+        }
+
+        return equals;
+    }
     
     /**
      * Overrides the Object Class's toString() method. 

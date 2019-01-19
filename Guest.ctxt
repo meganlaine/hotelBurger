@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=Guest
-comment0.text=\n\ Guest\ class\ models\ a\ customer\ of\ a\ hotel.\ The\ guest\ is\ a\ person\ with\ a\ name\ and\ various\ personal\ information.\ \n\ Guests\ might\ have\ discounts\ applied\ based\ on\ membership\ to\ the\ hotel\ or\ status\ as\ a\ veteran\ or\ senior\ citizen\ so\n\ we\ have\ fields\ for\ those\ data.\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 1/17/2019\n
+comment0.text=\r\n\ Guest\ class\ models\ a\ customer\ of\ a\ hotel.\ The\ guest\ is\ a\ person\ with\ a\ name\ and\ various\ personal\ information.\ \r\n\ Guests\ might\ have\ discounts\ applied\ based\ on\ membership\ to\ the\ hotel\ or\ status\ as\ a\ veteran\ or\ senior\ citizen\ so\r\n\ we\ have\ fields\ for\ those\ data.\r\n\r\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\r\n\ @version\ 1/17/2019\r\n
 comment1.params=first\ last
 comment1.target=Guest(java.lang.String,\ java.lang.String)
-comment1.text=\ this\ is\ a\ constructor\ for\ testing,\ so\ that\ we\ don't\ have\ to\ create\ a\ full\ guest\ object\n\ eveytime\ we\ make\ a\ new\ reservation.\ We\ can\ take\ it\ out\ before\ submission.\n
+comment1.text=\ this\ is\ a\ constructor\ for\ testing,\ so\ that\ we\ don't\ have\ to\ create\ a\ full\ guest\ object\r\n\ eveytime\ we\ make\ a\ new\ reservation.\ We\ can\ take\ it\ out\ before\ submission.\r\n
 comment10.params=
 comment10.target=boolean\ isGovernment()
 comment11.params=

@@ -89,7 +89,7 @@ public class Hotel
         String bedtype;
         String roomtype;
         Room room;
-        
+
         while(input.hasNextLine()) {
 
             // We expect String roomNum.
@@ -107,7 +107,7 @@ public class Hotel
 
             // We expect RoomType ROOMTYPE. SEE NOTE above for parsing Strings as enum values
             roomtype = input.next();
-            
+
             switch(roomtype)
             {
                 case "REGULAR":
@@ -123,7 +123,7 @@ public class Hotel
                 room = new RegularRoom(roomNum, floor, capacity, bedtype);
                 break;
             }            
-            
+
             this.addRoom(room);
         }
     }
@@ -208,11 +208,15 @@ public class Hotel
         return null;
     }
 
+    public void addReservation(Reservation r) {
+        reservations.add(r);
+    }
+
     public int getNumReservations() {
         return reservations.size();
     }
-    
-     public ArrayList<Reservation> getActiveReservations() {
+
+    public ArrayList<Reservation> getActiveReservations() {
         ArrayList<Reservation> arr = new ArrayList<>();
         for(Reservation r : reservations) {
             if(r.getStatus().equals(Status.IN) || r.getStatus().equals(Status.WAITING)) {
@@ -223,7 +227,7 @@ public class Hotel
     }
 
     public ArrayList<Reservation> getInactiveReservations() {
-         ArrayList<Reservation> arr = new ArrayList<>();
+        ArrayList<Reservation> arr = new ArrayList<>();
         for(Reservation r : reservations) {
             if(r.getStatus().equals(Status.OUT) || r.getStatus().equals(Status.CANCELED)) {
                 arr.add(r);
@@ -231,7 +235,6 @@ public class Hotel
         }
         return arr;
     }
-
 
     @Override
     public String toString() {
