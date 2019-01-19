@@ -207,11 +207,42 @@ public class Hotel
         }
         return null;
     }
-
+    
+    /**
+     * Method to add a new reservation to the hotel's list of reservations.
+     */
     public void addReservation(Reservation r) {
         reservations.add(r);
     }
-
+    
+    /**
+     * Method to find all reservations matching a guest last name from hotel's list of reservations.
+     */
+    public ArrayList<Reservation> getReservationsByLastName(String guestLastName) {
+            
+        ArrayList<Reservation> reservationsByName = new ArrayList<Reservation>();
+        
+        for(Reservation res: reservations) {
+            if(res.getGuest().getLastName().equals(guestLastName)) {
+                reservationsByName.add(res);
+            }
+        }
+        return reservationsByName;
+    }    
+    
+    /**
+     * Method to find a reservation by reservationID number from hotel's list of reservations.
+     */
+    public Reservation getReservation(int reservationID) {      
+        
+        for(Reservation res: reservations) {
+            if(res.getReservationID() == reservationID) {
+                return res;
+            }
+        }
+        return null;
+    }    
+    
     public int getNumReservations() {
         return reservations.size();
     }

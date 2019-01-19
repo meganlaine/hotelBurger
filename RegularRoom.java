@@ -53,7 +53,7 @@ public class RegularRoom extends Room
     public String toString() {
         
         return ROOM_TYPE + " " + super.toString() + 
-                ", PricePerNight: " + this.getRate();
-        
+                ", PricePerNight: " + this.getRate() +
+                "\n";        
     }
 }

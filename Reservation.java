@@ -187,15 +187,28 @@ public class Reservation
         }
         
         // case OUT, set the Reservation status to OUT, and free up the room
-        if ( s == Status.OUT ) {
+        if ( s == Status.IN ) {
+            if(this.getStatus() == Status.CANCELED) {
+                throw new IllegalArgumentException("The reservation was already canceled.");
+            }
+            r.setAvailable(false);
             
+        }
+        
+        // case OUT, set the Reservation status to OUT, and free up the room
+        if ( s == Status.OUT ) {
+            if(this.getStatus() == Status.CANCELED) {
+                throw new IllegalArgumentException("The reservation was already canceled.");
+            }
             r.setAvailable(true);
             
         }
 
         // case WAITING, set the Reservation status to WAITING, and hold the room for guest
         if ( s == Status.WAITING ) {
-            
+            if(this.getStatus() == Status.CANCELED) {
+                throw new IllegalArgumentException("The reservation was already canceled.");
+            }
             r.setAvailable(false);
             
         }
@@ -204,6 +217,20 @@ public class Reservation
         this.status = s;
         
     }
+    
+    /**
+     * This method returns the room object of this reservation.
+     */
+    public Room getRoom() {
+        return this.r;
+    }
+    
+    /**
+    * This method returns the room object of this reservation.
+    */
+    public Guest getGuest() {
+        return this.g;
+    }    
     
     /**
      * Sets the Reservation's room. Validates that the room in question is available. Sets the room availability to false.
@@ -304,7 +331,7 @@ public class Reservation
     public String toString() {
         
         return "= = = = = = = = = = =" + '\n' +
-               "Reservation #: " + getReservationID() + '\n' +
+               "Reservation ID#: " + getReservationID() + '\n' +
                "Status: " + getStatus() + '\n' +
                r.toString() + '\n' +
                "Guest: " + g.toString() + '\n' +

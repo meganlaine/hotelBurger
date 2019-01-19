@@ -1,4 +1,4 @@
-
+ 
 /**
  * Class Large Room for Hotel Burger.
  * Price is $20.00/night more than abstract class Room
@@ -53,7 +53,7 @@ public class LargeRoom extends Room
     public String toString() {
         
         return ROOM_TYPE + " " + super.toString() + 
-                ", PricePerNight: " + this.getRate();
-        
+                ", PricePerNight: " + this.getRate() +
+                "\n";        
     }
 }

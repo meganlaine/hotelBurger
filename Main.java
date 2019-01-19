@@ -28,6 +28,8 @@ public class Main
         mainMenu();        
     }
 
+    //** HELPER METHODS **/
+    
     /** 
      * A method to safely test if input from the keyboard is an integer or not without crashing the app.
      */
@@ -84,6 +86,54 @@ public class Main
     }
     
     /**
+     * Method to lookup all reservations under a last name and find the right one. Used a couple times by the menus.
+     */
+    private static Reservation getReservationByLastName() {
+        Reservation reservation = null;
+        String lastName = "";        
+        int reservationID = -1;
+        ArrayList<Reservation> reservationsByName = new ArrayList<Reservation>();        
+                   
+        System.out.println(" To lookup the reservation, we need last name");
+        System.out.println(" what is your last name?");  
+        lastName = input.next();        
+        reservationsByName = hotel.getReservationsByLastName(lastName);
+        
+        while(reservationsByName.size() < 1 && !lastName.equals("0")) {
+            System.out.println("Reservation not found, please try again, or press 0 to exit");
+            System.out.println(" what is your last name?");  
+            lastName = input.next();
+            reservationsByName = hotel.getReservationsByLastName(lastName);
+        }
+        
+        if(lastName.equals("0")) {
+            mainMenu();
+        }          
+        
+        System.out.println(" here are the reservations under that last name, which would you like to change(enter ID# from below list)? Or press 0 to return to main menu"); 
+        for(Reservation res: reservationsByName) {
+            System.out.println(res);
+        }
+                
+        reservationID = getUserInputInt(0);
+        reservation = hotel.getReservation(reservationID);
+            
+        while (reservation == null && reservationID != 0) {
+            System.out.println(" reservationID was not entered correctly, try again. or press 0 to return to main menu");
+            reservationID = getUserInputInt(1);
+            reservation = hotel.getReservation(reservationID);
+        }
+        
+        if(reservationID == 0) {
+            mainMenu();
+        }          
+       
+        return reservation;    
+    }
+    
+    //** MENU METHODS **/
+    
+    /**
      * Menu to show main options.
      */
     private static void mainMenu() {
@@ -91,16 +141,15 @@ public class Main
         System.out.println();
         System.out.println(" Please make a selection from the following options and press enter");
         System.out.println(" 1. Make a new reservation");
-        System.out.println(" 2. Change existing reservation"); 
-        System.out.println(" 3. Cancel a reservation"); 
-        System.out.println(" 4. See an existing reservation's invoice info"); 
-        System.out.println(" 5. See an existing reservation's guest info");
-        System.out.println(" 6. See an existing reservation's checkin/out/cancel status");        
-        System.out.println(" 7. View all available rooms");        
-        System.out.println(" 8. See help menu");
-        System.out.println(" 9. Quit/close +  save state");
+        System.out.println(" 2. Change/Cancel existing reservation");          
+        System.out.println(" 3. See an existing reservation's checkin/out/cancel status"); 
+        System.out.println(" 4. Guest info");
+        System.out.println(" 5. See an existing reservation's invoice info");        
+        System.out.println(" 6. View all available rooms");        
+        System.out.println(" 7. See help menu");
+        System.out.println(" 8. Quit/close +  save state");
 
-        int selectionInt = getUserInputInt(1,9); 
+        int selectionInt = getUserInputInt(1,8); 
         
         switch(selectionInt)
         {
@@ -111,27 +160,24 @@ public class Main
                 changeReservationMenu();
                 break;
             case 3:
-                cancelReservationMenu();
+                reservationStatusMenu();               
                 break;
             case 4:
-                invoiceMenu();
-                break;
-            case 5:
                 guestMenu();
                 break;
-            case 6:
-                reservationStatusMenu();                
+            case 5:
+                invoiceMenu();           
                 break;
-            case 7:
+            case 6:
                 availableRoomsMenu();
-                break;            
-            case 8:
-                helpMenu();
                 break; 
-            case 9:
+            case 7:
+                helpMenu();
+                break;        
+            case 8:
                 input.close();
                 System.exit(0);                
-                break;
+                break;                
         }      
          
     }          
@@ -211,23 +257,52 @@ public class Main
      * Menu to allow to change some data in a reservation.
      */
     private static void changeReservationMenu() {
+        Reservation reservation = null;        
+        String newRoomNumber = "";
+        Room newRoom = null;
+        
         //print a blank line followed by menu title
         System.out.println(" Change Reservation Menu");
-        System.out.println(" This part of the menu has not been implemented yet :(");
-        //prompt to enter the guest's name? then get the reservation? then prompt for what they want to change? might need to open the reservation menu at that point
+        
+        while(reservation == null) {
+            reservation = getReservationByLastName();
+        }
+        
+        System.out.println(" For this reservation, what would you like to change?");
+        
+        System.out.println(" 1. Cancel it");        
+        System.out.println(" 2. Change room");
+        System.out.println(" 0. Return to the main menu");                  
+        
+        int selectionInt = getUserInputInt(0,2); 
+        
+        switch(selectionInt)
+        {
+            case 0:
+                mainMenu();
+                break;
+            case 1:                
+                reservation.setStatus(Status.CANCELED);
+                System.out.println("Successfully cancelled");
+                break;
+            case 2:
+                System.out.println(" which room from the following do want to change to?");
+                System.out.println(hotel.getEmptyRooms());
+                newRoomNumber = input.next();                
+                newRoom = hotel.getRoom(newRoomNumber);
+                while(newRoom == null || !newRoom.isAvailable()) {
+                    System.out.println(" room not entered correctly or already reserved, try again");
+                    newRoomNumber = input.next();                
+                    newRoom = hotel.getRoom(newRoomNumber);
+                }
+                    
+                reservation.setRoom(newRoom);
+                System.out.println("Successfully changed room to room# " + newRoomNumber);
+                break;
+        }
+        
         returnToMainMenuPrompt();
-    }
-    
-    /**
-     * Menu to cancel someone's reservation.
-     */
-    private static void cancelReservationMenu() {
-        //print a blank line followed by menu title
-        System.out.println(" Cancel Reservation Menu");
-        System.out.println(" This part of the menu has not been implemented yet :(");
-        //prompt to enter the guest's name? then get the reservation? then cancel it
-        returnToMainMenuPrompt();
-    }
+    }       
     
     /**
      * Menu to search for an invoice and view the information in it.
@@ -273,17 +348,52 @@ public class Main
     private static void guestMenu() { 
         //print a blank line followed by menu title
         System.out.println(" Guest Menu");
-        System.out.println(" This part of the menu has not been implemented yet :(");
+        System.out.println(" What is the intended functionality of this menu?");
+        
         returnToMainMenuPrompt();
     }
-    
+            
     /**
      * Menu to view information about the status of a reservation. Is it checked in, checked out, or cancelled?
      */
     private static void reservationStatusMenu() {
+        Reservation reservation = null;        
+        
         //print a blank line followed by menu title
-        System.out.println(" Reservation Status Menu");
-        System.out.println(" This part of the menu has not been implemented yet :(");
+        System.out.println(" Reservation Status Menu");        
+        
+        while(reservation == null) {
+            reservation = getReservationByLastName();
+        }
+        
+        System.out.println(" For this reservation, what would you like to change?");
+        
+        System.out.println(" 1. Cancel it");        
+        System.out.println(" 2. Checkin");
+        System.out.println(" 3. Checkout");
+        System.out.println(" 0. Return to the main menu");                  
+        
+        int selectionInt = getUserInputInt(0,3); 
+        
+        switch(selectionInt)
+        {
+            case 0:
+                mainMenu();
+                break;
+            case 1:                
+                reservation.setStatus(Status.CANCELED);
+                System.out.println("Successfully cancelled");
+                break;
+            case 2:
+                reservation.setStatus(Status.IN);
+                System.out.println("Successfully checked in");
+                break;
+            case 3:
+                reservation.setStatus(Status.OUT);
+                System.out.println("Successfully checked out");
+                break;
+        }
+        
         returnToMainMenuPrompt();
     }
     
@@ -291,10 +401,14 @@ public class Main
      * Menu to see all available rooms just to satisfy the assignment prompt.
      */
     private static void availableRoomsMenu() {
+        ArrayList<Room> availableRooms = hotel.getEmptyRooms();
+        
         //print a blank line followed by menu title
         System.out.println(" Available Rooms Menu");
-        System.out.println(" This part of the menu has not been implemented yet :(");
-        //hotelBurger.getEmptyRooms();
+        
+        System.out.println( " we have these rooms available:");        
+        System.out.println(availableRooms); 
+        
         returnToMainMenuPrompt();
     }
     

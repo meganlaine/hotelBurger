@@ -157,7 +157,6 @@ public abstract class Room
                 ", Floor: " + this.getFloor() +
                 ", BedType: " + this.getBedType() + 
                 ", Capacity: " + this.getCapacity() + 
-                ", Available?: " + this.isAvailable();
-        
+                ", Available: " + this.isAvailable();        
     }
 }
