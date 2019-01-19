@@ -139,8 +139,12 @@ public class Guest
     }
 
     public void setNights(int nights) {
+        if(nights < 1 || nights > 90) {
+            throw new IllegalArgumentException("Night must be between 1 and 90");
+        }
         this.nights = nights;
     }
+
 
     public String toString() {
         return firstName + " " + lastName + " , " + phoneNumber + "\n" +
