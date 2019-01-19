@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=RegularRoom
+comment0.text=\r\n\ Class\ Regular\ Room\ for\ Hotel\ Burger.\r\n\ No\ additional\ costs\ from\ abstract\ class\ Room.\r\n\r\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\r\n\ @version\ 01/17/2019\r\n
+comment1.params=roomNum\ floor\ capacity\ bedType
+comment1.target=RegularRoom(java.lang.String,\ int,\ int,\ java.lang.String)
+comment1.text=\r\n\ Constructor\ for\ RegularRoom\ object\r\n\ Calls\ super\ method\ to\ construct\ Room\ object\r\n\ \r\n\ @param\ roomNum\ (String)\ the\ room\ number\ of\ the\ room\r\n\ @param\ floor\ (int)\ the\ floor\ where\ room\ located\r\n\ @param\ capacity\ (int)\ the\ human\ capacity\ of\ the\ room\r\n\ @param\ bedType\ (String)\ the\ bedtype\ of\ the\ room\r\n
+comment2.params=
+comment2.target=double\ getRate()
+comment2.text=\r\n\ Returns\ the\ price\ of\ the\ room\ per\ night,\ accounting\ for\ \r\n\ which\ floor\ the\ room\ is\ on\ and\ any\ special\ charges\ based\ on\r\n\ Room\ -\ Regular\ (Regular\ room\ has\ no\ extra\ charges).\r\n\ \r\n\ @return\ double\ representing\ nightly\ price\ of\ RegularRoom\r\n
+comment3.params=
+comment3.target=java.lang.String\ getRoomType()
+comment4.params=
+comment4.target=java.lang.String\ toString()
+comment4.text=\r\n\ Overrides\ the\ abstract\ Room\ Class's\ toString()\ method.\ \r\n\ For\ example\:\ 'Regular\ Room\:\ 405,\ Floor\:\ 4,\ BedType\:\ DOUBLE,\ Capacity\:\ 4,\r\n\ Available?\:\ true,\ PricePerNight\:\ XXX.00'\r\n\ \r\n\ @return\ String\ representing\ information\ about\ this\ Room\r\n
+numComments=5
