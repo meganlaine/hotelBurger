@@ -96,7 +96,7 @@ public class Main
      * This is going to be used anytime a menu gets to a dead end, 
      * such as when a task is complete or there is nothing else to do in that menu.
      */
-    private static void returnToMainMenuPrompt() 
+    private static void returnToMainMenuPrompt() throws FileNotFoundException 
     {
         System.out.println();
         System.out.println(" Press 0 to return to the main menu");
@@ -115,7 +115,7 @@ public class Main
      * 
      * @return reservation (Reservation) a reservation object matched by last name
      */
-    private static Reservation getReservationByLastName() 
+    private static Reservation getReservationByLastName() throws FileNotFoundException 
     {
         Reservation reservation = null;        
         String lastName = "";        
@@ -172,7 +172,7 @@ public class Main
     /**
      * Menu to show main options.
      */
-    private static void mainMenu() 
+    private static void mainMenu() throws FileNotFoundException 
     {
         // print a blank line followed by menu title
         System.out.println();
@@ -222,7 +222,7 @@ public class Main
     /**
      * Menu to create a new reservation.
      */
-    private static void makeReservationMenu()
+    private static void makeReservationMenu() throws FileNotFoundException 
     {
         // variables needed to make reservations
         int partySize = 0;
@@ -318,7 +318,7 @@ public class Main
     /**
      * Menu to allow changes to some data in a reservation.
      */
-    private static void changeReservationMenu() 
+    private static void changeReservationMenu() throws FileNotFoundException 
     {
         Reservation reservation = null;        
         String newRoomNumber = "";
@@ -370,7 +370,7 @@ public class Main
     /**
      * Menu to search for an invoice and view the information in it.
      */
-    private static void invoiceMenu() 
+    private static void invoiceMenu() throws FileNotFoundException 
     { 
         Reservation reservation = null;
         
@@ -413,7 +413,7 @@ public class Main
     /** 
      * Menu to see an existing reservation's guest information.
      */
-    private static void guestMenu() 
+    private static void guestMenu() throws FileNotFoundException 
     { 
         // print a blank line followed by menu title
         System.out.println(" Guest Menu");
@@ -426,7 +426,7 @@ public class Main
      * Menu to view information about the status of a reservation. 
      * Is it checked in, checked out, or canceled?
      */
-    private static void reservationStatusMenu() 
+    private static void reservationStatusMenu() throws FileNotFoundException 
     {
         Reservation reservation = null;        
         
@@ -472,7 +472,7 @@ public class Main
     /**
      * Menu to see all available rooms.
      */
-    private static void availableRoomsMenu() 
+    private static void availableRoomsMenu() throws FileNotFoundException 
     {
         ArrayList<Room> availableRooms = hotel.getEmptyRooms();
         
@@ -488,7 +488,7 @@ public class Main
     /**
      * Menu to display information on how to use this program.
      */
-    private static void helpMenu() 
+    private static void helpMenu() throws FileNotFoundException 
     {
         // print a blank line followed by menu title
         System.out.println(" Help Menu");
