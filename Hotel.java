@@ -1,9 +1,8 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.ArrayList;
-
 /**
  * Class Hotel represents a hotel. It has (ArrayLists) for Rooms and Reservations.
  * 
@@ -230,10 +229,26 @@ public class Hotel
      * and will crash trying to create the reservation on a room that is not available.
      * 
      */
-    public void save()
+    public void save() throws FileNotFoundException 
     {
-        // not implemented yet :(
-        // need to sort reservations so canceled ones get saved first
+        System.out.println("num Reservations: " + reservations.size());
+        //sortReservations();
+        PrintStream output = new PrintStream(new File("HotelBurgerReservations.txt"));
+        for(Reservation r : reservations) {
+            Guest g = r.getGuest();
+            Room room = r.getRoom();
+            output.println();
+            output.print(g.getPartySize() + " ");
+            output.print(g.getNights() + " ");
+            output.print(room.getRoomNumber() + " ");
+            output.print(g.getFirstName() + " ");
+            output.print(g.getLastName() + " ");
+            output.print(g.getPhoneNum() + " ");
+            output.print(g.isMilitary() + " ");
+            output.print(g.isGovernment() + " ");
+            output.print(g.isMember() + " ");
+            output.print(r.getStatus());
+        }
     }
     
     /* ACCESSOR METHODS */
