@@ -1,77 +1,89 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
- * Class to represent a Hotel. Has storage containers for all the Rooms and all the Reservations.
- * 
- * @field name:String the name of the Hotel
- * @field address:String the address of the Hotel
- * @field phoneNumber:String the phonenumber you can use to call the Hotel
- * @field rooms:ArrayList<Room> the container for all Rooms in the Hotel
- * @field reservations:ArrayList<Reservation> the container for all the reservations in the Hotel
+ * Class Hotel represents a hotel. It has (ArrayLists) for Rooms and Reservations.
  * 
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/17/2019
+ * @version 1/19/2019
  */
 public class Hotel
 {
+    /* INSTANCE VARIABLES */
     private static Scanner input;
     private String name;
     private String address;
     private String phoneNumber;
-
+    private ArrayList<Reservation> reservations;
     public ArrayList<Room> rooms;
-    private ArrayList<Reservation> reservations; 
-
+    
+    /* CONSTRUCTOR METHODS */
+    
     /**
-     * This is the constructor that all other constructors will use.
+     * Hotel Constructor 1/3 (full constructor for a hotel object)
+     *
+     * @param name (String) hotel's name
+     * @param address (String) hotel's address
+     * @param phoneNumber (String) hotel's phone number
      */
-    public Hotel(String name, String address, String phoneNumber) {
+    public Hotel( String name, String address, String phoneNumber )
+    {
         setName(name);
         setAddress(address);
         setPhoneNumber(phoneNumber);
 
         rooms = new ArrayList<Room>();
-
         reservations = new ArrayList<Reservation>();
     }
 
     /**
-     * This is the default constructor if you pass no parameters, it just calls the other constructor will some default testing values.
+     * Hotel Constructor 2/3 (default constructor for a hotel object)
      */
-    public Hotel() {
-        this("Burger Hotel!", "North Seattle College", "8675309");        
+    public Hotel() 
+    {
+        this( "Burger Hotel!", "North Seattle College", "0123456789" );        
     }
 
     /**
-     * Constructor used from Main client code. do not delete.
-     * Reads data from the hotel text file, and populate the ArrayList<Room>
+     * Hotel Constructor 3/3 (Constructor used from Main client code. do not delete!)
+     * Reads data from the hotel text file, and populates the ArrayList<Room>
      */
     public Hotel( String fileName ) throws FileNotFoundException
     {     
-        //call default constructor so all fields get initialized to something, including the ArrayLists
+        // call default constructor so all fields get initialized to something,
+        // including the ArrayLists
         this();
+        
         File inFile = new File(fileName);
         input = new Scanner(inFile);
 
-        if (!input.hasNext()) {
+        if (!input.hasNext()) 
+        {
             throw new IllegalArgumentException("File doesn't match expected format.");
         }
 
         // We expect line 1 to have the name of the hotel
         String name = input.nextLine();
+        
         // We expect line 2 to have the address of the hotel
         String address = input.nextLine();
+        
         // We expect line 3 to have the phone number of the hotel
         String phoneNumber = input.nextLine();
+        
+        // reset the name/address/phone number of the hotel
         setName(name);
         setAddress(address);
         setPhoneNumber(phoneNumber);
-
+        
+        // 'fill' the room arraylist with different rooms available in the hotel
         fillRoomArrayList();
     }
+    
+    /* METHODS UTILIZED BY THE CONSTRUCTORS */
 
     /**
      * Reads data from a .txt file and stores it in this Room-object ArrayList.
@@ -107,25 +119,33 @@ public class Hotel
 
             // We expect RoomType ROOMTYPE. SEE NOTE above for parsing Strings as enum values
             roomtype = input.next();
-
-            switch(roomtype)
+            
+            switch( roomtype )
             {
                 case "REGULAR":
-                room = new RegularRoom(roomNum, floor, capacity, bedtype);
-                break;
+                    room = new RegularRoom(roomNum, floor, capacity, bedtype);
+                    break;
+                    
                 case "LARGE":
-                room = new LargeRoom(roomNum, floor, capacity, bedtype);
-                break;
+                    room = new LargeRoom(roomNum, floor, capacity, bedtype);
+                    break;
+                    
                 case "SUITE":
-                room = new Suite(roomNum, floor, capacity, bedtype);
-                break;
+                    room = new Suite(roomNum, floor, capacity, bedtype);
+                    break;
+                    
                 default:
-                room = new RegularRoom(roomNum, floor, capacity, bedtype);
-                break;
+                    room = new RegularRoom(roomNum, floor, capacity, bedtype);
+                    break;
             }            
 
             this.addRoom(room);
         }
+    }
+    
+    public void addRoom(Room room)
+    {
+        rooms.add(room);
     }
 
     /**
@@ -156,8 +176,8 @@ public class Hotel
         Guest guest;        
         Reservation reservation;
         
-        while(input.hasNextLine()) {            
-
+        while(input.hasNextLine()) 
+        {
             // We expect int partySize.
             partySize = input.nextInt();            
 
@@ -188,7 +208,8 @@ public class Hotel
             room = this.getRoom(roomNumber);
 
             //make a guest object
-            guest = new Guest(firstName, lastName, phoneNumber, partySize, nights, isMilitary, isGov, isMember);
+            guest = new Guest(firstName, lastName, phoneNumber, 
+                partySize, nights, isMilitary, isGov, isMember);
             
             //make the reservation
             reservation = new Reservation(room, guest, status);
@@ -198,7 +219,8 @@ public class Hotel
     }
     
     /**
-     * This method "saves" persists the hotel data back to the text files the data was first read from.
+     * This method "saves" persists the hotel data back to the text files from where the 
+     * construction data were first read.
      * 
      * ArrayList of reservations needs to be sorted with canceled ones first before we save.
      * This is because when the program starts and reservations 
@@ -208,85 +230,129 @@ public class Hotel
      * and will crash trying to create the reservation on a room that is not available.
      * 
      */
-    public void save() {
-        //not implemented yet :(
-        //need to sort reservations so canceled ones get saved first
+    public void save()
+    {
+        // not implemented yet :(
+        // need to sort reservations so canceled ones get saved first
     }
     
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getName() {
+    /* ACCESSOR METHODS */
+    
+    /**
+     * Returns the hotel's name
+     *
+     * @return name (String) the hotel's name
+     */
+    public String getName() 
+    {
         return name;
     }
 
-    public String getAddress() {
+    /**
+     * Returns the hotel's address as a string.
+     *
+     * @return address (String) the hotel's address
+     */
+    public String getAddress() 
+    {
         return address;
     }
 
-    public String getPhoneNumber() {
+    /**
+     * Returns the hotel's phone number as a string.
+     *
+     * @return phoneNumber (String) the hotel's phone number
+     */
+    public String getPhoneNumber() 
+    {
         return phoneNumber;
     }  
 
-    public void addRoom(Room room)
+    /**
+     * Returns an arraylist of Room objects that are available.
+     * A room is considered available IF there is no reservation on it, and IF there are no
+     * guests checked into the room.
+     *
+     * @return rms (ArrayList<Room>) ArrayList of available rooms in the hotel.
+     */
+    public ArrayList<Room> getEmptyRooms() 
     {
-        rooms.add(room);
+        ArrayList<Room> rms = new ArrayList<Room>();
+        
+        for (Room rm: rooms) 
+        {
+            if ( rm.isAvailable() ) 
+            {
+                rms.add(rm);
+            }
+        }
+        return rms;
     }
-
-    // Checks every room and returns how many are empty
-    public ArrayList<Room> getEmptyRooms() {
-        ArrayList<Room> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(rm.isAvailable()) {
+    
+    /**
+     * Returns an arraylist of Room objects that are unavailable.
+     * A reserved room is considered unavailable. 
+     * A room with a checked in guest is considered unavailable.
+     *
+     * @return rms (ArrayList<Room>) ArrayList of unavailable rooms in the hotel.
+     */
+    public ArrayList<Room> getOccupiedRoomsList()
+    {
+        ArrayList<Room> rms = new ArrayList<Room>();
+        
+        for (Room rm: rooms) 
+        {
+            if ( !rm.isAvailable() ) 
+            {
                 rms.add(rm);
             }
         }
         return rms;
     }
 
-    // Checks every room and returns how many are empty
-    public ArrayList<Room> getOccupiedRoomsList() {
-        ArrayList<Room> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(!rm.isAvailable()) {
-                rms.add(rm);
-            }
-        }
-        return rms;
-    }
-
-    // Checks every room and returns how many are full
-    public int getOccupiedRooms() {
+    /**
+     * Returns the number of unavailable rooms in the hotel. 
+     * A reserved room is considered unavailable. 
+     * A room with a checked in guest is considered unavailable.
+     *
+     * @return accum (int) representing number of unavailable rooms in the hotel.
+     */
+    public int getOccupiedRooms() 
+    {
         int accum = 0;
-        for(Room rm : rooms) {
-            if(!rm.isAvailable()) { // check if room is occupied
+        
+        for (Room rm : rooms) 
+        {
+            if ( !rm.isAvailable() ) 
+            {
                 accum++;
             }
         }
         return accum;
     }
 
-    public ArrayList<Room> getAllRooms() {
+    /**
+     * Returns the ArrayList<Room> that 'contains' all Room objects in this hotel.
+     *
+     * @return rooms (ArrayList<Room>) representing all Room objects in the hotel.
+     */
+    public ArrayList<Room> getAllRooms() 
+    {
         return rooms;
     }
 
-    // this is a method which allows us to search rooms by room number
     /**
-     * This enables us to search through all rooms in the hotel and returns the room object
-     * which corresponds to the room number argument.
+     * Returns a room object when the room number matches the argument.
+     * 
+     * @param roomNumber (String) the room number being searched
+     * @return rm or null (Room) the room object that matches the search. or null, if no match.
      */
-    public Room getRoom(String roomNumber) {
-        for(Room rm: rooms) {
-            if(rm.getRoomNumber().equals(roomNumber)) {
+    public Room getRoom(String roomNumber)
+    {
+        for (Room rm: rooms) 
+        {
+            if (rm.getRoomNumber().equals(roomNumber)) 
+            {
                 return rm;
             }
         }
@@ -294,21 +360,20 @@ public class Hotel
     }
     
     /**
-     * Method to add a new reservation to the hotel's list of reservations.
+     * Returns an arraylist of all reservations matching a guest's last name from 
+     * hotel's list of reservations.
+     * 
+     * @param guestLastName (String) the last name to search by
+     * @return reservationsByName (ArrayList<Reservation>) list of reservations whose last name matches the search criteria.
      */
-    public void addReservation(Reservation r) {
-        reservations.add(r);
-    }
-    
-    /**
-     * Method to find all reservations matching a guest last name from hotel's list of reservations.
-     */
-    public ArrayList<Reservation> getReservationsByLastName(String guestLastName) {
-            
+    public ArrayList<Reservation> getReservationsByLastName(String guestLastName) 
+    {
         ArrayList<Reservation> reservationsByName = new ArrayList<Reservation>();
         
-        for(Reservation res: reservations) {
-            if(res.getGuest().getLastName().equals(guestLastName)) {
+        for (Reservation res: reservations) 
+        {
+            if (res.getGuest().getLastName().equals(guestLastName)) 
+            {
                 reservationsByName.add(res);
             }
         }
@@ -316,36 +381,67 @@ public class Hotel
     }    
     
     /**
-     * Method to find a reservation by reservationID number from hotel's list of reservations.
+     * Returns a Reservation object when the reservationIDs match. Returns null if no match.
+     * 
+     * @param reservationID (int) the reservation ID to search for.
+     * @return res or null (Reservation) the reservation object whose ID matches the search.
      */
-    public Reservation getReservation(int reservationID) {      
-        
-        for(Reservation res: reservations) {
-            if(res.getReservationID() == reservationID) {
+    public Reservation getReservation(int reservationID) 
+    {
+        for (Reservation res: reservations)
+        {
+            if (res.getReservationID() == reservationID) 
+            {
                 return res;
             }
         }
         return null;
     }    
     
-    public int getNumReservations() {
+    /**
+     * Returns the number of all reservations that the Hotel has (includes all statuses).
+     *
+     * @return (int) the number of all hotel reservations (all statuses)
+     */
+    public int getNumReservations()
+    {
         return reservations.size();
     }
 
-    public ArrayList<Reservation> getActiveReservations() {
-        ArrayList<Reservation> arr = new ArrayList<>();
-        for(Reservation r : reservations) {
-            if(r.getStatus().equals(Status.IN) || r.getStatus().equals(Status.WAITING)) {
+    /**
+     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
+     * 'active'. 'Active' reservation = hotel is waiting for guest, OR guest is checked in.
+     * 
+     * @return ArrayList<Reservation> of all active reservations.
+     */
+    public ArrayList<Reservation> getActiveReservations() 
+    {
+        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+        
+        for (Reservation r : reservations) 
+        {
+            if (r.getStatus().equals(Status.IN) || r.getStatus().equals(Status.WAITING)) 
+            {
                 arr.add(r);
             }
         }
         return arr;
     }
 
-    public ArrayList<Reservation> getInactiveReservations() {
-        ArrayList<Reservation> arr = new ArrayList<>();
-        for(Reservation r : reservations) {
-            if(r.getStatus().equals(Status.OUT) || r.getStatus().equals(Status.CANCELED)) {
+    /**
+     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
+     * 'inactive'. 'Inactive' reservation = guest checked out, OR reservation canceled.
+     * 
+     * @return ArrayList<Reservation> of all inactive reservations.
+     */
+    public ArrayList<Reservation> getInactiveReservations()
+    {
+        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+        
+        for (Reservation r : reservations) 
+        {
+            if (r.getStatus().equals(Status.OUT) || r.getStatus().equals(Status.CANCELED)) 
+            {
                 arr.add(r);
             }
         }
@@ -353,38 +449,101 @@ public class Hotel
     }
      
     /**
-     * Method to get all invoices for the whole hotel
+     * Returns an ArrayList of strings representing 'invoices' in the hotel 
+     * where there is NO balance due.
+     * 
+     * @return ArrayList<String> of all 'invoices' that have been paid.
      */
-    public ArrayList<String> getAllInvoicesPaid() {
+    public ArrayList<String> getAllInvoicesPaid() 
+    {
         ArrayList<String> invoices = new ArrayList<String>();
         
-        for(Reservation res : reservations) {
-            if(res.getPaymentDue() == 0) invoices.add(res.getInvoice());
+        for (Reservation res : reservations) 
+        {
+            if ( res.getPaymentDue() == 0 ) 
+            {
+                invoices.add( res.getInvoice() );
+            }
         }
-        
-        return invoices;
-    }
-    /**
-     * Method to get all invoices for the whole hotel
-     */
-    public ArrayList<String> getAllInvoicesUnpaid() {
-        ArrayList<String> invoices = new ArrayList<String>();
-        
-        for(Reservation res : reservations) {
-            if(res.getPaymentDue() > 0) invoices.add(res.getInvoice());
-        }
-        
         return invoices;
     }
     
+    /**
+     * Returns an ArrayList of strings representing 'invoices' in the hotel 
+     * where there is a balance due.
+     * 
+     * @return ArrayList<String> of all 'invoices' with outstanding balance.
+     */
+    public ArrayList<String> getAllInvoicesUnpaid() 
+    {
+        ArrayList<String> invoices = new ArrayList<String>();
+        
+        for (Reservation res : reservations) 
+        {
+            if (res.getPaymentDue() > 0)
+            {
+                invoices.add( res.getInvoice() );
+            }
+        }
+        return invoices;
+    }
+    
+    /* MUTATOR METHODS */
+    
+    /**
+     * Method setName sets this hotel's name field.
+     *
+     * @param name (String) hotel name
+     */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    /**
+     * Method setAddress sets this hotel's address field.
+     *
+     * @param address (String) hotel address
+     */
+    public void setAddress(String address) 
+    {
+        this.address = address;
+    }
+
+    /**
+     * Method setPhoneNumber sets the hotel's phone number
+     *
+     * @param phoneNumber (String) hotel phone number
+     */
+    public void setPhoneNumber(String phoneNumber) 
+    {
+        // no validation...
+        this.phoneNumber = phoneNumber;
+    }
+    
+    /**
+     * Adds a new Reservation object to the Hotel's arrayList of reservation objects
+     * 
+     * @param r (Reservation) reservation object
+     */
+    public void addReservation(Reservation r) 
+    {
+        reservations.add(r);
+    }
+    
+    /* OTHER METHODS */
+    /**
+     * Method toString overrides Object class's toString method; returns info about the hotel.
+     *
+     * @return (String) with info about name, address, and phone number.
+     */
     @Override
-    public String toString() {
-        String hotelString = "=========================" + "\n";
-        hotelString += "Hotel: ";
-        hotelString += name + "\n";
-        hotelString += address + "\n";
-        hotelString += phoneNumber + "\n";
-        hotelString += "=========================" + "\n";
-        return hotelString;
+    public String toString() 
+    {
+        return "=========================" + "\n" +
+            "Hotel: " + name + "\n" +
+            address + "\n" +
+            phoneNumber + "\n" +
+            "=========================" + "\n";
     }
 }
