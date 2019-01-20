@@ -1,15 +1,17 @@
 
 /**
- * Abstract class that sets up the required fields and methods for 
- * a type of Hotel Room.
- * Rooms on higher floors have a higher cost per night.
+ * Abstract class Room provides the required fields and methods for 
+ * a type of Hotel Room. Rooms on higher floors have a higher cost per night.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 01/17/2019
+ * @version 01/19/2019
  */
 public abstract class Room
 {
+    /* CLASS CONSTANTS */
     private static final double BASE_RATE = 150.00;
+    
+    /* INSTANCE VARIABLES */
     private String roomNum;
     private int floor;
     private int capacity;
@@ -24,7 +26,7 @@ public abstract class Room
      * @param capacity (int) the human capacity of the room
      * @param bedType (String) the bedtype of the room
      */
-    public Room(String roomNum, int floor, int capacity, String bedType)
+    public Room( String roomNum, int floor, int capacity, String bedType )
     {
         /* Because we are assuming that the textfile with room information is correct, we are not going to require validators here. */
         this.roomNum = roomNum;
@@ -46,17 +48,17 @@ public abstract class Room
      * Note that in the child classes, getRate() will need to call 
      * super.getBaseRate()!
      * 
-     * @return double representing nightly price of Room
+     * @return (double) representing nightly price of Room
      */
     public abstract double getRate();
-    
-    
+        
     /**
      * Returns the Room number as a String.
      * 
      * @return (String) the room number
      */
-    public String getRoomNumber() {
+    public String getRoomNumber()
+    {
         return this.roomNum;
     }
     
@@ -65,7 +67,8 @@ public abstract class Room
      * 
      * @return (int) the room's floor number
      */
-    public int getFloor() {
+    public int getFloor()
+    {
         return this.floor;
     }
     
@@ -74,7 +77,8 @@ public abstract class Room
      * 
      * @return (int) the room's human capacity
      */
-    public int getCapacity() {
+    public int getCapacity()
+    {
         return this.capacity;
     }
     
@@ -83,7 +87,8 @@ public abstract class Room
      * 
      * @return (String) the room's bedType
      */
-    public String getBedType() {
+    public String getBedType()
+    {
         return this.bedType;
     }
     
@@ -92,11 +97,12 @@ public abstract class Room
      * 
      * @return (double) the price of the room per night
      */
-    protected double getBaseRate() {
-        
+    protected double getBaseRate()
+    {
         double baseRate = BASE_RATE;
         
-        if (floor > 5 && floor < 11) {
+        if (floor > 5 && floor < 11)
+        {
             baseRate += (BASE_RATE * 1.03);
         }
         
@@ -109,10 +115,9 @@ public abstract class Room
      * @param r (Room) to check
      * @return true if the room is Available for guests.
      */
-    public boolean isAvailable() {
-        
+    public boolean isAvailable()
+    {
         return this.isAvailable;
-        
     }
     
     /* MUTATOR METHODS */
@@ -122,16 +127,23 @@ public abstract class Room
      * 
      * @param true if room will be available
      */
-    public void setAvailable( boolean b ) {
-        
+    public void setAvailable( boolean b )
+    {
         this.isAvailable = b;
-        
     }
     
     /* OTHER METHODS */
     
+    /**
+     * Method equals overrides the Object class's equals method.
+     * It returns true if the other Room object has the same room number as this room.
+     * It returns false if the other Object is not the same room, or is not a room-object.
+     *
+     * @param other (Object) to be compared
+     * @return true if other Room has the same room number as this room.
+     */
     @Override
-    public boolean equals(Object other)
+    public boolean equals( Object other )
     {
         boolean equals = false;
 
@@ -148,11 +160,11 @@ public abstract class Room
      * For example: 'Room: 405, Floor: 4, BedType: DOUBLE, Capacity: 4,
      * Available?: true'
      * 
-     * @return String representing information about this Room
+     * @return (String) representing information about this Room
      */
     @Override
-    public String toString() {
-        
+    public String toString()
+    {
         return "Room: " + this.getRoomNumber() +
                 ", Floor: " + this.getFloor() +
                 ", BedType: " + this.getBedType() + 

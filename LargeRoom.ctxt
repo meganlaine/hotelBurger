@@ -1,13 +1,13 @@
 #BlueJ class context
 comment0.target=LargeRoom
-comment0.text=\r\n\ Class\ Large\ Room\ for\ Hotel\ Burger.\r\n\ Price\ is\ $20.00/night\ more\ than\ abstract\ class\ Room\r\n\r\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\r\n\ @version\ 01/17/2019\r\n
+comment0.text=\n\ Class\ Large\ Room\ for\ Hotel\ Burger.\n\ Price\ is\ $20.00/night\ more\ than\ abstract\ class\ Room\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 01/19/2019\n
 comment1.params=roomNum\ floor\ capacity\ bedType
 comment1.target=LargeRoom(java.lang.String,\ int,\ int,\ java.lang.String)
-comment1.text=\r\n\ Constructor\ for\ LargeRoom\ object\r\n\ Calls\ super\ method\ to\ construct\ Room\ object\r\n\ \r\n\ @param\ roomNum\ (String)\ the\ room\ number\ of\ the\ room\r\n\ @param\ floor\ (int)\ the\ floor\ where\ room\ located\r\n\ @param\ capacity\ (int)\ the\ human\ capacity\ of\ the\ room\r\n\ @param\ bedType\ (String)\ the\ bedtype\ of\ the\ room\r\n
+comment1.text=\n\ Constructor\ for\ LargeRoom\ object\n\ Calls\ super\ method\ to\ construct\ Room\ object\n\ \n\ @param\ roomNum\ (String)\ the\ room\ number\ of\ the\ room\n\ @param\ floor\ (int)\ the\ floor\ where\ room\ located\n\ @param\ capacity\ (int)\ the\ human\ capacity\ of\ the\ room\n\ @param\ bedType\ (String)\ the\ bedtype\ of\ the\ room\n
 comment2.params=
 comment2.target=double\ getRate()
-comment2.text=\r\n\ Returns\ the\ price\ of\ the\ room\ per\ night,\ accounting\ for\ \r\n\ which\ floor\ the\ room\ is\ on\ and\ any\ special\ charges\ based\ on\r\n\ Room\ -\ Large\ (Large\ room\ costs\ 20.0/night\ more\ than\ base\ Room).\r\n\ \r\n\ @return\ double\ representing\ nightly\ price\ of\ LargeRoom\r\n
+comment2.text=\n\ Returns\ the\ price\ of\ the\ room\ per\ night,\ accounting\ for\ \n\ which\ floor\ the\ room\ is\ on\ and\ any\ special\ charges\ based\ on\n\ Room\ -\ Large\ (Large\ room\ costs\ 20.0/night\ more\ than\ base\ Room).\ Overrides\ the\ \n\ abstract\ class\ Room's\ getRate()\ method.\n\ \n\ @return\ (double)\ representing\ nightly\ price\ of\ LargeRoom\n
 comment3.params=
 comment3.target=java.lang.String\ toString()
-comment3.text=\r\n\ Overrides\ the\ abstract\ Room\ Class's\ toString()\ method.\ \r\n\ For\ example\:\ 'Large\ Room\:\ 805,\ Floor\:\ 8,\ BedType\:\ DOUBLE,\ Capacity\:\ 4,\r\n\ Available?\:\ true,\ PricePerNight\:\ XXX.00'\r\n\ \r\n\ @return\ String\ representing\ information\ about\ this\ Room\r\n
+comment3.text=\n\ Overrides\ the\ abstract\ Room\ Class's\ toString()\ method.\ \n\ For\ example\:\ 'Large\ Room\:\ 805,\ Floor\:\ 8,\ BedType\:\ DOUBLE,\ Capacity\:\ 4,\n\ Available?\:\ true,\ PricePerNight\:\ XXX.00'\n\ \n\ @return\ (String)\ representing\ information\ about\ this\ Room\n
 numComments=4

@@ -1,13 +1,14 @@
 
 /**
  * Class Suite for Hotel Burger.
- * $40.00/night more than abstract class Room
+ * $40.00/night more than abstract class Room.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 01/17/2019
+ * @version 01/19/2019
  */
 public class Suite extends Room
 {
+    /* CLASS CONSTANTS */
     private static final String ROOM_TYPE = "Suite";
     
     /**
@@ -19,9 +20,9 @@ public class Suite extends Room
      * @param capacity (int) the human capacity of the room
      * @param bedType (String) the bedtype of the room
      */
-    public Suite(String roomNum, int floor, int capacity, String bedType)
+    public Suite( String roomNum, int floor, int capacity, String bedType )
     {
-        super(roomNum, floor, capacity, bedType);
+        super( roomNum, floor, capacity, bedType );
     }
     
     /* ACCESSOR METHODS */
@@ -31,13 +32,12 @@ public class Suite extends Room
      * which floor the room is on and any special charges based on
      * Room - Suite (Suite room costs 40.0/night more than base Room).
      * 
-     * @return double representing nightly price of Suite
+     * @return (double) representing nightly price of Suite
      */
-     @Override
-     public double getRate()
-     {
+    @Override
+    public double getRate()
+    {
         return super.getBaseRate() + 40.0;
-    
     }
     
     /* OTHER METHODS */
@@ -47,14 +47,13 @@ public class Suite extends Room
      * For example: 'Suite Room: 10SB, Floor: 10, BedType: KING, Capacity: 6,
      * Available?: true, PricePerNight: XXX.00'
      * 
-     * @return String representing information about this Room
+     * @return (String) representing information about this Room
      */
     @Override
-    public String toString() {
-        
+    public String toString()
+    {
         return ROOM_TYPE + " " + super.toString() + 
                 ", PricePerNight: " + this.getRate() +
                 "\n";
-        
     }
 }

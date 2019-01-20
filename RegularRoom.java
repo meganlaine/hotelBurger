@@ -4,10 +4,11 @@
  * No additional costs from abstract class Room.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 01/17/2019
+ * @version 01/19/2019
  */
 public class RegularRoom extends Room
 {
+    /* CLASS CONSTANTS */
     private static final String ROOM_TYPE = "Regular";
     
     /**
@@ -19,9 +20,9 @@ public class RegularRoom extends Room
      * @param capacity (int) the human capacity of the room
      * @param bedType (String) the bedtype of the room
      */
-    public RegularRoom(String roomNum, int floor, int capacity, String bedType)
+    public RegularRoom( String roomNum, int floor, int capacity, String bedType )
     {
-        super(roomNum, floor, capacity, bedType);
+        super( roomNum, floor, capacity, bedType );
     }
     
     /* ACCESSOR METHODS */
@@ -29,15 +30,15 @@ public class RegularRoom extends Room
     /**
      * Returns the price of the room per night, accounting for 
      * which floor the room is on and any special charges based on
-     * Room - Regular (Regular room has no extra charges).
+     * Room - Regular (Regular room has no extra charges). Overrides the abstract class 
+     * Room's getRate() method.
      * 
-     * @return double representing nightly price of RegularRoom
+     * @return (double) representing nightly price of RegularRoom
      */
-     @Override
-     public double getRate()
-     {
+    @Override
+    public double getRate()
+    {
         return super.getBaseRate();
-    
     }
     
     /* OTHER METHODS */
@@ -47,11 +48,11 @@ public class RegularRoom extends Room
      * For example: 'Regular Room: 405, Floor: 4, BedType: DOUBLE, Capacity: 4,
      * Available?: true, PricePerNight: XXX.00'
      * 
-     * @return String representing information about this Room
+     * @return (String) representing information about this Room
      */
     @Override
-    public String toString() {
-        
+    public String toString()
+    {
         return ROOM_TYPE + " " + super.toString() + 
                 ", PricePerNight: " + this.getRate() +
                 "\n";        
