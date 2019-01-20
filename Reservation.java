@@ -1,4 +1,7 @@
 import java.lang.IllegalArgumentException;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Reservation class models a reservation in a hotel. A reservation is a guarantee to a guest that they will have a room set aside 
@@ -54,7 +57,9 @@ public class Reservation
         
         // initialize setPaymentDue
         // (applies discounts based on Guest's booleans)
-        setPaymentDue();
+        if(this.status != Status.CANCELED) {       
+            setPaymentDue();
+        }
         
         // Everytime a new reservation object is made, increment a counter first and then assign that number to the reservationID
         // should reservationID be a String so that people can't alter it in later uses?
@@ -321,6 +326,24 @@ public class Reservation
     }
     
     /**
+     * Method to get invoice-like info on this reservation
+     */
+    public String getInvoice() {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
+        
+        return "\n" +
+               "= = = = = = = = = = = = = = = = =" + "\n" +
+               "Invoice# " + getReservationID() + " Reservation ID#: " + getReservationID() + "\n" +   
+               "= = = = = = = = = = = = = = = = =" + "\n" +
+               "Invoice Date: " + dateFormat.format(date) + "\n" +                           
+               "Guest: " + g.getLastName() + "\n" +
+               "Reservation status: " + status + "\n" + 
+               "Payment due: " + getPaymentDue() + "\n" +
+               "= = = = = = = = = = = = = = = = =";
+    }   
+    
+    /**
      * Returns a String with information about this Reservation instance.
      * Shows all aspects about the reservation: 
      * Guest info, room info, reservation status, paymentDue info.
@@ -330,13 +353,14 @@ public class Reservation
     @Override
     public String toString() {
         
-        return "= = = = = = = = = = =" + '\n' +
+        return "\n" +
+               "= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =" + '\n' +
                "Reservation ID#: " + getReservationID() + '\n' +
                "Status: " + getStatus() + '\n' +
                r.toString() + '\n' +
                "Guest: " + g.toString() + '\n' +
                "Payment due: " + getPaymentDue() + '\n' +
-               "= = = = = = = = = = =";
+               "= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =";
         
     }
     

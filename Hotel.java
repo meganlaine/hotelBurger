@@ -128,6 +128,91 @@ public class Hotel
         }
     }
 
+    /**
+     * Reads data from a .txt file and stores it in this Room-object ArrayList.
+     * Assumes that the text file is in a correct template. (Assume no mistakes in .txt file)
+     *
+     * @param fileName (String) representing a .txt file.
+     * @throws FileNotFoundException if the file doesn't exist or cannot be read.
+     * @throws IllegalArgumentException if the file doesn't match expected format.
+     */
+    public void fillReservationArrayList(String fileName) throws FileNotFoundException
+    {
+        File inFile = new File(fileName);
+        input = new Scanner(inFile);
+        
+        //variables needed to make reservations
+        int partySize = 0;
+        int nights = 0;
+        String roomNumber;        
+        String firstName;
+        String lastName;
+        String phoneNumber;
+        boolean isMilitary;
+        boolean isGov;
+        boolean isMember;
+        Status status;
+        Room room;
+        Guest guest;        
+        Reservation reservation;
+        
+        while(input.hasNextLine()) {            
+
+            // We expect int partySize.
+            partySize = input.nextInt();            
+
+            // We expect int nights.
+            nights = input.nextInt();
+            
+            // We expect String roomNum.
+            roomNumber = input.next();            
+            
+            // We expect String first name.
+            firstName = input.next(); 
+            
+            // We expect String last name.
+            lastName = input.next(); 
+            
+            // We expect String  phoneNumber.
+            phoneNumber = input.next(); 
+            
+            //next get discount statuses
+            isMilitary = input.nextBoolean(); 
+            isGov = input.nextBoolean(); 
+            isMember = input.nextBoolean(); 
+            
+            // We expect Status status.
+            status = Status.valueOf( input.next() );
+            
+            //get the room from the roomNumber
+            room = this.getRoom(roomNumber);
+
+            //make a guest object
+            guest = new Guest(firstName, lastName, phoneNumber, partySize, nights, isMilitary, isGov, isMember);
+            
+            //make the reservation
+            reservation = new Reservation(room, guest, status);
+            
+            this.addReservation(reservation);
+        }
+    }
+    
+    /**
+     * This method "saves" persists the hotel data back to the text files the data was first read from.
+     * 
+     * ArrayList of reservations needs to be sorted with canceled ones first before we save.
+     * This is because when the program starts and reservations 
+     * are read in from the txt file, if a room is reserved with status other than canceled, 
+     * then the room will be flagged unavailable, but if the same room has a canceled reservation
+     * later in the text file, it will think the room is unavailable (which is true)
+     * and will crash trying to create the reservation on a room that is not available.
+     * 
+     */
+    public void save() {
+        //not implemented yet :(
+        //need to sort reservations so canceled ones get saved first
+    }
+    
     public void setName(String name) {
         this.name = name;
     }
@@ -266,13 +351,40 @@ public class Hotel
         }
         return arr;
     }
-
+     
+    /**
+     * Method to get all invoices for the whole hotel
+     */
+    public ArrayList<String> getAllInvoicesPaid() {
+        ArrayList<String> invoices = new ArrayList<String>();
+        
+        for(Reservation res : reservations) {
+            if(res.getPaymentDue() == 0) invoices.add(res.getInvoice());
+        }
+        
+        return invoices;
+    }
+    /**
+     * Method to get all invoices for the whole hotel
+     */
+    public ArrayList<String> getAllInvoicesUnpaid() {
+        ArrayList<String> invoices = new ArrayList<String>();
+        
+        for(Reservation res : reservations) {
+            if(res.getPaymentDue() > 0) invoices.add(res.getInvoice());
+        }
+        
+        return invoices;
+    }
+    
     @Override
     public String toString() {
-        String hotelString = "Hotel: ";
+        String hotelString = "=========================" + "\n";
+        hotelString += "Hotel: ";
         hotelString += name + "\n";
         hotelString += address + "\n";
         hotelString += phoneNumber + "\n";
+        hotelString += "=========================" + "\n";
         return hotelString;
     }
 }

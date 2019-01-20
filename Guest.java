@@ -147,9 +147,8 @@ public class Guest
 
 
     public String toString() {
-        return firstName + " " + lastName + " , " + phoneNumber + "\n" +
+        return firstName + " " + lastName + " , phone:" + phoneNumber + "\n" +
         "Party: " + partySize + ", nights: " + nights +  "\n" + 
-        "Military: " + isMilitary + " , " + "Government: " + isGovernment + "\n" +
-        "Member: " + isMember;
+        "Military: " + isMilitary + ", " + "Government: " + isGovernment + ", Member: " + isMember;        
     }
 }
