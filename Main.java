@@ -3,10 +3,10 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 /**
- * Main class. Creates hotel object. And has the console app.
+ * Main class. Creates hotel object and has the console app.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/17/2019
+ * @version 1/19/2019
  */
 public class Main
 {
@@ -14,29 +14,34 @@ public class Main
     private static String selection; //should be a String, if it's hardcoded as an int, then the program will crash if in int is not entered.
     private static Hotel hotel;
     
-    public static void main(String[] args) throws FileNotFoundException {
-        //instantiate a Hotel object using the constructor that takes a textfile
+    public static void main(String[] args) throws FileNotFoundException 
+    {
+        // instantiate a Hotel object using the constructor that takes a text file of Room info
         hotel = new Hotel("HotelBurgerwithRooms.txt");
         
-        //get all saved reservations from txt file
+        // add all existing/saved reservations (from a text file) to the Hotel object
         hotel.fillReservationArrayList("HotelBurgerReservations.txt");
         
-        //print the Hotel information to the console
+        // print some hotel details (name, address, phone number) to the console
         System.out.println(hotel);
         
-        //start keyboard input for the console app
+        // start keyboard input for the console app
         input = new Scanner(System.in);
         
-        //show the main menu for the console app to the user
+        // show the main menu for the console app to the user
         mainMenu();        
     }
 
-    //** HELPER METHODS **/
+    /* HELPER METHODS */
     
     /** 
-     * A method to safely test if input from the keyboard is an integer or not without crashing the app.
+     * Returns true if input from the keyboard is an integer.
+     * 
+     * @param s (String) keyboard input
+     * @return true if input is an integer
      */
-    private static boolean isInt(String s) {
+    private static boolean isInt(String s) 
+    {
         try {
             Integer.parseInt(s);
             return true;
@@ -46,13 +51,18 @@ public class Main
     }
 
     /**
-     * This method prompts the user to enter an int greater than the lowest value allowed.
-     * This method has 2 overloads
+     * Method getUserInputInt 1/2: Prompts the user to enter an int greater than the 
+     * lowest value allowed.
+     * 
+     * @param lowest (int) user input
+     * @return Integer.parseInt(selection)
      */
-    public static int getUserInputInt(int lowest) {
+    public static int getUserInputInt(int lowest)
+    {
         selection = input.next();        
 
-        while(!isInt(selection) || Integer.parseInt(selection) < lowest) {
+        while (!isInt(selection) || Integer.parseInt(selection) < lowest) 
+        {
             System.out.println(" Input not recognized, please try again");
             selection = input.next();  
         } 
@@ -60,13 +70,21 @@ public class Main
     }
     
     /**
-     * This method prompts the user to enter an int greater than the lowest value allowed.
-     * This method has 2 overloads
+     * Method getUserInputInt 2/2: Prompts the user to enter an int greater than the 
+     * lowest value allowed.
+     * 
+     * @param lowest (int) user input
+     * @param highest (int) user input
+     * @return Integer.parseInt(selection)
      */
-    public static int getUserInputInt(int lowest, int highest) {
+    public static int getUserInputInt(int lowest, int highest) 
+    {
         selection = input.next();        
 
-        while(!isInt(selection) || Integer.parseInt(selection) < lowest || Integer.parseInt(selection) > highest) {
+        while ( !isInt(selection) || 
+                Integer.parseInt(selection) < lowest || 
+                Integer.parseInt(selection) > highest ) 
+        {
             System.out.println(" Input not recognized, please try again");
             selection = input.next();  
         } 
@@ -74,24 +92,31 @@ public class Main
     }
     
     /**
-     * Method that prompts the user to get back to the main menu by pressing 0. This is going to be used anytime a menu gets to a dead end, 
+     * Prompts the user to get back to the main menu by pressing 0. 
+     * This is going to be used anytime a menu gets to a dead end, 
      * such as when a task is complete or there is nothing else to do in that menu.
      */
-    private static void returnToMainMenuPrompt() { 
+    private static void returnToMainMenuPrompt() 
+    {
         System.out.println();
         System.out.println(" Press 0 to return to the main menu");
         selection = input.next();
-        while(!isInt(selection) || Integer.parseInt(selection) != 0) {
+        
+        while ( !isInt(selection) || Integer.parseInt(selection) != 0 ) 
+        {
             selection = input.next();  
         }        
-        
         mainMenu();  
     }
     
     /**
-     * Method to lookup all reservations under a last name and find the right one. Used a couple times by the menus.
+     * Looks up all reservations under a last name and finds the right one. 
+     * Used a couple times by the menus.
+     * 
+     * @return reservation (Reservation) a reservation object matched by last name
      */
-    private static Reservation getReservationByLastName() {
+    private static Reservation getReservationByLastName() 
+    {
         Reservation reservation = null;        
         String lastName = "";        
         int reservationID = -1;
@@ -102,32 +127,40 @@ public class Main
         lastName = input.next();        
         reservationsByName = hotel.getReservationsByLastName(lastName);
         
-        while(reservationsByName.size() < 1 && !lastName.equals("0")) {
+        while ( (reservationsByName.size() < 1) && !lastName.equals("0") ) 
+        {
             System.out.println(" Reservation not found, please try again, or press 0 to exit");
             System.out.println(" What is your last name?");  
             lastName = input.next();
             reservationsByName = hotel.getReservationsByLastName(lastName);
         }
         
-        if(lastName.equals("0")) {
+        if (lastName.equals("0")) 
+        {
             mainMenu();
         }          
         
-        System.out.println(" Here are the reservations under that last name, which would you like to choose(enter ID# from below list)? Or press 0 to return to main menu"); 
-        for(Reservation res: reservationsByName) {
+        System.out.println(" Here are the reservations under that last name, " +
+            "which would you like to choose(enter ID# from below list)? " +
+            "Or press 0 to return to main menu");
+        for (Reservation res: reservationsByName) 
+        {
             System.out.println(res);
         }
                 
         reservationID = getUserInputInt(0);
         reservation = hotel.getReservation(reservationID);
             
-        while (reservation == null && reservationID != 0) {
-            System.out.println(" ReservationID was not entered correctly, try again. or press 0 to return to main menu");
+        while ( (reservation == null) && (reservationID != 0) ) 
+        {
+            System.out.println(" ReservationID was not entered correctly, try again. " +
+                "Or press 0 to return to main menu");
             reservationID = getUserInputInt(1);
             reservation = hotel.getReservation(reservationID);
         }
         
-        if(reservationID == 0) {
+        if (reservationID == 0) 
+        {
             mainMenu();
         }          
        
@@ -139,8 +172,9 @@ public class Main
     /**
      * Menu to show main options.
      */
-    private static void mainMenu() {
-        //print a blank line followed by menu title
+    private static void mainMenu() 
+    {
+        // print a blank line followed by menu title
         System.out.println();
         System.out.println(" Please make a selection from the following options and press enter");
         System.out.println(" 1. Make a new reservation");
@@ -154,7 +188,7 @@ public class Main
 
         int selectionInt = getUserInputInt(1,8); 
         
-        switch(selectionInt)
+        switch( selectionInt )
         {
             case 1:
                 makeReservationMenu();
@@ -182,15 +216,15 @@ public class Main
                 hotel.save();
                 System.exit(0);                
                 break;                
-        }      
-         
+        }
     }          
         
     /**
      * Menu to create a new reservation.
      */
-    private static void makeReservationMenu() {
-        //variables needed to make reservations
+    private static void makeReservationMenu()
+    {
+        // variables needed to make reservations
         int partySize = 0;
         int nights = 0;
         String roomNumber;
@@ -204,18 +238,18 @@ public class Main
         Guest guest;
         ArrayList<Room> availableRooms;
         
-        //print a blank line followed by menu title
+        // print a blank line followed by menu title
         System.out.println();        
         System.out.println(" Make a Reservation Menu");
         
         System.out.println(" How many adults?");
         
-        //get the number of adults, must be at least 1
+        // get the number of adults, must be at least 1
         partySize = getUserInputInt(1);
         
         System.out.println(" How many nights?");  
         
-        //get the number of nights, must be at least 1
+        // get the number of nights, must be at least 1
         nights = getUserInputInt(1);
         
         availableRooms = hotel.getEmptyRooms();
@@ -225,29 +259,34 @@ public class Main
         System.out.println( " Enter the roomNumber you want to reserve or 0 to cancel:");
         roomNumber = input.next();   
         room = hotel.getRoom(roomNumber);
-        //validates the roomNumber that was typed is a correct roomNumber in the list of available rooms
-        //if this check passes, we have a valid room about to be reserved, just need guest info to make the reservation
-        while(!availableRooms.contains(room) && !roomNumber.equals("0")) {
+        
+        /* validates the roomNumber that was typed matches what is available in Hotel.
+         * if this check passes, we have a valid room about to be reserved, 
+         * -- just need guest info to make the reservation */
+        while ( !availableRooms.contains(room) && !roomNumber.equals("0") ) 
+        {
             System.out.println(" Input not recognized, please try again, or press 0 to exit");
             roomNumber = input.next();
             room = hotel.getRoom(roomNumber);
         }
         
-        if(roomNumber.equals("0")) {
+        if (roomNumber.equals("0")) 
+        {
             mainMenu();
         }          
         
-        //get the guest's personal info. I don't think we need to perform any validation on name fields
-        //because, remember, the hotel staff ask this questions and enter the data, so if the guest says
-        //a weird name, the hotel staff can figure it out
+        /* get the guest's personal info. 
+         * I don't think we need to perform any validation on name fields
+         * because, remember, the hotel staff ask this questions and enter the data, 
+         * so if the guest says a weird name, the hotel staff can figure it out */
         System.out.println(" What is your first name?");
         firstName = input.next();
         System.out.println(" What is your last name?");  
         lastName = input.next();
-        System.out.println(" What is your cellphone number?");  
+        System.out.println(" What is your cellphone number?");
         phoneNumber = input.next();
         
-        //next get discount statuses
+        // next get discount statuses
         System.out.println(" Are you active military? Enter 1 for yes, or 0 for no");        
         int in = getUserInputInt(0,1);
         isMilitary = (in == 1);
@@ -260,12 +299,14 @@ public class Main
         in = getUserInputInt(0,1);
         isMember = (in == 1); 
         
-        guest = new Guest(firstName, lastName, phoneNumber, partySize, nights, isMilitary, isGov, isMember);
+        // construct the Guest object
+        guest = new Guest(firstName, lastName, phoneNumber, 
+            partySize, nights, isMilitary, isGov, isMember);
         
-        //make the reservation
+        // construct the Reservation object (note: it's also possible to set status to waiting)
         Reservation reservation = new Reservation(room, guest, Status.IN);
         
-        //add the reservation to the hotel
+        // add the reservation to the hotel
         hotel.addReservation(reservation);
         
         System.out.println( "Your reservation was successfully created:");         
@@ -275,29 +316,30 @@ public class Main
     }
     
     /**
-     * Menu to allow to change some data in a reservation.
+     * Menu to allow changes to some data in a reservation.
      */
-    private static void changeReservationMenu() {
+    private static void changeReservationMenu() 
+    {
         Reservation reservation = null;        
         String newRoomNumber = "";
         Room newRoom = null;
         
-        //print a blank line followed by menu title
+        // print a blank line followed by menu title
         System.out.println(" Change Reservation Menu");
         
-        while(reservation == null) {
+        while (reservation == null) 
+        {
             reservation = getReservationByLastName();
         }
         
         System.out.println(" For this reservation, what would you like to change?");
-        
         System.out.println(" 1. Cancel it");        
         System.out.println(" 2. Change room");
         System.out.println(" 0. Return to the main menu");                  
         
         int selectionInt = getUserInputInt(0,2); 
         
-        switch(selectionInt)
+        switch( selectionInt )
         {
             case 0:
                 mainMenu();
@@ -311,7 +353,8 @@ public class Main
                 System.out.println(hotel.getEmptyRooms());
                 newRoomNumber = input.next();                
                 newRoom = hotel.getRoom(newRoomNumber);
-                while(newRoom == null || !newRoom.isAvailable()) {
+                while ( newRoom == null || !newRoom.isAvailable() )
+                {
                     System.out.println(" Room not entered correctly or already reserved, try again");
                     newRoomNumber = input.next();                
                     newRoom = hotel.getRoom(newRoomNumber);
@@ -321,17 +364,17 @@ public class Main
                 System.out.println("Successfully changed room to room# " + newRoomNumber);
                 break;
         }
-        
         returnToMainMenuPrompt();
     }       
     
     /**
      * Menu to search for an invoice and view the information in it.
      */
-    private static void invoiceMenu() { 
+    private static void invoiceMenu() 
+    { 
         Reservation reservation = null;
         
-        //print a blank line followed by menu title
+        // print a blank line followed by menu title
         System.out.println(" Invoice Menu");        
         System.out.println(" 1. Search invoices on Guest Last Name");        
         System.out.println(" 2. See all paid invoices");
@@ -340,13 +383,14 @@ public class Main
         
         int selectionInt = getUserInputInt(0,3); 
         
-        switch(selectionInt)
+        switch( selectionInt )
         {
             case 0:
                 mainMenu();
                 break;
             case 1:
-                while(reservation == null) {
+                while (reservation == null) 
+                {
                     reservation = getReservationByLastName();
                 }                                
                 System.out.println(reservation.getInvoice());
@@ -369,8 +413,9 @@ public class Main
     /** 
      * Menu to see an existing reservation's guest information.
      */
-    private static void guestMenu() { 
-        //print a blank line followed by menu title
+    private static void guestMenu() 
+    { 
+        // print a blank line followed by menu title
         System.out.println(" Guest Menu");
         System.out.println(" What is the intended functionality of this menu supposed to be?");
         
@@ -378,15 +423,18 @@ public class Main
     }
             
     /**
-     * Menu to view information about the status of a reservation. Is it checked in, checked out, or cancelled?
+     * Menu to view information about the status of a reservation. 
+     * Is it checked in, checked out, or canceled?
      */
-    private static void reservationStatusMenu() {
+    private static void reservationStatusMenu() 
+    {
         Reservation reservation = null;        
         
-        //print a blank line followed by menu title
+        // print a blank line followed by menu title
         System.out.println(" Reservation Status Menu");        
         
-        while(reservation == null) {
+        while(reservation == null) 
+        {
             reservation = getReservationByLastName();
         }
         
@@ -406,7 +454,7 @@ public class Main
                 break;
             case 1:                
                 reservation.setStatus(Status.CANCELED);
-                System.out.println("Successfully cancelled");
+                System.out.println("Successfully canceled");
                 break;
             case 2:
                 reservation.setStatus(Status.IN);
@@ -422,12 +470,13 @@ public class Main
     }
     
     /**
-     * Menu to see all available rooms just to satisfy the assignment prompt.
+     * Menu to see all available rooms.
      */
-    private static void availableRoomsMenu() {
+    private static void availableRoomsMenu() 
+    {
         ArrayList<Room> availableRooms = hotel.getEmptyRooms();
         
-        //print a blank line followed by menu title
+        // print a blank line followed by menu title
         System.out.println(" Available Rooms Menu");
         
         System.out.println( " These rooms are available:");        
@@ -439,14 +488,19 @@ public class Main
     /**
      * Menu to display information on how to use this program.
      */
-    private static void helpMenu() {
-        //print a blank line followed by menu title
+    private static void helpMenu() 
+    {
+        // print a blank line followed by menu title
         System.out.println(" Help Menu");
-        System.out.println(" 1. Reserving a room: you cannot reserve a room unless it is available(no one else has reserved it). Currently dates are not yet factored in.");
-        System.out.println(" 2. Changing a reservation: you must enter the last name of the guest who made the reservation to find that reservation.");
-        System.out.println("\t If a guest has multiple reservations with us, you then need to find the room number");
-        System.out.println(" 3. Discounts: discounts are applied for active duty military, active government employees, and hotel members");
+        System.out.println(" 1. Reserving a room: you cannot reserve a room unless " + 
+                                "it is available(no one else has reserved it). " + 
+                                "Currently dates are not yet factored in.");
+        System.out.println(" 2. Changing a reservation: you must enter the last name of " + 
+                                "the guest who made the reservation to find that reservation.");
+        System.out.println("\t If a guest has multiple reservations with us, " + 
+                                "you then need to find the room number");
+        System.out.println(" 3. Discounts: discounts are applied for active duty military, " + 
+                                "active government employees, and hotel members");
         returnToMainMenuPrompt();
     }
-    
- }
+}

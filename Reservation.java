@@ -29,8 +29,8 @@ import java.text.SimpleDateFormat;
 public class Reservation
 {
     /* CLASS CONSTANTS */
-    // how many reservation objects have been created
-    private static int counter = 0;
+    // how many reservation objects have been created - to generate reservation IDs
+    private static int counter = 100;
     
     /* INSTANCE VARIABLES */
     private int reservationID; // should this be a String?? we might not want people to be able to alter this.
@@ -263,7 +263,8 @@ public class Reservation
     {
         if ( !r.isAvailable() ) 
         {
-            throw new IllegalArgumentException("You can't make a reservation for this room; it is not available.");
+            throw new IllegalArgumentException("You can't make a reservation for this room; " + 
+                "it is not available.");
         }
         
         this.r = r;
@@ -329,16 +330,6 @@ public class Reservation
     /* OTHER METHODS */
     
     /**
-     * Static method; Returns how many instances of Class Reservations have been made.
-     *
-     * @return counter (int) representing the # of Reservation objects made.
-     */
-    public static int countInstances()
-    {
-        return counter;
-    }
-    
-    /**
      * Method to get invoice-like info on this reservation
      * 
      * @return (String) representing invoice information from the reservation.
@@ -350,7 +341,8 @@ public class Reservation
         
         return "\n" +
                "= = = = = = = = = = = = = = = = =" + "\n" +
-               "Invoice# " + getReservationID() + " Reservation ID#: " + getReservationID() + "\n" +   
+               "Invoice# " + getReservationID() + 
+                    " Reservation ID#: " + getReservationID() + "\n" +   
                "= = = = = = = = = = = = = = = = =" + "\n" +
                "Invoice Date: " + dateFormat.format(date) + "\n" +                           
                "Guest: " + g.getLastName() + "\n" +
@@ -370,12 +362,12 @@ public class Reservation
     public String toString()
     {
         return "\n" +
-               "= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =" + '\n' +
+               "= = = = = = = = = = = = = = = = = = = = = = = =" + '\n' +
                "Reservation ID#: " + getReservationID() + '\n' +
                "Status: " + getStatus() + '\n' +
                r.toString() + '\n' +
                "Guest: " + g.toString() + '\n' +
                "Payment due: " + getPaymentDue() + '\n' +
-               "= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =";
+               "= = = = = = = = = = = = = = = = = = = = = = = =";
     }
 }
