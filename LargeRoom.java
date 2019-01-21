@@ -28,17 +28,24 @@ public class LargeRoom extends Room
     /* ACCESSOR METHODS */
     
     /**
-     * Returns the price of the room per night, accounting for 
-     * which floor the room is on and any special charges based on
-     * Room - Large (Large room costs 20.0/night more than base Room). Overrides the 
+     * Returns the price of the room per night, accounting for extra charge due to room 
+     * size (Large room costs 20.0/night more than base Room), and if the room is on a 
+     * higher floor (3% extra charge if on floors 6-10). Overrides the 
      * abstract class Room's getRate() method.
      * 
-     * @return (double) representing nightly price of LargeRoom
+     * @return result (double) representing nightly price of LargeRoom
      */
     @Override
     public double getRate()
     {
-        return super.getBaseRate() + 20.0;
+        double result = super.getBaseRate() + 20.0;
+        
+        if ( this.getFloor() > 5 && this.getFloor() < 11 )
+        {
+            result *= 1.03;
+        }
+        
+        return result;
     }
     
     /* OTHER METHODS */

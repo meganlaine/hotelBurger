@@ -93,20 +93,13 @@ public abstract class Room
     }
     
     /**
-     * Returns the base rate after changes to it based on what floor the * room is on (higher floor adjusts to a higher price).
+     * Returns the base rate with NO changes based on floor (that is done in child classes).
      * 
-     * @return (double) the price of the room per night
+     * @return (double) the base price of the room per night in Hotel Burger
      */
     protected double getBaseRate()
     {
-        double baseRate = BASE_RATE;
-        
-        if (floor > 5 && floor < 11)
-        {
-            baseRate += (BASE_RATE * 1.03);
-        }
-        
-        return baseRate;
+        return BASE_RATE;
     }
     
     /**

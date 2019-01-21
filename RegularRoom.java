@@ -28,17 +28,23 @@ public class RegularRoom extends Room
     /* ACCESSOR METHODS */
     
     /**
-     * Returns the price of the room per night, accounting for 
-     * which floor the room is on and any special charges based on
-     * Room - Regular (Regular room has no extra charges). Overrides the abstract class 
-     * Room's getRate() method.
+     * Returns the price of the room per night, accounting for which floor the room is on 
+     * (Regular room has no extra charges unless on floors 6-10).
+     * Overrides the abstract class Room's getRate() method.
      * 
-     * @return (double) representing nightly price of RegularRoom
+     * @return result (double) representing nightly price of RegularRoom
      */
     @Override
     public double getRate()
     {
-        return super.getBaseRate();
+        double result = super.getBaseRate();
+        
+        if ( this.getFloor() > 5 && this.getFloor() < 11 )
+        {
+            result *= 1.03;
+        }
+        
+        return result;
     }
     
     /* OTHER METHODS */
