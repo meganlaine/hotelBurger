@@ -165,10 +165,10 @@ public abstract class Room
     @Override
     public String toString()
     {
-        return "Room: " + this.getRoomNumber() +
-                ", Floor: " + this.getFloor() +
-                ", BedType: " + this.getBedType() + 
-                ", Capacity: " + this.getCapacity() + 
+        return "Room " + this.getRoomNumber() +
+                ", Floor " + this.getFloor() +
+                ", BedType " + this.getBedType() + 
+                ", Capacity " + this.getCapacity() + 
                 ", Available: " + this.isAvailable();        
     }
 }

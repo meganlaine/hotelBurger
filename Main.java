@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
  * Main class. Creates hotel object and has the console app.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/19/2019
+ * @version 1/21/2019
  */
 public class Main
 {
     private static Scanner input;
-    private static String selection; //should be a String, if it's hardcoded as an int, then the program will crash if in int is not entered.
+    /* String selection: should be a String, if it's hardcoded as an int, 
+     * then the program will crash if in int is not entered.*/
+    private static String selection; 
     private static Hotel hotel;
     
     public static void main(String[] args) throws FileNotFoundException 
@@ -491,16 +493,26 @@ public class Main
     private static void helpMenu() throws FileNotFoundException 
     {
         // print a blank line followed by menu title
-        System.out.println(" Help Menu");
-        System.out.println(" 1. Reserving a room: you cannot reserve a room unless " + 
-                                "it is available(no one else has reserved it). " + 
-                                "Currently dates are not yet factored in.");
-        System.out.println(" 2. Changing a reservation: you must enter the last name of " + 
-                                "the guest who made the reservation to find that reservation.");
-        System.out.println("\t If a guest has multiple reservations with us, " + 
-                                "you then need to find the room number");
-        System.out.println(" 3. Discounts: discounts are applied for active duty military, " + 
-                                "active government employees, and hotel members");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" HELP MENU:");
+        System.out.println(" 1. Reserving a room: " + '\n' +
+            '\t' + "You cannot reserve a room unless it is available (no one else has reserved it). " + '\n' +
+            '\t' + "At this time, dates are not factored into our program.");
+        System.out.println(" 2. Changing a reservation: " + '\n' +
+            '\t' + "To locate an existing reservation, access it by the Guest's last name." + '\n' +
+            '\t' + "If a guest has multiple reservations with us, then access it by room number.");
+            // this only works if the guest hasn't stayed in the same room each time.
+            // what about by reservation ID, is that too difficult to set up?
+        System.out.println(" 3. Discounts: (only the highest rate is applied)" + '\n' +
+            '\t' + "Active duty military: 7% discount" + '\n' +
+            '\t' + "Government employees: 9% discount" + '\n' +
+            '\t' + "Hotel members: 5% discount");
+        System.out.println(" 4. Room Types:" + '\n' +
+            '\t' + "Regular Room: $150.00/night" + '\n' +
+            '\t' + "Large Room: $170.00/night" + '\n' +
+            '\t' + "Suite: $190.00/night" + '\n' +
+            '\t' + "Floors 6-10: Additional 3% per night");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         returnToMainMenuPrompt();
     }
 }

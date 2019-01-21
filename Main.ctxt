@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Main
-comment0.text=\n\ Main\ class.\ Creates\ hotel\ object\ and\ has\ the\ console\ app.\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 1/19/2019\n
+comment0.text=\n\ Main\ class.\ Creates\ hotel\ object\ and\ has\ the\ console\ app.\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 1/21/2019\n
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
 comment10.params=
