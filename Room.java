@@ -135,7 +135,7 @@ public abstract class Room
     /* OTHER METHODS */
     
     /**
-     * Method equals overrides the Object class's equals method.
+     * Method equals overrides the Object class's equals method; matches by room number.
      * It returns true if the other Room object has the same room number as this room.
      * It returns false if the other Object is not the same room, or is not a room-object.
      *
