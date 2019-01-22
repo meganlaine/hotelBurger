@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Class Hotel represents a hotel. It has (ArrayLists) for Rooms and Reservations.
  * 
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/19/2019
+ * @version 1/21/2019
  */
 public class Hotel
 {

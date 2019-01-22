@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Suite
-comment0.text=\n\ Class\ Suite\ for\ Hotel\ Burger.\n\ $40.00/night\ more\ than\ abstract\ class\ Room.\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 01/19/2019\n
+comment0.text=\n\ Class\ Suite\ for\ Hotel\ Burger.\n\ $40.00/night\ more\ than\ abstract\ class\ Room.\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 01/21/2019\n
 comment1.params=roomNum\ floor\ capacity\ bedType
 comment1.target=Suite(java.lang.String,\ int,\ int,\ java.lang.String)
 comment1.text=\n\ Constructor\ for\ Suite\ object\n\ Calls\ super\ method\ to\ construct\ Room\ object\n\ \n\ @param\ roomNum\ (String)\ the\ room\ number\ of\ the\ room\n\ @param\ floor\ (int)\ the\ floor\ where\ room\ located\n\ @param\ capacity\ (int)\ the\ human\ capacity\ of\ the\ room\n\ @param\ bedType\ (String)\ the\ bedtype\ of\ the\ room\n

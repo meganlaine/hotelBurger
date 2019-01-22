@@ -4,7 +4,7 @@
  * No additional costs from abstract class Room.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 01/19/2019
+ * @version 01/21/2019
  */
 public class RegularRoom extends Room
 {

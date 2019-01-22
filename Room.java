@@ -4,7 +4,7 @@
  * a type of Hotel Room. Rooms on higher floors have a higher cost per night.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 01/19/2019
+ * @version 01/21/2019
  */
 public abstract class Room
 {
