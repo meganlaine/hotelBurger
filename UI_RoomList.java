@@ -17,7 +17,7 @@ public class UI_RoomList extends JFrame
     private JLabel jl1, jl2;
     private JScrollPane js1, js2;
     private JList list1, list2;
-    private ArrayList<Integer> empty, occupied;
+    private ArrayList<String> empty, occupied;
     /**
      * Constructor for objects of class PopUp
      */
@@ -25,7 +25,6 @@ public class UI_RoomList extends JFrame
     {
         UI_RoomList window = new UI_RoomList(h);
         JFrame frame = new JFrame("Rooms");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public UI_RoomList(Hotel h)
@@ -85,7 +84,7 @@ public class UI_RoomList extends JFrame
         this.setSize(800,600);
         this.setLocation(300,300);
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
         jb1.addActionListener(new ActionListener(){
                 @Override    
@@ -116,6 +115,17 @@ public class UI_RoomList extends JFrame
         list2.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     list1.clearSelection();
+                }
+            });
+        this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent we)
+                { 
+                    int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to back to main menu?", "Warning", JOptionPane.YES_NO_OPTION);
+                    if(temp == 0){
+                        Menu.main(h);
+                        dispose();
+                    }
                 }
             });
     }

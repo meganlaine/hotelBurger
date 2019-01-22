@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.FileNotFoundException;
 
 /**
  * Write a description of class UI_Exit here.
@@ -17,15 +18,15 @@ public class UI_Exit extends JFrame
     /**
      * Constructor for objects of class PopUp
      */
-    public static void main(String[] args)
+    public static void main(Hotel h)
     {
-        UI_Exit window = new UI_Exit();
+        UI_Exit window = new UI_Exit(h);
         JFrame frame = new JFrame("Hotel App");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     
-    public UI_Exit()
+    public UI_Exit(Hotel h)
     {
         jp1 = new JPanel();
         jp2 = new JPanel();
@@ -57,8 +58,16 @@ public class UI_Exit extends JFrame
                 @Override    
                 public void actionPerformed(ActionEvent e){
                     //Some exit program here
-                    System.exit(0);
+                    try{
+                    h.save();
+                                        System.exit(0);
                 }
+                catch(FileNotFoundException ex){
+                    
+                    JOptionPane.showMessageDialog(null, "File save failed", "Message", JOptionPane.PLAIN_MESSAGE);
+
+                }
+            }
             });
         jb2.addActionListener(new ActionListener(){
                 @Override    

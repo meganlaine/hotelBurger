@@ -12,14 +12,13 @@ public class UI_Reservation extends JFrame
 {
     private JPanel jp1, jp2, jp3, jp4, jp5;
     private JButton jb1, jb2, jb3;
-    
+
     public static void main(Hotel h)
     {
         UI_Reservation window = new UI_Reservation(h);
         JFrame frame = new JFrame("Reservation");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
-    
+
     /**
      * Constructor for objects of class UI_Reservation
      */
@@ -30,15 +29,15 @@ public class UI_Reservation extends JFrame
         jp3 = new JPanel();
         jp4 = new JPanel();
         jp5 = new JPanel();
-        
+
         jb1 = new JButton("Make a new reservation");
         jb2 = new JButton("See current reservations");
         jb3 = new JButton("Back to main menu");
-        
+
         jp2.add(jb1);
         jp2.add(jb2);
         jp3.add(jb3);
-        
+
         jp4.setLayout(new GridLayout(2,1));
         jp4.add(jp2);
         jp4.add(jp3);
@@ -46,14 +45,14 @@ public class UI_Reservation extends JFrame
         this.add(jp1);
         this.add(jp4);
         this.add(jp5);
-        
+
         this.setTitle("Exit Reservation");
         this.setSize(600,500);
         this.setLocation(200,200);
         this.setResizable(true);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-        
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -61,7 +60,7 @@ public class UI_Reservation extends JFrame
                     dispose();
                 }
             });
-        
+
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -69,7 +68,7 @@ public class UI_Reservation extends JFrame
                     dispose();
                 }
             });
-        
+
         jb3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -77,7 +76,17 @@ public class UI_Reservation extends JFrame
                     dispose();
                 }
             });
+        this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent we)
+                { 
+                    int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to back to main menu?", "Warning", JOptionPane.YES_NO_OPTION);
+                    if(temp == 0){
+                        Menu.main(h);
+                        dispose();
+                    }
+                }
+            });
     }
-    
 
 }

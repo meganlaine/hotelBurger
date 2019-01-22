@@ -17,7 +17,7 @@ public class UI_GuestList extends JFrame
     private JLabel jl1, jl2;
     private JScrollPane js1, js2;
     private JList list1, list2;
-    private ArrayList<Integer> empty, occupied;
+    private ArrayList<Guest> in, out, waiting;
     /**
      * Constructor for objects of class PopUp
      */
@@ -25,10 +25,8 @@ public class UI_GuestList extends JFrame
     {
         UI_GuestList window = new UI_GuestList(h);
         JFrame frame = new JFrame("Hotel App");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    
     public UI_GuestList(Hotel h)
     {
         jp1 = new JPanel();
@@ -38,14 +36,15 @@ public class UI_GuestList extends JFrame
         jp5 = new JPanel();
         jp6 = new JPanel();
 
-        empty = h.getEmptyRoomNum();
-        occupied = h.getOccupiedRoomNum();
+        in = getStatusOf(h, Status.IN);
+        waiting = getStatusOf(h, Status.WAITING);
+        out = getStatusOf(h, Status.OUT);
 
-        list1 = new JList(empty.toArray());
-        list2 = new JList(occupied.toArray());
+        list1 = new JList(toLabel(waiting).toArray());
+        list2 = new JList(toLabel(in).toArray());
 
-        jl1 = new JLabel("Empty");
-        jl2 = new JLabel("Occupied");
+        jl2 = new JLabel("Checked in");
+        jl1 = new JLabel("Not yet checked in");
 
         js1 = new JScrollPane();
         js1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -60,8 +59,8 @@ public class UI_GuestList extends JFrame
 
         this.setLayout(new BorderLayout());
 
-        js2.setViewportView(list1);
-        js1.setViewportView(list2);
+        js1.setViewportView(list1);
+        js2.setViewportView(list2);
 
         jp1.setLayout(new GridLayout(1,2));
         jp1.add(js1);
@@ -86,8 +85,8 @@ public class UI_GuestList extends JFrame
         this.setSize(800,600);
         this.setLocation(300,300);
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -100,10 +99,10 @@ public class UI_GuestList extends JFrame
                 @Override    
                 public void actionPerformed(ActionEvent e){
                     if(list1.getSelectedIndex() != -1) {
-                        UI_Room.main(h, empty.get(list1.getSelectedIndex()));
+                        UI_Guest.main(h, waiting.get(list1.getSelectedIndex()));
                     }
-                    else{
-                        UI_Room.main(h, occupied.get(list2.getSelectedIndex()));
+                    else if (list2.getSelectedIndex() != -1){
+                        UI_Guest.main(h, in.get(list2.getSelectedIndex()));
                     }
                 }
             });
@@ -119,6 +118,35 @@ public class UI_GuestList extends JFrame
                     list1.clearSelection();
                 }
             });
+        this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent we)
+                { 
+                    int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to back to main menu?", "Warning", JOptionPane.YES_NO_OPTION);
+                    if(temp == 0){
+                        Menu.main(h);
+                        dispose();
+                    }
+                }
+            });
+    }
+
+    private static ArrayList<String> toLabel(ArrayList<Guest> guests){
+        ArrayList<String> list = new ArrayList<>();
+
+        for(Guest guest: guests){
+            list.add(guest.getFullName());
+        }
+        return list;
+    }
+
+    private static ArrayList<Guest> getStatusOf(Hotel h, Status status){
+        ArrayList<Guest> list = new ArrayList<>();
+        ArrayList<Reservation> reservations = h.getReservations(status);
+        for(Reservation reservation: reservations){
+            list.add(reservation.getGuest());
+        }
+        return list;
     }
 }
 

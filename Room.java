@@ -1,266 +1,169 @@
 
 /**
- * The class of the room object.
+ * Abstract class Room provides the required fields and methods for 
+ * a type of Hotel Room. Rooms on higher floors have a higher cost per night.
  *
- * @author Xingyu Liu
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 01/21/2019
  */
 public abstract class Room
 {
+    /* CLASS CONSTANTS */
     private static final double BASE_RATE = 150.00;
+    
+    /* INSTANCE VARIABLES */
     private String roomNum;
     private int floor;
-    //private double price;
-    private BedType bedType;
-    private RoomType roomType;
-    private String guestLastName;
+    private int capacity;
+    private String bedType;
     private boolean isAvailable;
-    private int guestNum;
     
     /**
-     * Constructor for objects of occupied Room
+     * Constructor for Room object
      * 
-     * @param roomNum the room number of the room
-     * @param floor the floor where room located
-     * @param price the price of the room
-     * @param capacity capacity of the room
-     * @param bedType the bedtype of the room
-     * @param roomType the roomtype of the room
-     * @param guestName the guest stays in the room
-     * @param isAvailable the availability of the room
-     * 
-     * @throws IllegalArgumentException if the number of guests exceeds the capacity of the room
+     * @param roomNum (String) the room number of the room
+     * @param floor (int) the floor where room located
+     * @param capacity (int) the human capacity of the room
+     * @param bedType (String) the bedtype of the room
      */
-    public Room(String roomNum, int floor,int guestNum, double price, BedType bedType, RoomType roomType, String guestLastName, boolean isAvailable)
+    public Room( String roomNum, int floor, int capacity, String bedType )
     {
-        //if(guestNum > capacity)
-        //    throw new IllegalArgumentException("Exceeding the room capacity!");
+        /* Because we are assuming that the textfile with room information is correct, we are not going to require validators here. */
+        this.roomNum = roomNum;
+        this.floor = floor;
+        this.capacity = capacity;
+        this.bedType = bedType;
         
-        this.roomNum = roomNum;
-        this.floor = floor;
-        //this.price = price;
-        this.bedType = bedType;
-        this.roomType = roomType;
-        this.guestLastName = guestLastName;
-        this.guestNum = guestNum;
+        // the assumption is when a Room is created in the hotel object, it is available.
         this.isAvailable = true;
     }
     
+    /* ACCESSOR METHODS */
+    
     /**
-     * Constructor for objects of an empty room
+     * This abstract method must be present in all child classes.
+     * It should return the price of the room per night, accounting for 
+     * which floor the room is on and any special charges based on
+     * Room - Regular, Large, or Suite.
+     * Note that in the child classes, getRate() will need to call 
+     * super.getBaseRate()!
      * 
-     * @param roomNum the room number of the room
-     * @param floor the floor where room located
-     * @param price the price of the room
-     * @param bedType the bedtype of the room
-     * @param roomType the roomtype of the room
-     * @param isAvailable the availability of the room
+     * @return (double) representing nightly price of Room
      */
-    public Room(String roomNum, int floor, double price, BedType bedType, RoomType roomType, boolean isAvailable)
+    public abstract double getRate();
+        
+    /**
+     * Returns the Room number as a String.
+     * 
+     * @return (String) the room number
+     */
+    public String getRoomNumber()
     {
-        this.roomNum = roomNum;
-        this.floor = floor;
-        //this.price = price;
-        this.bedType = bedType;
-        this.roomType = roomType;
-        this.guestLastName =  "";
-        this.isAvailable = true;
-    }
-    
-
-    public Room( String roomNum, int floor, double pricePerNight, BedType bedType, RoomType roomType) {
-        this.roomNum = roomNum;
-        this.floor = floor;
-        //this.price = pricePerNight;
-        this.bedType = bedType;
-        this.roomType = roomType;
-        this.guestLastName = " ";
-        this.isAvailable = true;
-    }
-    
-    
-    /**
-     * get the bed type of the room
-     * 
-     * @return the bed type of the room
-     */
-    public BedType getBedType(){
-        return bedType;
+        return this.roomNum;
     }
     
     /**
-     * get the room type of the room
+     * Returns the Room's floor as an int.
      * 
-     * @return the room type of the room
+     * @return (int) the room's floor number
      */
-    public RoomType getRoomType(){
-        return roomType;
-    }
-    
-    
-    /**
-     * get the room number
-     * 
-     * @return the room number
-     */
-    public String getRoomNumber(){
-        return roomNum;
+    public int getFloor()
+    {
+        return this.floor;
     }
     
     /**
-     * get the price of the room
+     * Returns the Room's capacity as an int.
      * 
-     * @return the price of the room
+     * @return (int) the room's human capacity
      */
-    public double getPrice(){
+    public int getCapacity()
+    {
+        return this.capacity;
+    }
+    
+    /**
+     * Returns the Room's bedType as a String.
+     * 
+     * @return (String) the room's bedType
+     */
+    public String getBedType()
+    {
+        return this.bedType;
+    }
+    
+    /**
+     * Returns the base rate with NO changes based on floor (that is done in child classes).
+     * 
+     * @return (double) the base price of the room per night in Hotel Burger
+     */
+    protected double getBaseRate()
+    {
         return BASE_RATE;
     }
     
-     /**
-     * Get the base rate plus extra charge for rooms on higher floors
-     * 
-     * @return the price of the room
-     */
-    protected double getBaseRate() {
-        double baseRate = BASE_RATE;
-        
-        if(floor > 5) {
-            baseRate += (BASE_RATE * 1.03);
-        }
-        
-        return baseRate;
-    }
-    
-    public abstract double getRate();
-    
-    public String getGuestLastName() {
-        return guestLastName;
-    }
-    
-    public void setAvailable(boolean bool) {
-        isAvailable = bool;
-    }
-    
     /**
-     * set the bed type of the room
+     * Returns true if the Room passed as an argument is available.
      * 
-     * @param bedType the bed type of the room
-     */
-    public void setBedType(BedType bedType){
-        this.bedType = bedType;
-    }
-    
-    /**
-     * set the room type of the room
-     * 
-     * @param roomType the room type of the room
-     */
-    public void setRoomType(RoomType roomType){
-        this.roomType = roomType;
-    }
-    
-    
-    /**
-     * set the price of the room
-     * 
-     * @param price the price of the room
-     
-    public void setPrice(int price){
-        this.price = price;
-    }
-     */
-    public void setGuestLastName(String name) {
-        guestLastName = name;
-    }
-   
-    
-    /**
-     * check the availability of the room 
-     *
-     * @return ture if available
+     * @param r (Room) to check
+     * @return true if the room is Available for guests.
      */
     public boolean isAvailable()
     {
-        return isAvailable;
+        return this.isAvailable;
+    }
+    
+    /* MUTATOR METHODS */
+    
+    /**
+     * Changes the status of this room.
+     * 
+     * @param true if room will be available
+     */
+    public void setAvailable( boolean b )
+    {
+        this.isAvailable = b;
+    }
+    
+    /* OTHER METHODS */
+    
+    /**
+     * Method equals overrides the Object class's equals method; matches by room number.
+     * It returns true if the other Room object has the same room number as this room.
+     * It returns false if the other Object is not the same room, or is not a room-object.
+     *
+     * @param other (Object) to be compared
+     * @return true if other Room has the same room number as this room.
+     */
+    @Override
+    public boolean equals( Object other )
+    {
+        boolean equals = false;
+
+        if (other != null && other instanceof Room)
+        {
+            equals = this.roomNum == ((Room) other).roomNum;
+        }
+
+        return equals;
     }
     
     /**
-     * let guests check in the room 
+     * Overrides the Object Class's toString() method. 
+     * For example: 'Room: 405, Floor: 4, BedType: DOUBLE, Capacity: 4,
+     * Available?: true'
      * 
-     * @param guests the list of guest names checking in.
-     * 
-     * @throws IllegalArgumentException if the room is already in use.
-     * @throws IllegalArgumentException if the number of guests exceeds the capacity of the room
+     * @return (String) representing information about this Room
      */
-    public void checkIn(String guestLastName){
-        if(!this.isAvailable())
-            throw new IllegalArgumentException("The room is already in use!");
-        
-        guestLastName = guestLastName;
-        isAvailable = false;
+    @Override
+    public String toString()
+    {
+        return "Room " + this.getRoomNumber() +
+                ", Floor " + this.getFloor() +
+                ", BedType " + this.getBedType() + 
+                ", Capacity " + this.getCapacity() + 
+                ", Available: " + this.isAvailable();        
     }
     
-    /**
-     * get the number of guests in the room
-     * 
-     * @return the number of guests in the room
-     */
-    public int getGuestNum(){
-        return guestNum;
-    }
-    
-    /**
-     * add one or more guests to the room
-     * 
-     * @param guests the list of guest names 
-     * 
-     * @throws IllegalArgumentException if the number of guests exceeds the capacity of the room
-     */
-    public void addGuest(int guestNum){
-        
-        this.guestNum += guestNum;
-    }
-    
-    /**
-     * checking out the guests in the room.
-     * 
-     * @throws IllegalArgumentException if the room is currently empty
-     */
-    public void checkOut(){
-        if(isAvailable)
-            throw new IllegalArgumentException("The room is already empty!");
-            
-        isAvailable = true;
-        guestLastName = "";
-        guestNum = 0;
-    }
-    
-    /**
-     * ckecking out the guests in the room, and return their names in a String[]
-     * 
-     * @return the name list for the guests.
-     * 
-     * @throws IllegalArgumentException if the room is currently empty
-     */
-    public String checkOutName(){
-        if(isAvailable)
-            throw new IllegalArgumentException("The room is already empty!");        
-        
-        isAvailable = true;
-        String temp = guestLastName;
-        guestLastName = "";
-        guestNum = 0;
-        return temp;
-    }
-    
-    public void showRoomInfo() {
-        System.out.println("Room number " + roomNum);
-        System.out.println("Room price: " + getPrice());
-        System.out.println("Room bed type: " + bedType);
-        System.out.println("Room Type: " + roomType);
-        System.out.println("Current Occupant: " + guestLastName);
-        System.out.println("currently occupied: " + isAvailable);
-        System.out.println("Number of guests: " + guestNum);
-    }
-    
+    abstract String getRoomType();
 }

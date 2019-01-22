@@ -1,452 +1,614 @@
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Scanner;
+import java.util.ArrayList;
+/**
+ * Class Hotel represents a hotel. It has (ArrayLists) for Rooms and Reservations.
+ * 
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/21/2019
+ */
 public class Hotel
 {
-
+    /* INSTANCE VARIABLES */
+    private static Scanner input;
     private String name;
     private String address;
     private String phoneNumber;
-    
-    private ArrayList<Guest> guests;
-    public ArrayList<Room> rooms;
     private ArrayList<Reservation> reservations;
-    private ArrayList<Invoice> invoices;
-    private GuestHandler gh;
-
-    /**
-     * 
-     */
-    public Hotel() {
-        name = "Burger Hotel!";
-        address = "North Seattle College";
-        phoneNumber = "8675309";
-        
-        guests = new ArrayList<Guest>();
-        rooms = new ArrayList<Room>();
-        reservations = new ArrayList<Reservation>();
-        invoices = new ArrayList<Invoice>();
-        gh = new GuestHandler();
-    }
+    public ArrayList<Room> rooms;
     
-    public Hotel(String hotelName, String hotelAddress, String phoneNumber, ArrayList<Room> rms) {
-        name = hotelName;
-        address = hotelAddress;
-        phoneNumber = phoneNumber;
-        
-        rooms = rms;
-        guests = new ArrayList<Guest>();
-        reservations = new ArrayList<Reservation>();
-        invoices = new ArrayList<Invoice>();
-        gh = new GuestHandler();
-    }
-
+    /* CONSTRUCTOR METHODS */
+    
     /**
-    * Nick's constructor
-    */
-    public Hotel(String name, String address, String phoneNumber) {
+     * Hotel Constructor 1/3 (full constructor for a hotel object)
+     *
+     * @param name (String) hotel's name
+     * @param address (String) hotel's address
+     * @param phoneNumber (String) hotel's phone number
+     */
+    public Hotel( String name, String address, String phoneNumber )
+    {
         setName(name);
         setAddress(address);
         setPhoneNumber(phoneNumber);
 
-        guests = new ArrayList<Guest>();
         rooms = new ArrayList<Room>();
         reservations = new ArrayList<Reservation>();
-        invoices = new ArrayList<Invoice>();
-        gh = new GuestHandler();
+    }
+
+    /**
+     * Hotel Constructor 2/3 (default constructor for a hotel object)
+     */
+    public Hotel() 
+    {
+        this( "Burger Hotel!", "North Seattle College", "0123456789" );        
+    }
+
+    /**
+     * Hotel Constructor 3/3 (Constructor used from Main client code. do not delete!)
+     * Reads data from the hotel text file, and populates the ArrayList<Room>
+     */
+    public Hotel( String fileName ) throws FileNotFoundException
+    {     
+        // call default constructor so all fields get initialized to something,
+        // including the ArrayLists
+        this();
+        
+        File inFile = new File(fileName);
+        input = new Scanner(inFile);
+
+        if (!input.hasNext()) 
+        {
+            throw new IllegalArgumentException("File doesn't match expected format.");
+        }
+
+        // We expect line 1 to have the name of the hotel
+        String name = input.nextLine();
+        
+        // We expect line 2 to have the address of the hotel
+        String address = input.nextLine();
+        
+        // We expect line 3 to have the phone number of the hotel
+        String phoneNumber = input.nextLine();
+        
+        // reset the name/address/phone number of the hotel
+        setName(name);
+        setAddress(address);
+        setPhoneNumber(phoneNumber);
+        
+        // 'fill' the room arraylist with different rooms available in the hotel
+        fillRoomArrayList();
     }
     
-    public void setName(String name) {
-        this.name = name;
-    }
+    /* METHODS UTILIZED BY THE CONSTRUCTORS */
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    /**
+     * Reads data from a .txt file and stores it in this Room-object ArrayList.
+     * Assumes that the text file is in a correct template. (Assume no mistakes in .txt file)
+     *
+     * @param fileName (String) representing a .txt file.
+     * @throws FileNotFoundException if the file doesn't exist or cannot be read.
+     * @throws IllegalArgumentException if the file doesn't match expected format.
+     */
+    public void fillRoomArrayList() throws FileNotFoundException
+    {
+        String roomNum;
+        int floor;
+        int capacity;
+        String bedtype;
+        String roomtype;
+        Room room;
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+        while(input.hasNextLine()) {
 
-    public String getName() {
-        return name;
-    }
+            // We expect String roomNum.
+            roomNum = input.next();
 
-    public String getAddress() {
-        return address;
-    }
+            // We expect int floor.
+            floor = input.nextInt();            
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }  
+            // We expect int capacity.
+            capacity = input.nextInt();
+
+            // We expect BedType BEDTYPE. SEE NOTE above for parsing Strings as enum values
+            //bedtype = BedType.valueOf( input.next() );
+            bedtype = input.next();
+
+            // We expect RoomType ROOMTYPE. SEE NOTE above for parsing Strings as enum values
+            roomtype = input.next();
+            
+            switch( roomtype )
+            {
+                case "REGULAR":
+                    room = new RegularRoom(roomNum, floor, capacity, bedtype);
+                    break;
+                    
+                case "LARGE":
+                    room = new LargeRoom(roomNum, floor, capacity, bedtype);
+                    break;
+                    
+                case "SUITE":
+                    room = new Suite(roomNum, floor, capacity, bedtype);
+                    break;
+                    
+                default:
+                    room = new RegularRoom(roomNum, floor, capacity, bedtype);
+                    break;
+            }            
+
+            this.addRoom(room);
+        }
+    }
     
     public void addRoom(Room room)
     {
         rooms.add(room);
     }
-    
-    // I'm not sure we need guest number and capactiy here, but for now, i'll leave it as is.
-    public void addRoom(String roomNum, int floor,int capacity, BedType bedType, RoomType roomType)
+
+    /**
+     * Reads data from a .txt file and stores it in this Room-object ArrayList.
+     * Assumes that the text file is in a correct template. (Assume no mistakes in .txt file)
+     *
+     * @param fileName (String) representing a .txt file.
+     * @throws FileNotFoundException if the file doesn't exist or cannot be read.
+     * @throws IllegalArgumentException if the file doesn't match expected format.
+     */
+    public void fillReservationArrayList(String fileName) throws FileNotFoundException
     {
-        rooms.add( new RegularRoom(roomNum, floor,capacity, bedType, roomType));
-    }   
+        File inFile = new File(fileName);
+        input = new Scanner(inFile);
+        
+        //variables needed to make reservations
+        int partySize = 0;
+        int nights = 0;
+        String roomNumber;        
+        String firstName;
+        String lastName;
+        String phoneNumber;
+        boolean isMilitary;
+        boolean isGov;
+        boolean isMember;
+        Status status;
+        Room room;
+        Guest guest;        
+        Reservation reservation;
+        
+        while(input.hasNextLine()) 
+        {
+            // We expect int partySize.
+            partySize = input.nextInt();            
 
-    public void addGuest(String first, String middle, String last, String bDay, String phoneNum,
-    String guestEmail, boolean isMil, boolean isGov,
-    boolean isMem, boolean isCheckedIn, String roomReserved) {
-        guests.add(new Guest(first, middle, last, bDay, phoneNum,
-                guestEmail, isMil, isGov,isCheckedIn, roomReserved));
+            // We expect int nights.
+            nights = input.nextInt();
+            
+            // We expect String roomNum.
+            roomNumber = input.next();            
+            
+            // We expect String first name.
+            firstName = input.next(); 
+            
+            // We expect String last name.
+            lastName = input.next(); 
+            
+            // We expect String  phoneNumber.
+            phoneNumber = input.next(); 
+            
+            //next get discount statuses
+            isMilitary = input.nextBoolean(); 
+            isGov = input.nextBoolean(); 
+            isMember = input.nextBoolean(); 
+            
+            // We expect Status status.
+            status = Status.valueOf( input.next() );
+            
+            //get the room from the roomNumber
+            room = this.getRoom(roomNumber);
+
+            //make a guest object
+            guest = new Guest(firstName, lastName, phoneNumber, 
+                partySize, nights, isMilitary, isGov, isMember);
+            
+            //make the reservation
+            reservation = new Reservation(room, guest, status);
+            
+            this.addReservation(reservation);
+        }
     }
     
-    public void addGuest(Guest g) {
-        guests.add(g);
+    /**
+     * This method "saves" persists the hotel data back to the text files from where the 
+     * construction data were first read.
+     * 
+     * ArrayList of reservations needs to be sorted with canceled ones first before we save.
+     * This is because when the program starts and reservations 
+     * are read in from the txt file, if a room is reserved with status other than canceled, 
+     * then the room will be flagged unavailable, but if the same room has a canceled reservation
+     * later in the text file, it will think the room is unavailable (which is true)
+     * and will crash trying to create the reservation on a room that is not available.
+     */
+    public void save() throws FileNotFoundException 
+    {
+        // sortReservations();
+        PrintStream output = new PrintStream(new File("HotelBurgerReservations.txt"));
+        for(Reservation r : reservations) {
+            Guest g = r.getGuest();
+            Room room = r.getRoom();
+            output.println();
+            output.print(g.getPartySize() + " ");
+            output.print(g.getNights() + " ");
+            output.print(room.getRoomNumber() + " ");
+            output.print(g.getFirstName() + " ");
+            output.print(g.getLastName() + " ");
+            output.print(g.getPhoneNum() + " ");
+            output.print(g.isMilitary() + " ");
+            output.print(g.isGovernment() + " ");
+            output.print(g.isMember() + " ");
+            output.print(r.getStatus());
+        }
     }
-
-    public void addGuest(String first, String middle, String last) {
-        guests.add(new Guest(first, middle, last));
-    }
-    //this is only for testing, it makes our life easier.
-    public void addReservation(Reservation r) {
-        reservations.add(r);
+    
+    /* ACCESSOR METHODS */
+    
+    /**
+     * Returns the hotel's name
+     *
+     * @return name (String) the hotel's name
+     */
+    public String getName() 
+    {
+        return name;
     }
 
     /**
-    public void checkOut(String name) { 
-    for(Room rm: rooms) {
-    if(rm.getOccupant().compareTo(name) == 0) {
-    rm.setOccupied(false);
-    rm.setOccupant("x");
+     * Returns the hotel's address as a string.
+     *
+     * @return address (String) the hotel's address
+     */
+    public String getAddress() 
+    {
+        return address;
     }
-    }
-    }
-     **/
 
-    // this works as an i/o method using a scanner
-    public void makeReservation() {
-        Scanner console = new Scanner(System.in);
-        String[] nameArr = gh.getGuestInfo(console); // using an array is easiest to format
+    /**
+     * Returns the hotel's phone number as a string.
+     *
+     * @return phoneNumber (String) the hotel's phone number
+     */
+    public String getPhoneNumber() 
+    {
+        return phoneNumber;
+    }  
 
-        // since Guest handler can only return one thing, we have to ask about number of guests here
-        int numGuests = gh.getNumGuests(console);
-
-        ArrayList<Room> choices = new ArrayList<>(); // this is making a deep copy of rooms (might be bad idea).
-        for(Room rm : rooms) {
-            choices.add(rm);
-        }
-
-        // this call manages our arraylist of choices which we will give to the customer at
-        // the end of the prompt sequence.
-        choices = choicesTrimmer(numGuests, choices);
-
-        System.out.println();
-        System.out.println("Do you want to create a profile with us? there may be discounts!");
-        System.out.print("Type y for yes or N for no and press enter: ");                
-        String input = console.next(); // Get the Y/N
-        System.out.println();
-        if(input.equalsIgnoreCase("y")){
-            boolean[] boolArr = gh.getGuestBooleans(console); // case doesn't matter
-        }
-
-        showChoices(choices);
-        int roomNumber = gh.getGuestRoomNum(console);
-
-        String name = nameArr[0] + " " + nameArr[1] + " " + nameArr[2];
-        Guest currGuest = gh.guestFinder(nameArr,guests);
-
-        for(Room rm : rooms) {
-            if(rm.getRoomNumber().equals(roomNumber)) { // finds room, checks if occupied
-                rm.setGuestLastName(currGuest.getLastName());
-                rm.setAvailable(false);
-                System.out.println("Your room has been reserved! " + name +
-                    " will be staying in room " + rm.getRoomNumber());
-                System.out.println();
-                reservations.add( new Reservation(numGuests,currGuest, rm));
-                currGuest.setRoomReserved(rm.getRoomNumber());
-                currGuest.addRoomToHistory(rm);
-                break; // saves the program from too much checking
-            }
-            else if(rm.getRoomNumber().equals(roomNumber) && !rm.isAvailable()) {
-                System.out.println("We found your room! " + roomNumber);
-                System.out.print("this room is already occupied"); // only way we can get to this is if first test failed
-                break;
+    /**
+     * Returns an arraylist of Room objects that are available.
+     * A room is considered available IF there is no reservation on it, and IF there are no
+     * guests checked into the room.
+     *
+     * @return rms (ArrayList<Room>) ArrayList of available rooms in the hotel.
+     */
+    public ArrayList<Room> getEmptyRooms() 
+    {
+        ArrayList<Room> rms = new ArrayList<Room>();
+        
+        for (Room rm: rooms) 
+        {
+            if ( rm.isAvailable() ) 
+            {
+                rms.add(rm);
             }
         }
-
-        currGuest.showGuestInfo();
-
-        continuePrompt(console);
-
-        invoices.add(new Invoice(reservations.get(reservations.size()-1)));
-        console.close();
+        return rms;
     }
-
-    public void displayMenu() {
-
-        Scanner console = new Scanner(System.in);
-        System.out.println(" Welcome to Burger Hotel!");
-        System.out.println(" Please make a selection from the following options and press enter");
-        System.out.println(" 1. Make a reservation/ check guest in");
-        System.out.println(" 2. Cancel reservation, check guest out");
-        System.out.println(" 3. Modify existing reservation");
-        System.out.println(" 4. See available rooms"); 
-        System.out.println(" 5. See current guest occupancy");
-        System.out.println(" 6. Look up an invoice");
-        System.out.println(" 7. Look up a room");
-        System.out.println(" 8. See all unpaid invoices");
-        System.out.println(" 9. See help menu");
-        System.out.println(" 10. Add guest");
-        System.out.println(" 11. Quit/close +  save state");
-        int selection = console.nextInt();
-        menuDirector(selection, console);
-        console.close();
-    }
-
-    // Checks every room and returns how many are empty
-    public ArrayList<Room> getEmptyRooms() {
-        ArrayList<Room> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(!rm.isAvailable()) {
+    
+    /**
+     * Returns an arraylist of Room objects that are unavailable.
+     * A reserved room is considered unavailable. 
+     * A room with a checked in guest is considered unavailable.
+     *
+     * @return rms (ArrayList<Room>) ArrayList of unavailable rooms in the hotel.
+     */
+    public ArrayList<Room> getOccupiedRoomsList()
+    {
+        ArrayList<Room> rms = new ArrayList<Room>();
+        
+        for (Room rm: rooms) 
+        {
+            if ( !rm.isAvailable() ) 
+            {
                 rms.add(rm);
             }
         }
         return rms;
     }
 
-    // Checks every room and returns how many are full
-    public int getOccupiedRooms() {
+    /**
+     * Returns the number of unavailable rooms in the hotel. 
+     * A reserved room is considered unavailable. 
+     * A room with a checked in guest is considered unavailable.
+     *
+     * @return accum (int) representing number of unavailable rooms in the hotel.
+     */
+    public int getOccupiedRooms() 
+    {
         int accum = 0;
-        for(Room rm : rooms) {
-            if(!rm.isAvailable()) { // check if room is occupied
+        
+        for (Room rm : rooms) 
+        {
+            if ( !rm.isAvailable() ) 
+            {
                 accum++;
             }
         }
         return accum;
     }
 
-    public int getNumberRooms() {
-        return rooms.size();
-    }
-
-    public int getNumGuests() {
-        return guests.size();
-    }
-
-    // this is a method which allows us to search rooms by room number
     /**
-     * This enables us to search through all rooms in the hotel and returns the room object
-     * which corresponds to the room number argument.
+     * Returns the ArrayList<Room> that 'contains' all Room objects in this hotel.
+     *
+     * @return rooms (ArrayList<Room>) representing all Room objects in the hotel.
      */
-    public Room getRoom(String roomNumber) {
-        for(Room rm: rooms) {
-            if(rm.getRoomNumber().equals(roomNumber)) {
+    public ArrayList<Room> getAllRooms() 
+    {
+        return rooms;
+    }
+
+    /**
+     * Returns a room object when the room number matches the argument.
+     * 
+     * @param roomNumber (String) the room number being searched
+     * @return rm or null (Room) the room object that matches the search. or null, if no match.
+     */
+    public Room getRoom(String roomNumber)
+    {
+        for (Room rm: rooms) 
+        {
+            if (rm.getRoomNumber().equals(roomNumber)) 
+            {
                 return rm;
             }
         }
         return null;
     }
-
+    
     /**
-     * This gives the entire rooms list
+     * Returns an arraylist of all reservations matching a guest's last name from 
+     * hotel's list of reservations.
+     * 
+     * @param guestLastName (String) the last name to search by
+     * @return reservationsByName (ArrayList<Reservation>) list of reservations whose last name matches the search criteria.
      */
-    public ArrayList<Room> getRoomList() {
-        return rooms;
-    }
-
-    public int getNumReservations() {
-        return reservations.size();
-    }
-
-    public ArrayList<Guest> getGuestList() {
-        return guests;
-    }
-
-    public Guest getGuest(String lastName) {
-        for(Guest g : guests) {
-            if(g.getLastName().compareTo(lastName) == 0) {
-                return g;
+    public ArrayList<Reservation> getReservationsByLastName(String guestLastName) 
+    {
+        ArrayList<Reservation> reservationsByName = new ArrayList<Reservation>();
+        
+        for (Reservation res: reservations) 
+        {
+            if (res.getGuest().getLastName().equals(guestLastName)) 
+            {
+                reservationsByName.add(res);
+            }
+        }
+        return reservationsByName;
+    }    
+    
+    /**
+     * Returns a Reservation object when the reservationIDs match. Returns null if no match.
+     * 
+     * @param reservationID (int) the reservation ID to search for.
+     * @return res or null (Reservation) the reservation object whose ID matches the search.
+     */
+    public Reservation getReservation(int reservationID) 
+    {
+        for (Reservation res: reservations)
+        {
+            if (res.getReservationID() == reservationID) 
+            {
+                return res;
             }
         }
         return null;
+    }    
+    
+    /**
+     * Returns the number of all reservations that the Hotel has (includes all statuses).
+     *
+     * @return (int) the number of all hotel reservations (all statuses)
+     */
+    public int getNumReservations()
+    {
+        return reservations.size();
     }
 
-    // public Guest getGuest(int memNumber) {
-    // Scanner console = new Scanner(System.in);
-    // for(Guest g : guests) {
-    // if(g.getFullName().equals(name)) {
-    // return g;
-    // }
-    // }
-    // return null;
-    // }
-
-    private void menuDirector(int selection, Scanner console) {
-        while(selection < 1 || selection > 11) {
-            System.out.println("Input not recognized, please try again");
-            System.out.println("Please enter your selection (a number from 1 - 4:");
-            selection = console.nextInt();
-        }
-
-        if(selection == 1) {
-            makeReservation();
-        }
-
-        else if(selection == 2){
-            System.out.print("Please enter room number and press enter: ");
-            String rmNum = console.next();
-            
-            // We need a room object to do stuff with 
-            Room checkOutRoom = getRoom(rmNum);
-            
-            
-            checkOutRoom.showRoomInfo();
-            
-            Guest checkOutGuest = getGuest(checkOutRoom.getGuestLastName());
-            checkOutGuest.showGuestInfo();
-            checkOutGuest.setCheckedIn(false);
-            checkOutRoom.checkOut();
-            
-            System.out.print("This reservation has been cancelled and the guest has been checked out");
-        }
-
-        else if(selection == 3){
-
-            System.out.println("Implement me!");
-        }
-
-        else if(selection == 4) {
-            System.out.println("To look up the state specific room, enter 1");
-            System.out.println("To see a list of all available rooms, enter 2");
-            System.out.println("To return to the main menu, enter 3");
-            System.out.println("Please enter a selection: ");
-            int input = console.nextInt();
-            if(input == 1) {
-                System.out.println("You chose to look up A specific room! please enter your room number: ");
-                String roomSelection = console.next();
-                Room room = getRoom(roomSelection);
-                room.showRoomInfo();
-            }
-            else if(input == 2) {            
-                ArrayList<Room> emptyRooms = getEmptyRooms();
-                for(Room rm : emptyRooms) {
-                    rm.showRoomInfo();
-                }
-            }
-            else if(input == 3) {
-                displayMenu();
+    /**
+     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
+     * 'active'. 'Active' reservation = hotel is waiting for guest, OR guest is checked in.
+     * 
+     * @return ArrayList<Reservation> of all active reservations.
+     */
+    public ArrayList<Reservation> getActiveReservations() 
+    {
+        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+        
+        for (Reservation r : reservations) 
+        {
+            if (r.getStatus().equals(Status.IN) || r.getStatus().equals(Status.WAITING)) 
+            {
+                arr.add(r);
             }
         }
-
-        else if(selection == 5) {
-
-            System.out.println("To look up the info of a specific guest, enter 1");
-            System.out.println("To see a list of all current occupants, enter 2");
-            System.out.println("Please enter a selection: ");
-            int lookUpInput = console.nextInt();
-            if(lookUpInput == 1) {
-                System.out.print("please enter the last name of the guest: ");
-                String guestInfo = console.next();
-
-                Guest result = getGuest(guestInfo);
-                if(result == null) {
-                    System.out.print("We couldn't find this guest");
-                    // **** search reservations for this person's name and get room
-                    //checkIn(input);
-                }
-                else {
-                    result.showGuestInfo();
-                }
-
-            }
-
-            if(lookUpInput == 2) {
-                for(Guest g : guests) {
-                    System.out.println(g.getFullName());
-                    if(g.isCheckedIn()) {
-                        g.showGuestInfo();
-                        System.out.println();
-                    }
-                }
-
-            }
-        }
-
-        else if(selection == 6) {
-
-        }
-        else if(selection == 7) {
-            System.out.print("Please enter room number and press enter: ");
-            String rmNum = console.next();
-            Room r = getRoom(rmNum);
-            System.out.println("Room number " + r.getRoomNumber() + " is " + r.isAvailable());
-        }
-        else if(selection == 8) {
-            System.out.println("implement me!");
-        }
-
-        else if(selection == 9) {
-            System.out.println("implement me!");
-        }
-
-        else if(selection == 10) {
-            System.out.println("implement me!");
-        }
-
-        else {
-            System.out.println("Goodbye!");
-        }
+        return arr;
     }
 
-    private void continuePrompt(Scanner console) {
-        System.out.println("To quit the program enter 1, or press any other key to return to");
-        System.out.print(" the menu screen: ");
-        String selection = console.next();
-        if(selection.equals("1")) {
-            System.out.println();
-            System.out.println();
-            System.out.println("GoodbyeGoodbyeGoodbyeGoodbyeGoodbyeGoodbyeGoodbyeGoodbye");
+    /**
+     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
+     * 'inactive'. 'Inactive' reservation = guest checked out, OR reservation canceled.
+     * 
+     * @return ArrayList<Reservation> of all inactive reservations.
+     */
+    public ArrayList<Reservation> getInactiveReservations()
+    {
+        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+        
+        for (Reservation r : reservations) 
+        {
+            if (r.getStatus().equals(Status.OUT) || r.getStatus().equals(Status.CANCELED)) 
+            {
+                arr.add(r);
+            }
         }
-        else{
-            displayMenu();
-        }
+        return arr;
     }
-
-    // currently this is nonsense from a logic POV, but we can tweak as we firm up our classes
-    private ArrayList<Room> choicesTrimmer(int numGuests, ArrayList<Room> choices) {
-        if(numGuests > 2) {
-            for(int i = 0; i < choices.size(); i++) {
-                Room rm = choices.get(i);
-                if(rm.getBedType() == BedType.DOUBLE || rm.getBedType() == BedType.DOUBLE) {
-                    choices.remove(rm);
-                }
+     
+    /**
+     * Returns an ArrayList of strings representing 'invoices' in the hotel 
+     * where there is NO balance due.
+     * 
+     * @return ArrayList<String> of all 'invoices' that have been paid.
+     */
+    public ArrayList<String> getAllInvoicesPaid() 
+    {
+        ArrayList<String> invoices = new ArrayList<String>();
+        
+        for (Reservation res : reservations) 
+        {
+            if ( res.getPaymentDue() == 0 ) 
+            {
+                invoices.add( res.getInvoice() );
             }
         }
-        else {
-            for(int i = 0; i < choices.size(); i++) {
-                Room rm = choices.get(i);
-                if(rm.getBedType() == BedType.QUEEN || rm.getBedType() == BedType.KING) {
-                    choices.remove(rm);
-                }
-            }
-        }      
-        return choices;
-    }
-
-    private void showChoices(ArrayList<Room> choices) {
-        int counter = 0;
-        for(Room rm: choices) {
-            System.out.print("[" + rm.getRoomNumber() + ", " + rm.getBedType() + ", $"  + rm.getPrice() + "]");
-            counter ++;
-            if(counter == 5) {
-                System.out.println();
-                counter = 0;
-            }
-        }   
+        return invoices;
     }
     
-     @Override
-    public String toString() {
-        String hotelString = "Hotel: ";
-        hotelString += name + "\n";
-        hotelString += address + "\n";
-        hotelString += phoneNumber + "\n";
-        return hotelString;
+    /**
+     * Returns an ArrayList of strings representing 'invoices' in the hotel 
+     * where there is a balance due.
+     * 
+     * @return ArrayList<String> of all 'invoices' with outstanding balance.
+     */
+    public ArrayList<String> getAllInvoicesUnpaid() 
+    {
+        ArrayList<String> invoices = new ArrayList<String>();
+        
+        for (Reservation res : reservations) 
+        {
+            if (res.getPaymentDue() > 0)
+            {
+                invoices.add( res.getInvoice() );
+            }
+        }
+        return invoices;
+    }
+    
+    /* MUTATOR METHODS */
+    
+    /**
+     * Method setName sets this hotel's name field.
+     *
+     * @param name (String) hotel name
+     */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    /**
+     * Method setAddress sets this hotel's address field.
+     *
+     * @param address (String) hotel address
+     */
+    public void setAddress(String address) 
+    {
+        this.address = address;
+    }
+
+    /**
+     * Method setPhoneNumber sets the hotel's phone number
+     *
+     * @param phoneNumber (String) hotel phone number
+     */
+    public void setPhoneNumber(String phoneNumber) 
+    {
+        // no validation...
+        this.phoneNumber = phoneNumber;
+    }
+    
+    /**
+     * Adds a new Reservation object to the Hotel's arrayList of reservation objects
+     * 
+     * @param r (Reservation) reservation object
+     */
+    public void addReservation(Reservation r) 
+    {
+        reservations.add(r);
+    }
+    
+    /* OTHER METHODS */
+    
+   // public void sortReservations() {
+   //     for(int i = 0; i < reservations.size(); i++) {
+   //         Reservation res = reservations.get(i);
+   //         if(res.getStatus().equals(Status.CANCELED)) {
+   //             reservations.remove(i); // removes from the list
+   //             reservations.add(0, res); // adds back to list at position 0
+   //             i--;
+   //         }
+//
+//        }
+//    }
+    /**
+     * Method toString overrides Object class's toString method; returns info about the hotel.
+     *
+     * @return (String) with info about name, address, and phone number.
+     */
+    @Override
+    public String toString() 
+    {
+        return "=========================" + "\n" +
+            "Hotel: " + name + "\n" +
+            address + "\n" +
+            phoneNumber + "\n" +
+            "=========================" + "\n";
+    }
+    
+        public ArrayList<String> getEmptyRoomNum() {
+        ArrayList<String> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(!rm.isAvailable()) {
+                rms.add(rm.getRoomNumber());
+            }
+        }
+        return rms;
+    }
+    
+    
+    public ArrayList<String> getOccupiedRoomNum() {
+        ArrayList<String> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(rm.isAvailable()) {
+                rms.add(rm.getRoomNumber());
+            }
+        }
+        return rms;
+    }
+    
+    public ArrayList<Reservation> getReservations(Status status){
+        ArrayList<Reservation> res = new ArrayList<>();
+        for(Reservation reserve: reservations) {
+            if(reserve.getStatus() == status) {
+                res.add(reserve);
+            }
+        }
+        return res;
+    }
+    
+    public Reservation findReservation(Guest guest){
+        for(Reservation reserve: reservations) {
+            if(reserve.getGuest().equals(guest)) {
+                return reserve;
+            }
+        }
+        return null;
     }
 }
