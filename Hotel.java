@@ -203,7 +203,7 @@ public class Hotel
     public void save() throws FileNotFoundException 
     {
         // sortReservations();
-        PrintStream output = new PrintStream(new File("HotelBurgerReservations.txt"));
+        PrintStream output = new PrintStream(new File("output.txt"));
         for(Reservation r : reservations) {
             Guest g = r.getGuest();
             Room room = r.getRoom();
