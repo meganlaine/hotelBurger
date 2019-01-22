@@ -113,7 +113,7 @@ public class Main
     
     /**
      * Looks up all reservations under a last name and finds the right one. 
-     * Used a couple times by the menus.
+     * Used a couple times by the menus. (For ex: menu(3))
      * 
      * @return reservation (Reservation) a reservation object matched by last name
      */
@@ -124,15 +124,15 @@ public class Main
         int reservationID = -1;
         ArrayList<Reservation> reservationsByName = new ArrayList<Reservation>();        
                    
-        System.out.println(" To lookup the reservation, we need last name");
-        System.out.println(" What is your last name?");  
+        System.out.println(" To look up the reservation, we'll need the guest's last name.");
+        System.out.println(" What is the guest's last name?");  
         lastName = input.next();        
         reservationsByName = hotel.getReservationsByLastName(lastName);
         
         while ( (reservationsByName.size() < 1) && !lastName.equals("0") ) 
         {
-            System.out.println(" Reservation not found, please try again, or press 0 to exit");
-            System.out.println(" What is your last name?");  
+            System.out.println(" Sorry! No matching reservations were found.");
+            System.out.println(" Type 0 to exit -OR- Enter a different last name to try again:");  
             lastName = input.next();
             reservationsByName = hotel.getReservationsByLastName(lastName);
         }
@@ -172,12 +172,13 @@ public class Main
     //** MENU METHODS **/
     
     /**
-     * Menu to show main options.
+     * Main Menu (0) to show main options.
      */
     private static void mainMenu() throws FileNotFoundException 
     {
         // print a blank line followed by menu title
         System.out.println();
+        System.out.println("+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +");
         System.out.println(" Please make a selection from the following options and press enter");
         System.out.println(" 1. Make a new reservation");
         System.out.println(" 2. Change/Cancel existing reservation");          
@@ -187,6 +188,7 @@ public class Main
         System.out.println(" 6. View all available rooms");        
         System.out.println(" 7. See help menu");
         System.out.println(" 8. Quit/close +  save state");
+        System.out.println("+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +");
 
         int selectionInt = getUserInputInt(1,8); 
         
@@ -222,7 +224,7 @@ public class Main
     }          
         
     /**
-     * Menu to create a new reservation.
+     * Menu (1) to create a new reservation.
      */
     private static void makeReservationMenu() throws FileNotFoundException 
     {
@@ -241,8 +243,8 @@ public class Main
         ArrayList<Room> availableRooms;
         
         // print a blank line followed by menu title
-        System.out.println();        
-        System.out.println(" Make a Reservation Menu");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" MAKE A RESERVATION MENU");
         
         System.out.println(" How many adults?");
         
@@ -313,12 +315,13 @@ public class Main
         
         System.out.println( "Your reservation was successfully created:");         
         System.out.println(reservation);
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         
         returnToMainMenuPrompt();
     }
     
     /**
-     * Menu to allow changes to some data in a reservation.
+     * Menu (2) to allow changes to some data in a reservation.
      */
     private static void changeReservationMenu() throws FileNotFoundException 
     {
@@ -327,7 +330,8 @@ public class Main
         Room newRoom = null;
         
         // print a blank line followed by menu title
-        System.out.println(" Change Reservation Menu");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" CHANGE RESERVATION MENU");
         
         while (reservation == null) 
         {
@@ -337,7 +341,8 @@ public class Main
         System.out.println(" For this reservation, what would you like to change?");
         System.out.println(" 1. Cancel it");        
         System.out.println(" 2. Change room");
-        System.out.println(" 0. Return to the main menu");                  
+        System.out.println(" 0. Return to the main menu");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         
         int selectionInt = getUserInputInt(0,2); 
         
@@ -363,25 +368,90 @@ public class Main
                 }
                     
                 reservation.setRoom(newRoom);
-                System.out.println("Successfully changed room to room# " + newRoomNumber);
+                System.out.println("Successfully changed room to room # " + newRoomNumber);
                 break;
         }
         returnToMainMenuPrompt();
     }       
     
     /**
-     * Menu to search for an invoice and view the information in it.
+     * Menu (3) to view information about the status of a reservation. 
+     * Is it checked in, checked out, or canceled?
+     */
+    private static void reservationStatusMenu() throws FileNotFoundException 
+    {
+        Reservation reservation = null;        
+        
+        // print a blank line followed by menu title
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" RESERVATION STATUS MENU");        
+        
+        while(reservation == null) 
+        {
+            reservation = getReservationByLastName();
+        }
+        
+        System.out.println(" For this reservation, what would you like to change?");
+        
+        System.out.println(" 1. Cancel it");        
+        System.out.println(" 2. Checkin");
+        System.out.println(" 3. Checkout");
+        System.out.println(" 0. Return to the main menu");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        
+        int selectionInt = getUserInputInt(0,3); 
+        
+        switch(selectionInt)
+        {
+            case 0:
+                mainMenu();
+                break;
+            case 1:                
+                reservation.setStatus(Status.CANCELED);
+                System.out.println("Successfully canceled");
+                break;
+            case 2:
+                reservation.setStatus(Status.IN);
+                System.out.println("Successfully checked in");
+                break;
+            case 3:
+                reservation.setStatus(Status.OUT);
+                System.out.println("Successfully checked out");
+                break;
+        }
+        
+        returnToMainMenuPrompt();
+    }
+    
+    /** 
+     * Menu (4) to see an existing reservation's guest information.
+     */
+    private static void guestMenu() throws FileNotFoundException 
+    { 
+        // print a blank line followed by menu title
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" Guest Menu");
+        System.out.println(" What is the intended functionality of this menu supposed to be?");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        
+        returnToMainMenuPrompt();
+    }
+    
+    /**
+     * Menu (5) to search for an invoice and view the information in it.
      */
     private static void invoiceMenu() throws FileNotFoundException 
     { 
         Reservation reservation = null;
         
         // print a blank line followed by menu title
-        System.out.println(" Invoice Menu");        
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" INVOICE MENU");        
         System.out.println(" 1. Search invoices on Guest Last Name");        
         System.out.println(" 2. See all paid invoices");
         System.out.println(" 3. See all unpaid invoices");      
-        System.out.println(" 0. Return to the main menu");                  
+        System.out.println(" 0. Return to the main menu");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         
         int selectionInt = getUserInputInt(0,3); 
         
@@ -412,83 +482,28 @@ public class Main
         returnToMainMenuPrompt();     
     }
     
-    /** 
-     * Menu to see an existing reservation's guest information.
-     */
-    private static void guestMenu() throws FileNotFoundException 
-    { 
-        // print a blank line followed by menu title
-        System.out.println(" Guest Menu");
-        System.out.println(" What is the intended functionality of this menu supposed to be?");
-        
-        returnToMainMenuPrompt();
-    }
-            
     /**
-     * Menu to view information about the status of a reservation. 
-     * Is it checked in, checked out, or canceled?
-     */
-    private static void reservationStatusMenu() throws FileNotFoundException 
-    {
-        Reservation reservation = null;        
-        
-        // print a blank line followed by menu title
-        System.out.println(" Reservation Status Menu");        
-        
-        while(reservation == null) 
-        {
-            reservation = getReservationByLastName();
-        }
-        
-        System.out.println(" For this reservation, what would you like to change?");
-        
-        System.out.println(" 1. Cancel it");        
-        System.out.println(" 2. Checkin");
-        System.out.println(" 3. Checkout");
-        System.out.println(" 0. Return to the main menu");                  
-        
-        int selectionInt = getUserInputInt(0,3); 
-        
-        switch(selectionInt)
-        {
-            case 0:
-                mainMenu();
-                break;
-            case 1:                
-                reservation.setStatus(Status.CANCELED);
-                System.out.println("Successfully canceled");
-                break;
-            case 2:
-                reservation.setStatus(Status.IN);
-                System.out.println("Successfully checked in");
-                break;
-            case 3:
-                reservation.setStatus(Status.OUT);
-                System.out.println("Successfully checked out");
-                break;
-        }
-        
-        returnToMainMenuPrompt();
-    }
-    
-    /**
-     * Menu to see all available rooms.
+     * Menu (6) to see all available rooms.
      */
     private static void availableRoomsMenu() throws FileNotFoundException 
     {
         ArrayList<Room> availableRooms = hotel.getEmptyRooms();
         
         // print a blank line followed by menu title
-        System.out.println(" Available Rooms Menu");
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" AVAILABLE ROOMS MENU:");
         
-        System.out.println( " These rooms are available:");        
-        System.out.println(availableRooms); 
-        
+        System.out.println( " These rooms are available:");
+        for (Room r: availableRooms)
+        {
+            System.out.println('\t' + r.toString());
+        }
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         returnToMainMenuPrompt();
     }
     
     /**
-     * Menu to display information on how to use this program.
+     * Menu (7) to display information on how to use this program.
      */
     private static void helpMenu() throws FileNotFoundException 
     {

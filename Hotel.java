@@ -227,11 +227,10 @@ public class Hotel
      * then the room will be flagged unavailable, but if the same room has a canceled reservation
      * later in the text file, it will think the room is unavailable (which is true)
      * and will crash trying to create the reservation on a room that is not available.
-     * 
      */
     public void save() throws FileNotFoundException 
     {
-        //sortReservations();
+        // sortReservations();
         PrintStream output = new PrintStream(new File("HotelBurgerReservations.txt"));
         for(Reservation r : reservations) {
             Guest g = r.getGuest();

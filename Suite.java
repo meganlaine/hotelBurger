@@ -9,7 +9,7 @@
 public class Suite extends Room
 {
     /* CLASS CONSTANTS */
-    private static final String ROOM_TYPE = "Suite";
+    private static final String ROOM_TYPE = "Suite  ";
     
     /**
      * Constructor for Suite object
@@ -61,7 +61,6 @@ public class Suite extends Room
     public String toString()
     {
         return ROOM_TYPE + " " + super.toString() + 
-                ", PricePerNight: " + this.getRate() +
-                "\n";
+                ", PricePerNight: " + String.format("$ %.2f", this.getRate());
     }
 }

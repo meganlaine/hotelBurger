@@ -9,7 +9,7 @@
 public class LargeRoom extends Room
 {
     /* CLASS CONSTANTS */
-    private static final String ROOM_TYPE = "Large";
+    private static final String ROOM_TYPE = "Large  ";
     
     /**
      * Constructor for LargeRoom object
@@ -61,7 +61,6 @@ public class LargeRoom extends Room
     public String toString()
     {
         return ROOM_TYPE + " " + super.toString() + 
-                ", PricePerNight: " + this.getRate() +
-                "\n";        
+                ", PricePerNight: " + String.format("$ %.2f", this.getRate());        
     }
 }
