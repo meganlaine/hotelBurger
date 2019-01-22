@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Class Hotel represents a hotel. It has (ArrayLists) for Rooms and Reservations.
  * 
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/21/2019
+ * @version 1/22/2019
  */
 public class Hotel
 {
@@ -19,42 +19,14 @@ public class Hotel
     private ArrayList<Reservation> reservations;
     public ArrayList<Room> rooms;
     
-    /* CONSTRUCTOR METHODS */
-    
     /**
-     * Hotel Constructor 1/3 (full constructor for a hotel object)
-     *
-     * @param name (String) hotel's name
-     * @param address (String) hotel's address
-     * @param phoneNumber (String) hotel's phone number
-     */
-    public Hotel( String name, String address, String phoneNumber )
-    {
-        setName(name);
-        setAddress(address);
-        setPhoneNumber(phoneNumber);
-
-        rooms = new ArrayList<Room>();
-        reservations = new ArrayList<Reservation>();
-    }
-
-    /**
-     * Hotel Constructor 2/3 (default constructor for a hotel object)
-     */
-    public Hotel() 
-    {
-        this( "Burger Hotel!", "North Seattle College", "0123456789" );        
-    }
-
-    /**
-     * Hotel Constructor 3/3 (Constructor used from Main client code. do not delete!)
+     * Hotel Constructor 1/1 (Constructor used from Main client code.)
      * Reads data from the hotel text file, and populates the ArrayList<Room>
      */
     public Hotel( String fileName ) throws FileNotFoundException
     {     
-        // call default constructor so all fields get initialized to something,
-        // including the ArrayLists
-        this();
+        rooms = new ArrayList<Room>();
+        reservations = new ArrayList<Reservation>();
         
         File inFile = new File(fileName);
         input = new Scanner(inFile);
@@ -101,7 +73,7 @@ public class Hotel
         String roomtype;
         Room room;
 
-        while(input.hasNextLine()) {
+        while (input.hasNextLine()) {
 
             // We expect String roomNum.
             roomNum = input.next();
@@ -210,7 +182,7 @@ public class Hotel
             guest = new Guest(firstName, lastName, phoneNumber, 
                 partySize, nights, isMilitary, isGov, isMember);
             
-            //make the reservation
+            // make the reservation
             reservation = new Reservation(room, guest, status);
             
             this.addReservation(reservation);
