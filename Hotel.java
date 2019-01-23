@@ -662,4 +662,13 @@ public class Hotel
             System.out.println("Hotel name is supposed to be Hotel Burger, but is " + testHotel.getName());
         }
     }
+    
+    public Reservation findReservation(String roomNum){
+        for(Reservation reserve: reservations) {
+            if(reserve.getRoom().getRoomNumber().equals(roomNum)&&(reserve.getStatus() == Status.IN || reserve.getStatus() == Status.WAITING)) {
+                return reserve;
+            }
+        }
+        return null;
+    }
 }
