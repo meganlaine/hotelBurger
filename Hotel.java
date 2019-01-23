@@ -518,17 +518,20 @@ public class Hotel
     
     /* OTHER METHODS */
     
-   // public void sortReservations() {
-   //     for(int i = 0; i < reservations.size(); i++) {
-   //         Reservation res = reservations.get(i);
-   //         if(res.getStatus().equals(Status.CANCELED)) {
-   //             reservations.remove(i); // removes from the list
-   //             reservations.add(0, res); // adds back to list at position 0
-   //             i--;
-   //         }
-//
-//        }
-//    }
+    public void sortReservations() {
+        for(int i = 0; i < reservations.size(); i++) {
+            Reservation res = reservations.get(i);
+            if(res.getStatus().equals(Status.CANCELED)) {
+                reservations.remove(i); // removes from the list
+                reservations.add(0, res); // adds back to list at position 0
+                if(i > 0) {
+                    i--;
+                }
+
+            }
+
+        }
+    }
     /**
      * Method toString overrides Object class's toString method; returns info about the hotel.
      *
