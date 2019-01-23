@@ -534,6 +534,49 @@ public class Hotel
         return invoices;
     }
     
+    public Reservation findReservation(Guest guest){
+        for(Reservation reserve: reservations) {
+            if(reserve.getGuest().equals(guest)) {
+                return reserve;
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<Reservation> getReservations(Status status){
+        ArrayList<Reservation> res = new ArrayList<>();
+        for(Reservation reserve: reservations) {
+            if(reserve.getStatus() == status) {
+                res.add(reserve);
+            }
+        }
+        return res;
+    }
+    
+    public ArrayList<String> getOccupiedRoomNum() {
+        ArrayList<String> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(rm.isAvailable()) {
+                rms.add(rm.getRoomNumber());
+            }
+        }
+        return rms;
+    }
+    
+    /**
+     *  methods used in GUI
+     */
+    
+    public ArrayList<String> getEmptyRoomNum() {
+        ArrayList<String> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(!rm.isAvailable()) {
+                rms.add(rm.getRoomNumber());
+            }
+        }
+        return rms;
+    }
+    
     /* MUTATOR METHODS */
     
     /**
@@ -609,46 +652,14 @@ public class Hotel
     }
     
     /**
-     *  methods used in GUI
+     * A method to test basic functionality of this class
      */
-    
-    public ArrayList<String> getEmptyRoomNum() {
-        ArrayList<String> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(!rm.isAvailable()) {
-                rms.add(rm.getRoomNumber());
-            }
+    public static void test() throws FileNotFoundException {
+        Hotel testHotel = new Hotel("hotelrooms.txt");
+        //do some stuff
+        if (!testHotel.getName().equals("Hotel Burger"))
+        {
+            System.out.println("Hotel name is supposed to be Hotel Burger, but is " + testHotel.getName());
         }
-        return rms;
-    }
-    
-    
-    public ArrayList<String> getOccupiedRoomNum() {
-        ArrayList<String> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(rm.isAvailable()) {
-                rms.add(rm.getRoomNumber());
-            }
-        }
-        return rms;
-    }
-    
-    public ArrayList<Reservation> getReservations(Status status){
-        ArrayList<Reservation> res = new ArrayList<>();
-        for(Reservation reserve: reservations) {
-            if(reserve.getStatus() == status) {
-                res.add(reserve);
-            }
-        }
-        return res;
-    }
-    
-    public Reservation findReservation(Guest guest){
-        for(Reservation reserve: reservations) {
-            if(reserve.getGuest().equals(guest)) {
-                return reserve;
-            }
-        }
-        return null;
     }
 }

@@ -12,7 +12,7 @@ public class Main
 {
     private static Scanner input;
     /* String selection: should be a String, if it's hardcoded as an int, 
-     * then the program will crash if in int is not entered.*/
+     * then the program will crash if in int is not entered. */
     private static String selection; 
     private static Hotel hotel;
     
@@ -142,9 +142,10 @@ public class Main
             mainMenu();
         }          
         
-        System.out.println(" Here are the reservations under that last name, " +
-            "which would you like to choose(enter ID# from below list)? " +
-            "Or press 0 to return to main menu");
+        System.out.println(" Here are the reservations under that last name; " + "\n" +
+            "    Which would you like to choose? " + "\n" +
+            "    -- Enter ID# from below list " + "\n" +
+            "    -- Or press 0 to return to main menu");
         for (Reservation res: reservationsByName) 
         {
             System.out.println(res);
@@ -181,7 +182,7 @@ public class Main
         System.out.println("+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +");
         System.out.println(" Please make a selection from the following options and press enter");
         System.out.println(" 1. Make a new reservation");
-        System.out.println(" 2. Change/Cancel existing reservation");          
+        System.out.println(" 2. Change/Cancel existing reservation (ie check in/out)");          
         System.out.println(" 3. See an existing reservation's checkin/out/cancel status"); 
         System.out.println(" 4. Guest info");
         System.out.println(" 5. See an existing reservation's invoice info");        
@@ -228,7 +229,7 @@ public class Main
     }          
         
     /**
-     * Menu (1) to create a new reservation.
+     * Menu to create a new reservation.
      */
     private static void makeReservationMenu() throws FileNotFoundException 
     {
@@ -325,7 +326,9 @@ public class Main
     }
     
     /**
-     * Menu (2) to allow changes to some data in a reservation.
+     * Menu to allow changes to some data in a reservation.
+     * 
+     * @throw FileNotFoundException if file of prior reservations is not found
      */
     private static void changeReservationMenu() throws FileNotFoundException 
     {
@@ -345,23 +348,38 @@ public class Main
         System.out.println(" For this reservation, what would you like to change?");
         System.out.println(" 1. Cancel it");        
         System.out.println(" 2. Change room");
+        System.out.println(" 3. Check in");
+        System.out.println(" 4. Check out");
         System.out.println(" 0. Return to the main menu");
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         
-        int selectionInt = getUserInputInt(0,2); 
+        int selectionInt = getUserInputInt(0,4); 
         
         switch( selectionInt )
         {
             case 0:
                 mainMenu();
                 break;
-            case 1:                
-                reservation.setStatus(Status.CANCELED);
-                System.out.println("Successfully cancelled");
-                break;
+            case 1:
+                try {
+                    reservation.setStatus(Status.CANCELED);
+                    System.out.println("Successfully cancelled");
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Hmm, that won't work because: " + e);
+                    System.out.println("You'll have to type the name again.");
+                    changeReservationMenu();
+                }
+                
             case 2:
-                System.out.println(" Which room from the following do want to change to?");
-                System.out.println(hotel.getEmptyRooms());
+                System.out.println(" EMPTY ROOMS:");
+                for (Room r : hotel.getEmptyRooms())
+                {
+                    System.out.println(r);
+                }
+                System.out.println(" Enter the room number you want to change to (ie 301):");
+                
+                //System.out.println(hotel.getEmptyRooms());
                 newRoomNumber = input.next();                
                 newRoom = hotel.getRoom(newRoomNumber);
                 while ( newRoom == null || !newRoom.isAvailable() )
@@ -374,12 +392,34 @@ public class Main
                 reservation.setRoom(newRoom);
                 System.out.println("Successfully changed room to room # " + newRoomNumber);
                 break;
+                
+            case 3:
+                try {
+                    reservation.setStatus(Status.IN);
+                    System.out.println("Successfully checked in.");
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Hmm, that won't work because: " + e);
+                    System.out.println("You'll have to type the name again.");
+                    changeReservationMenu();
+                }
+                
+            case 4:
+                try {
+                    reservation.setStatus(Status.OUT);
+                    System.out.println("Successfully checked out.");
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Hmm, that won't work because: " + e);
+                    System.out.println("You'll have to type the name again.");
+                    changeReservationMenu();
+                }
         }
         returnToMainMenuPrompt();
     }       
     
     /**
-     * Menu (3) to view information about the status of a reservation. 
+     * Menu to view information about the status of a reservation. 
      * Is it checked in, checked out, or canceled?
      */
     private static void reservationStatusMenu() throws FileNotFoundException 
@@ -428,7 +468,7 @@ public class Main
     }
     
     /** 
-     * Menu (4) to see an existing reservation's guest information.
+     * Menu to see an existing reservation's guest information.
      */
     private static void guestMenu() throws FileNotFoundException 
     { 
@@ -442,7 +482,7 @@ public class Main
     }
     
     /**
-     * Menu (5) to search for an invoice and view the information in it.
+     * Menu to search for an invoice and view the information in it.
      */
     private static void invoiceMenu() throws FileNotFoundException 
     { 
@@ -487,7 +527,7 @@ public class Main
     }
     
     /**
-     * Menu (6) to see all available rooms.
+     * Menu to see all available rooms.
      */
     private static void availableRoomsMenu() throws FileNotFoundException 
     {
@@ -507,7 +547,7 @@ public class Main
     }
     
     /**
-    * Menu (8) to display a report for internal hotel use.
+    * Menu to display a report for internal hotel use.
     * check hotel occupancy (how many guests are currently in hotel)
     * check how many rooms are occupied
     * check how many checkouts have occured
@@ -553,7 +593,7 @@ public class Main
     }
     
     /**
-     * Menu (8) to display information on how to use this program.
+     * Menu to display information on how to use this program.
      */
     private static void helpMenu() throws FileNotFoundException 
     {
