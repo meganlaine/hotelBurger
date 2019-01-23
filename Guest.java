@@ -300,4 +300,28 @@ public class Guest
                 "Government: " + isGovernment + ", " +
                     "Member: " + isMember;        
     }
+    
+    /**
+     *  Methods used in GUI
+     */
+    
+    
+    public boolean equals(Guest guest){
+        boolean equals = false;
+        if(this.getFullName().equals(guest.getFullName()) && this.getPhoneNum().equals(guest.getPhoneNum()))
+            equals = true;
+        return equals;
+    }
+
+    public String getRoomReserved(Hotel h){
+        return h.findReservation(this).getRoom().getRoomNumber();
+    }
+
+    public boolean isCheckedIn(Hotel h){
+        Status status = h.findReservation(this).getStatus();
+        if(status == Status.IN)
+            return true;
+        return false;
+    }
+    
 }
