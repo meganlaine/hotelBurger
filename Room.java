@@ -91,6 +91,13 @@ public abstract class Room
     {
         return this.bedType;
     }
+     
+    /**
+     * Returns the Room's RoomType as a String.
+     * 
+     * @return (String) the room's RoomType
+     */
+    abstract String getRoomType();
     
     /**
      * Returns the base rate with NO changes based on floor (that is done in child classes).
