@@ -9,7 +9,7 @@
 public class Suite extends Room
 {
     /* CLASS CONSTANTS */
-    private static final String ROOM_TYPE = "Suite  ";
+    private static final String ROOM_TYPE = "Suite";
     
     /**
      * Constructor for Suite object

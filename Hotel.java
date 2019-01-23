@@ -281,15 +281,15 @@ public class Hotel
      *
      * @return rms (ArrayList<Room>) ArrayList of unavailable rooms in the hotel.
      */
-    public ArrayList<Room> getOccupiedRoomsList()
+    public ArrayList<Room> getReservedRoomsList()
     {
         ArrayList<Room> rms = new ArrayList<Room>();
         
-        for (Room rm: rooms) 
+        for (Reservation r: reservations) 
         {
-            if ( !rm.isAvailable() ) 
+            if ( !r.getStatus().equals(Status.WAITING) ) 
             {
-                rms.add(rm);
+                rms.add(r.getRoom());
             }
         }
         return rms;
@@ -302,18 +302,9 @@ public class Hotel
      *
      * @return accum (int) representing number of unavailable rooms in the hotel.
      */
-    public int getOccupiedRooms() 
+    public int getReservedRooms() 
     {
-        int accum = 0;
-        
-        for (Room rm : rooms) 
-        {
-            if ( !rm.isAvailable() ) 
-            {
-                accum++;
-            }
-        }
-        return accum;
+        return getReservedRoomsList().size();
     }
 
     /**

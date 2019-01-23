@@ -319,26 +319,6 @@ public class Reservation
         return "Thank you, payment received. Balance is 0.0.";
     }
     
-    /**
-     * A better option?? This would require small changes to Class Hotel
-     * Sets the Reservation's paymentDue field to 0.0 (simulates the action that
-     * the hotel guest has paid the bill). Returns a double to the Hotel class
-     * so that Hotel Class can increment a revenue field.
-     *
-     * Assume that payment is made in 1 lump sum.
-     * Assume that payment can be made at any time of the reservation process.
-     */
-    /* A better option??
-    public double payBill() {
-    
-        double hotelRevenue = this.paymentDue;
-        
-        this.paymentDue = 0.0;
-        
-        return hotelRevenue;
-        
-    } */
-    
     /* OTHER METHODS */
     
     /**

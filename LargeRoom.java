@@ -9,7 +9,7 @@
 public class LargeRoom extends Room
 {
     /* CLASS CONSTANTS */
-    private static final String ROOM_TYPE = "Large  ";
+    private static final String ROOM_TYPE = "Large";
     
     /**
      * Constructor for LargeRoom object

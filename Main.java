@@ -541,7 +541,7 @@ public class Main
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         System.out.println(" HOTEL REPORT MENU:");
         System.out.println(" Total rooms in hotel: " + hotel.getAllRoomsCount());
-        System.out.println(" Total rooms occupied: " + hotel.getOccupiedRooms());
+        System.out.println(" Total rooms reserved: " + hotel.getReservedRooms());
         System.out.println(" Total guests in hotel: " + totalGuestsIn);
         System.out.println(" Total checkouts: " + checkedOutRes.size());
         System.out.println(" Total cancellations: " + canceledRes.size());
