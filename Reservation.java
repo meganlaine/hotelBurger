@@ -38,6 +38,7 @@ public class Reservation
     private Guest g;
     private Status status;
     private double paymentDue;
+    private double amountPaid;
     
     /**
      * Constructor 1/1 for Reservation object: it assigns a Room and a Guest object
@@ -86,7 +87,7 @@ public class Reservation
     }
     
     /**
-     * Returns a string that represents the charges for the room based on the
+     * Returns a double that represents the charges for the room based on the
      * Room object on the reservation. Takes into account the guest's discounts
      * 
      * @return (double) representing nightly price of Room
@@ -94,6 +95,16 @@ public class Reservation
     public double getPaymentDue()
     {
         return this.paymentDue;
+    }
+    
+    /**
+     * Returns a double that represents the amount paid by the guest
+     * 
+     * @return (double) representing amount paid from bill
+     */
+    public double getAmountPaid()
+    {
+        return this.amountPaid;
     }
     
     /**
@@ -296,15 +307,16 @@ public class Reservation
     }
     
     /**
-     * Sets the Reservation's paymentDue field to 0.0; returns a string confirming payment.
+     * Sets the Reservation's amountPaid field to amountDue and paymentDue field to 0.0; returns a string confirming payment.
      * Assume that payment is made in 1 lump sum.
      * Assume that payment can be made at any time of the reservation process.
      */
     public String payBill() 
     {
+        this.amountPaid = paymentDue;
         this.paymentDue = 0.0;
         
-        return "Thank you, payment received. Balance is 0.";
+        return "Thank you, payment received. Balance is 0.0.";
     }
     
     /**
@@ -348,6 +360,7 @@ public class Reservation
                "Guest: " + g.getLastName() + "\n" +
                "Reservation status: " + status + "\n" + 
                "Payment due: " + getPaymentDue() + "\n" +
+               "Amount paid: " + getAmountPaid() + '\n' +
                "= = = = = = = = = = = = = = = = =";
     }   
     
@@ -368,6 +381,7 @@ public class Reservation
                r.toString() + '\n' +
                "Guest: " + g.toString() + '\n' +
                "Payment due: " + getPaymentDue() + '\n' +
+               "Amount paid: " + getAmountPaid() + '\n' +
                "= = = = = = = = = = = = = = = = = = = = = = = =";
     }
 }

@@ -185,12 +185,13 @@ public class Main
         System.out.println(" 3. See an existing reservation's checkin/out/cancel status"); 
         System.out.println(" 4. Guest info");
         System.out.println(" 5. See an existing reservation's invoice info");        
-        System.out.println(" 6. View all available rooms");        
-        System.out.println(" 7. See help menu");
-        System.out.println(" 8. Quit/close +  save state");
+        System.out.println(" 6. View all available rooms");
+        System.out.println(" 7. View hotel report");        
+        System.out.println(" 8. See help menu");
+        System.out.println(" 9. Quit/close +  save state");
         System.out.println("+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +");
 
-        int selectionInt = getUserInputInt(1,8); 
+        int selectionInt = getUserInputInt(1,9); 
         
         switch( selectionInt )
         {
@@ -213,9 +214,12 @@ public class Main
                 availableRoomsMenu();
                 break; 
             case 7:
+                reportMenu();
+                break;   
+            case 8:
                 helpMenu();
                 break;        
-            case 8:                    
+            case 9:                    
                 input.close();
                 hotel.save();
                 System.exit(0);                
@@ -503,7 +507,53 @@ public class Main
     }
     
     /**
-     * Menu (7) to display information on how to use this program.
+    * Menu (8) to display a report for internal hotel use.
+    * check hotel occupancy (how many guests are currently in hotel)
+    * check how many rooms are occupied
+    * check how many checkouts have occured
+    * check how many cancellations for occured
+    * check total sales and total amountDue
+    */
+    public static void reportMenu()  throws FileNotFoundException 
+    { 
+        ArrayList<Reservation> checkedOutRes = hotel.getCheckedoutReservations();
+        double totalSales = 0.0;
+        
+        for(Reservation res : checkedOutRes) {
+            totalSales += res.getAmountPaid();
+        }
+        
+        ArrayList<Reservation> canceledRes = hotel.getCanceledReservations();
+        
+        ArrayList<Reservation> checkedInRes = hotel.getCheckedInReservations();
+        int totalGuestsIn = 0;
+        for(Reservation res : checkedInRes) {
+            totalGuestsIn += res.getGuest().getPartySize();
+        }
+        
+        ArrayList<Reservation> activeRes = hotel.getActiveReservations();
+        double totalAmountDue = 0.0;
+        for(Reservation res : checkedOutRes) {
+            totalAmountDue += res.getPaymentDue();
+        }
+        
+        // print a blank line followed by menu title
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        System.out.println(" HOTEL REPORT MENU:");
+        System.out.println(" Total rooms in hotel: " + hotel.getAllRoomsCount());
+        System.out.println(" Total rooms occupied: " + hotel.getOccupiedRooms());
+        System.out.println(" Total guests in hotel: " + totalGuestsIn);
+        System.out.println(" Total checkouts: " + checkedOutRes.size());
+        System.out.println(" Total cancellations: " + canceledRes.size());
+        
+        System.out.println(" Total amount due on active unpaid reservations: " + "$" + totalAmountDue);
+        System.out.println(" Total sales: " + "$" + totalSales);
+        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
+        returnToMainMenuPrompt();
+    }
+    
+    /**
+     * Menu (8) to display information on how to use this program.
      */
     private static void helpMenu() throws FileNotFoundException 
     {

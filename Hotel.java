@@ -17,7 +17,7 @@ public class Hotel
     private String address;
     private String phoneNumber;
     private ArrayList<Reservation> reservations;
-    public ArrayList<Room> rooms;
+    private ArrayList<Room> rooms;
     
     /**
      * Hotel Constructor 1/1 (Constructor used from Main client code.)
@@ -326,6 +326,16 @@ public class Hotel
         return rooms;
     }
 
+     /**
+     * Returns the ArrayList<Room> that 'contains' all Room objects in this hotel.
+     *
+     * @return rooms (ArrayList<Room>) representing all Room objects in the hotel.
+     */
+    public int getAllRoomsCount() 
+    {
+        return rooms.size();
+    }
+    
     /**
      * Returns a room object when the room number matches the argument.
      * 
@@ -433,6 +443,66 @@ public class Hotel
         return arr;
     }
      
+     /**
+     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
+     * guest checked out, 
+     * 
+     * @return ArrayList<Reservation> of all checkedout reservations.
+     */
+    public ArrayList<Reservation> getCheckedInReservations()
+    {
+        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+        
+        for (Reservation r : reservations) 
+        {
+            if (r.getStatus().equals(Status.IN)) 
+            {
+                arr.add(r);
+            }
+        }
+        return arr;
+    }
+    
+    /**
+     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
+     * guest checked out, 
+     * 
+     * @return ArrayList<Reservation> of all checkedout reservations.
+     */
+    public ArrayList<Reservation> getCheckedoutReservations()
+    {
+        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+        
+        for (Reservation r : reservations) 
+        {
+            if (r.getStatus().equals(Status.OUT)) 
+            {
+                arr.add(r);
+            }
+        }
+        return arr;
+    }
+    
+      /**
+     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
+     * guest canceled, 
+     * 
+     * @return ArrayList<Reservation> of all canceled reservations.
+     */
+    public ArrayList<Reservation> getCanceledReservations()
+    {
+        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+        
+        for (Reservation r : reservations) 
+        {
+            if (r.getStatus().equals(Status.CANCELED)) 
+            {
+                arr.add(r);
+            }
+        }
+        return arr;
+    }
+    
     /**
      * Returns an ArrayList of strings representing 'invoices' in the hotel 
      * where there is NO balance due.
