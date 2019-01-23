@@ -47,6 +47,19 @@ public class RegularRoom extends Room
         return result;
     }
     
+    /**
+     * Returns the Room's RoomType as a String.
+     * 
+     * @return (String) the room's RoomType
+     */
+    
+    @Override
+    public String getRoomType()
+    {
+        return ROOM_TYPE;
+    }
+    
+    
     /* OTHER METHODS */
     
     /**
