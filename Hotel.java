@@ -651,4 +651,13 @@ public class Hotel
         }
         return null;
     }
+    
+    public Reservation findReservation(String roomNum){
+        for(Reservation reserve: reservations) {
+            if(reserve.getRoom().getRoomNumber().equals(roomNum)&&(reserve.getStatus() == Status.IN || reserve.getStatus() == Status.WAITING)) {
+                return reserve;
+            }
+        }
+        return null;
+    }
 }
