@@ -72,15 +72,15 @@ public class Hotel
         String bedtype;
         String roomtype;
         Room room;
-
-        while (input.hasNextLine()) {
-
+        
+        while (input.hasNextLine())
+        {
             // We expect String roomNum.
             roomNum = input.next();
-
+            
             // We expect int floor.
-            floor = input.nextInt();            
-
+            floor = input.nextInt();
+            
             // We expect int capacity.
             capacity = input.nextInt();
 
