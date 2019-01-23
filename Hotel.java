@@ -616,4 +616,48 @@ public class Hotel
             phoneNumber + "\n" +
             "=========================" + "\n";
     }
+    
+    /**
+     *  methods used in GUI
+     */
+    
+    public ArrayList<String> getEmptyRoomNum() {
+        ArrayList<String> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(!rm.isAvailable()) {
+                rms.add(rm.getRoomNumber());
+            }
+        }
+        return rms;
+    }
+    
+    
+    public ArrayList<String> getOccupiedRoomNum() {
+        ArrayList<String> rms = new ArrayList<>();
+        for(Room rm: rooms) {
+            if(rm.isAvailable()) {
+                rms.add(rm.getRoomNumber());
+            }
+        }
+        return rms;
+    }
+    
+    public ArrayList<Reservation> getReservations(Status status){
+        ArrayList<Reservation> res = new ArrayList<>();
+        for(Reservation reserve: reservations) {
+            if(reserve.getStatus() == status) {
+                res.add(reserve);
+            }
+        }
+        return res;
+    }
+    
+    public Reservation findReservation(Guest guest){
+        for(Reservation reserve: reservations) {
+            if(reserve.getGuest().equals(guest)) {
+                return reserve;
+            }
+        }
+        return null;
+    }
 }
