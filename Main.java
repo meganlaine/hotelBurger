@@ -19,7 +19,7 @@ public class Main
     public static void main(String[] args) throws FileNotFoundException 
     {
         // instantiate a Hotel object using the constructor that takes a text file of Room info
-        hotel = new Hotel("HotelBurgerwithRooms.txt");
+        hotel = new Hotel("hotelrooms.txt");
         
         // add all existing/saved reservations (from a text file) to the Hotel object
         hotel.fillReservationArrayList("HotelBurgerReservations.txt");
