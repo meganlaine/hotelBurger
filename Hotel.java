@@ -296,17 +296,36 @@ public class Hotel
     }
 
     /**
-     * Returns the number of unavailable rooms in the hotel. 
-     * A reserved room is considered unavailable. 
-     * A room with a checked in guest is considered unavailable.
-     *
-     * @return accum (int) representing number of unavailable rooms in the hotel.
+     * Returns the number of reserved rooms in the hotel. 
+     * A room is considered reserved if the reservation status is WAITING. 
+     * 
+     * @return accum (int) representing number of reserved rooms in the hotel.
      */
-    public int getReservedRooms() 
+    public int getTotalReservedRooms() 
     {
         return getReservedRoomsList().size();
     }
 
+     /**
+     * Returns the number of occupied rooms in the hotel. 
+     * A room with a reservation with status IN is considered occupied. 
+     * 
+     * @return accum (int) representing number of occupied rooms in the hotel.
+     */
+    public int getTotalOccupiedRooms() {
+        int totalOccupied = 0;
+        
+        for (Reservation r: reservations) 
+        {
+            if (r.getStatus().equals(Status.IN)) 
+            {
+                ++totalOccupied;
+            }
+        }
+        
+        return totalOccupied;
+    }
+    
     /**
      * Returns the ArrayList<Room> that 'contains' all Room objects in this hotel.
      *
@@ -432,68 +451,8 @@ public class Hotel
             }
         }
         return arr;
-    }
-     
-     /**
-     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
-     * guest checked out, 
-     * 
-     * @return ArrayList<Reservation> of all checkedout reservations.
-     */
-    public ArrayList<Reservation> getCheckedInReservations()
-    {
-        ArrayList<Reservation> arr = new ArrayList<Reservation>();
-        
-        for (Reservation r : reservations) 
-        {
-            if (r.getStatus().equals(Status.IN)) 
-            {
-                arr.add(r);
-            }
-        }
-        return arr;
-    }
-    
-    /**
-     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
-     * guest checked out, 
-     * 
-     * @return ArrayList<Reservation> of all checkedout reservations.
-     */
-    public ArrayList<Reservation> getCheckedoutReservations()
-    {
-        ArrayList<Reservation> arr = new ArrayList<Reservation>();
-        
-        for (Reservation r : reservations) 
-        {
-            if (r.getStatus().equals(Status.OUT)) 
-            {
-                arr.add(r);
-            }
-        }
-        return arr;
-    }
-    
-      /**
-     * Returns an ArrayList of Reservation objects from the hotel if Reservation status is 
-     * guest canceled, 
-     * 
-     * @return ArrayList<Reservation> of all canceled reservations.
-     */
-    public ArrayList<Reservation> getCanceledReservations()
-    {
-        ArrayList<Reservation> arr = new ArrayList<Reservation>();
-        
-        for (Reservation r : reservations) 
-        {
-            if (r.getStatus().equals(Status.CANCELED)) 
-            {
-                arr.add(r);
-            }
-        }
-        return arr;
-    }
-    
+    }  
+  
     /**
      * Returns an ArrayList of strings representing 'invoices' in the hotel 
      * where there is NO balance due.
@@ -636,6 +595,73 @@ public class Hotel
 
         }
     }
+    
+    /**
+     * Calculates the total of all paid reservations.
+     */
+    public double getTotalSales() {     
+        double totalSales = 0.0;
+        
+        for(Reservation res : reservations) {
+            totalSales += res.getAmountPaid();
+        }   
+        
+        return totalSales;
+    }
+    
+    /**
+     * Calculates the total of all unpaid reservations
+     */
+    public double getTotalPaymentDue() {        
+        double totalAmountDue = 0.0;
+        
+        for(Reservation res : reservations) {
+            totalAmountDue += res.getPaymentDue();
+        }
+        
+        return totalAmountDue;
+    }
+    
+    /**
+     * Gets a count of all the guests currently checked into the hotel accounting for party size
+     * 
+     */
+    public int getTotalGuestsInHotel() {
+        int countGuests = 0;
+        
+        for(Reservation res : reservations) {
+            if(res.getStatus().equals(Status.IN)) countGuests += res.getPartySize();
+        }
+        
+        return countGuests;
+    }
+    
+     /**
+     * Calculates how many reservations with Status OUT
+     */
+    public int getTotalCheckedOutReservations() {
+        int totalCheckouts = 0;
+        
+        for(Reservation res : reservations) {
+            if(res.getStatus().equals(Status.OUT)) ++totalCheckouts;
+        }
+        
+        return totalCheckouts;
+    }
+    
+    /**
+     * Calculates how many reservations with Status CANCELED
+     */
+    public int getTotalCanceledReservations() {
+        int totalCancellations = 0;
+        
+        for(Reservation res : reservations) {
+            if(res.getStatus().equals(Status.CANCELED)) ++totalCancellations;
+        }
+        
+        return totalCancellations;
+    }
+    
     /**
      * Method toString overrides Object class's toString method; returns info about the hotel.
      *

@@ -1,5 +1,3 @@
 
 2 1 201 Mike Fields 3606666666 false false false CANCELED
 2 1 10SA Darren Folds 2066666969 false false false WAITING
-2 9 902 FAKE Guy 8888888888 false false false IN
-2 10 901 Fake Military 9999999999 true false false IN

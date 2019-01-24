@@ -572,39 +572,19 @@ public class Main
     * check total sales and total amountDue
     */
     public static void reportMenu()  throws FileNotFoundException 
-    { 
-        ArrayList<Reservation> checkedOutRes = hotel.getCheckedoutReservations();
-        double totalSales = 0.0;
-        
-        for(Reservation res : checkedOutRes) {
-            totalSales += res.getAmountPaid();
-        }
-        
-        ArrayList<Reservation> canceledRes = hotel.getCanceledReservations();
-        
-        ArrayList<Reservation> checkedInRes = hotel.getCheckedInReservations();
-        int totalGuestsIn = 0;
-        for(Reservation res : checkedInRes) {
-            totalGuestsIn += res.getPartySize();
-        }
-        
-        ArrayList<Reservation> activeRes = hotel.getActiveReservations();
-        double totalAmountDue = 0.0;
-        for(Reservation res : checkedOutRes) {
-            totalAmountDue += res.getPaymentDue();
-        }
-        
+    {                
         // print a blank line followed by menu title
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         System.out.println(" HOTEL REPORT MENU:");
         System.out.println(" Total rooms in hotel: " + hotel.getAllRoomsCount());
-        System.out.println(" Total rooms reserved: " + hotel.getReservedRooms());
-        System.out.println(" Total guests in hotel: " + totalGuestsIn);
-        System.out.println(" Total checkouts: " + checkedOutRes.size());
-        System.out.println(" Total cancellations: " + canceledRes.size());
+        System.out.println(" Total rooms reserved (not checked in): " + hotel.getTotalReservedRooms());
+        System.out.println(" Total rooms checked in: " + hotel.getTotalOccupiedRooms());
+        System.out.println(" Total guests checked into hotel: " + hotel.getTotalGuestsInHotel());
+        System.out.println(" Total checkouts: " + hotel.getTotalCheckedOutReservations());
+        System.out.println(" Total cancellations: " + hotel.getTotalCanceledReservations());
         
-        System.out.println(" Total amount due on active unpaid reservations: " + String.format("$ %.2f", totalAmountDue));
-        System.out.println(" Total sales: " + String.format("$ %.2f", totalSales));
+        System.out.println(" Total amount due on active unpaid reservations: " + String.format("$ %.2f", hotel.getTotalPaymentDue()));
+        System.out.println(" Total sales: " + String.format("$ %.2f", hotel.getTotalSales()));
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         returnToMainMenuPrompt();
     }
