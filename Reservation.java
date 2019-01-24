@@ -31,15 +31,17 @@ public class Reservation
     /* CLASS CONSTANTS */
     // how many reservation objects have been created - to generate reservation IDs
     private static int counter = 100;
-    
+
     /* INSTANCE VARIABLES */
     private int reservationID; // should this be a String?? we might not want people to be able to alter this.
     private Room r;
     private Guest g;
     private Status status;
+    private int partySize;
+    private int nights;
     private double paymentDue;
     private double amountPaid;
-    
+
     /**
      * Constructor 1/1 for Reservation object: it assigns a Room and a Guest object
      * to the reservation. It also assigns an ID number to the Reservation
@@ -48,34 +50,37 @@ public class Reservation
      * @param g (Guest) the Guest listed on the reservation
      * @param status (Status) status of the reservation.
      */
-    public Reservation( Room r, Guest g, Status status )
+    public Reservation( Room r, Guest g, Status status, int partySize, int nights)
     {
         // call setRoom first 
         // (which will validate if room is available)
         // (it will also change room availability)
         setRoom( r );
-        
+
         // initialize the status of the Reservation 
         // (it will validate the status change)
         setStatus( status );
-        
+
         // initialize the Guest object
         setGuest( g );
-        
+
+        setPartySize( partySize );
+        setNights( nights );
+
         // initialize setPaymentDue; (applies discounts based on Guest's booleans)
         if (this.status != Status.CANCELED) 
         {       
             setPaymentDue();
-        }
-        
+        }       
+
         /* Everytime a new reservation object is made, increment a counter first and then 
          * assign that number to the reservationID;
          * Should reservationID be a String so that people can't alter it in later uses?? */
         this.reservationID = ++counter;
     }
-    
+
     /* ACCESSOR METHODS */
-    
+
     /**
      * Returns an int representing the Reservation object's id number.
      * 
@@ -85,7 +90,7 @@ public class Reservation
     {
         return this.reservationID;
     }
-    
+
     /**
      * Returns a double that represents the charges for the room based on the
      * Room object on the reservation. Takes into account the guest's discounts
@@ -96,7 +101,7 @@ public class Reservation
     {
         return this.paymentDue;
     }
-    
+
     /**
      * Returns a double that represents the amount paid by the guest
      * 
@@ -106,7 +111,7 @@ public class Reservation
     {
         return this.amountPaid;
     }
-    
+
     /**
      * Returns the status of the Reservation in string format.
      * 
@@ -116,9 +121,29 @@ public class Reservation
     {
         return this.status;
     }
-    
+
+    /**
+     * Method getPartySize returns how many people are in the guest's party (including guest)
+     *
+     * @return (int) the size of the guest's party
+     */
+    public int getPartySize() 
+    {
+        return partySize;
+    }
+
+    /**
+     * Method getNights returns how many nights the guest is staying
+     *
+     * @return (int) the number of nights the guest is staying
+     */
+    public int getNights() 
+    {
+        return nights;
+    }
+
     /* MUTATOR METHODS */
-    
+
     /**
      * Sets the guest object. at the moment doesnt have any safety measures.
      *
@@ -128,7 +153,7 @@ public class Reservation
     {
         this.g = g;
     }
-    
+
     /**
      * setPaymentDue 1/2: overloaded method; Calculates and sets what payment is due based on 
      * this Reservation's Room type and Guest discounts. 
@@ -136,30 +161,30 @@ public class Reservation
      */
     public void setPaymentDue() 
     {
-        double result = r.getRate() * g.getNights();
-            
+        double result = r.getRate() * getNights();
+
         // if guest is government employee, apply the highest discount: 9%
         if ( g.isGovernment() ) 
         {
             result *= (1 - 0.09);
         }
-        
+
         // if guest is not government but military, apply second highest discount: 7%
         else if ( !g.isGovernment() && g.isMilitary() )
         {
             result *= (1 - 0.07);
         }
-        
+
         // if guest is member only (not govt, not mil), apply the lowest discount (5%)
         else if ( !g.isGovernment() && !g.isMilitary() && g.isMember() ) 
         {
             result *= (1 - 0.05);
         }
-        
+
         // if guest is neither govt nor mil nor member, no discount is applied
         this.paymentDue = result;        
     }
-    
+
     /**
      * setPaymentDue 2/2: overloaded method that sets paymentDue to 0.0 if the reservation 
      * gets cancelled.
@@ -173,10 +198,10 @@ public class Reservation
         {
             throw new IllegalArgumentException("Amount due cannot be less than 0");
         }
-        
+
         this.paymentDue = amount;
     }
-    
+
     /**
      * Sets the status of the Reservation. 
      * As a reminder, a status can be: (IN, OUT, CANCELED, WAITING)
@@ -193,7 +218,7 @@ public class Reservation
             throw new IllegalArgumentException("The reservation status is " + 
                 "already what you're trying to change it to.");
         }
-        
+
         // if wanting to change Status to CANCELED,
         // check first that the reservation is not already completed.
         // if a valid request: make the room available, and zero out room charges
@@ -204,10 +229,10 @@ public class Reservation
                 throw new IllegalArgumentException("You can't cancel an already completed reservation.");
             }
             r.setAvailable(true);
-            
+
             this.setPaymentDue(0.0);
         }
-        
+
         // to set status to IN, check first that this reservation was not already canceled.
         // if a valid request, set the room to 'unavailable'.
         if ( s == Status.IN )
@@ -218,7 +243,7 @@ public class Reservation
             }            
             r.setAvailable(false);
         }
-        
+
         // to set status to OUT, check first that this reservation was not already canceled.
         // if a valid request, free up the room
         if ( s == Status.OUT ) 
@@ -242,11 +267,45 @@ public class Reservation
             }
             r.setAvailable(false);
         }
-        
+
         // if you've made it here, it means you can safely change the status of the reservation
         this.status = s;
     }
-    
+
+    /**
+     * Method setPartySize sets the guest's party size, if valid. a valid party size is 
+     * 1-6. The higher number, 6, could depend on the hotel's fire codes.
+     *
+     * @param num (int) representing how many people are in the reserving party
+     * @throw IllegalArgumentException if the party is smaller than 1 or bigger than 6
+     */
+    public void setPartySize(int num) 
+    {
+        if (num < 1 || num > 6)
+        {
+            throw new IllegalArgumentException("The party size number must be between 1 and 6. \nIf greater than 6, you must book additional reservations.");
+        }
+
+        partySize = num;
+    }
+
+    /**
+     * Method setNights sets the number of nights the guest is staying, if valid. a valid 
+     * stay cannot be less than 1 night, and cannot be more than 90 days.
+     *
+     * @param nights (int) representing how many nights the guest will stay
+     * @throw IllegalArgumentException if the number of nights is less than 1, more than 90.
+     */
+    public void setNights(int nights) 
+    {
+        if ( nights < 1 || nights > 90 ) 
+        {
+            throw new IllegalArgumentException("Number of nights for a reservation must be between 1 and 90");
+        }
+
+        this.nights = nights;
+    }
+
     /**
      * This method returns the room object of this reservation.
      */
@@ -254,15 +313,15 @@ public class Reservation
     {
         return this.r;
     }
-    
+
     /**
-    * This method returns the guest object of this reservation.
-    */
+     * This method returns the guest object of this reservation.
+     */
     public Guest getGuest() 
     {
         return this.g;
     }    
-    
+
     /**
      * Sets the Reservation's room. Validates that the room in question is available. 
      * Sets the room availability to false.
@@ -277,12 +336,12 @@ public class Reservation
             throw new IllegalArgumentException("You can't make a reservation for this room; " + 
                 "it is not available.");
         }
-        
+
         this.r = r;
-        
+
         r.setAvailable(false);
     }
-    
+
     /**
      * Changes the Reservation's room from this to other by calling the pre-existing method 
      * "setRoom(Room r)"; Frees this room up before the change.
@@ -297,15 +356,15 @@ public class Reservation
             throw new IllegalArgumentException("You can't change to the room you requested;"
                 + " it is not available.");
         }
-        
+
         // free up this Room for other guests.
         this.r.setAvailable(true);
-        
+
         // calling this method will change the room on the reservation
         // it will also make it reserved/not-bookable by other guests.
         setRoom(other);
     }
-    
+
     /**
      * Sets the Reservation's amountPaid field to amountDue and paymentDue field to 0.0; returns a string confirming payment.
      * Assume that payment is made in 1 lump sum.
@@ -315,12 +374,12 @@ public class Reservation
     {
         this.amountPaid = paymentDue;
         this.paymentDue = 0.0;
-        
+
         return "Thank you, payment received. Balance is 0.0.";
     }
-    
+
     /* OTHER METHODS */
-    
+
     /**
      * Method to get invoice-like info on this reservation
      * 
@@ -330,20 +389,20 @@ public class Reservation
     {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date date = new Date();
-        
+
         return "\n" +
-               "= = = = = = = = = = = = = = = = =" + "\n" +
-               "Invoice# " + getReservationID() + 
-                    " Reservation ID#: " + getReservationID() + "\n" +   
-               "= = = = = = = = = = = = = = = = =" + "\n" +
-               "Invoice Date: " + dateFormat.format(date) + "\n" +                           
-               "Guest: " + g.getLastName() + "\n" +
-               "Reservation status: " + status + "\n" + 
-               "Payment due: " + getPaymentDue() + "\n" +
-               "Amount paid: " + getAmountPaid() + '\n' +
-               "= = = = = = = = = = = = = = = = =";
+        "= = = = = = = = = = = = = = = = =" + "\n" +
+        "Invoice# " + getReservationID() + 
+        " Reservation ID#: " + getReservationID() + "\n" +   
+        "= = = = = = = = = = = = = = = = =" + "\n" +
+        "Invoice Date: " + dateFormat.format(date) + "\n" +                           
+        "Guest: " + g.getLastName() + "\n" +
+        "Reservation status: " + status + "\n" + 
+        "Payment due: $ " + String.format("%.2f", getPaymentDue()) + '\n' +
+        "Amount paid: $ " + String.format("%.2f", getAmountPaid()) + '\n' +
+        "= = = = = = = = = = = = = = = = =";
     }   
-    
+
     /**
      * Returns a String with information about this Reservation instance.
      * Shows all aspects about the reservation: 
@@ -355,13 +414,14 @@ public class Reservation
     public String toString()
     {
         return "\n" +
-               "= = = = = = = = = = = = = = = = = = = = = = = =" + '\n' +
-               "Reservation ID#: " + getReservationID() + '\n' +
-               "Status: " + getStatus() + '\n' +
-               r.toString() + '\n' +
-               "Guest: " + g.toString() + '\n' +
-               "Payment due: " + getPaymentDue() + '\n' +
-               "Amount paid: " + getAmountPaid() + '\n' +
-               "= = = = = = = = = = = = = = = = = = = = = = = =";
+        "= = = = = = = = = = = = = = = = = = = = = = = =" + '\n' +
+        "Reservation ID#: " + getReservationID() + '\n' +
+        "Status: " + getStatus() + '\n' +
+        r.toString() + '\n' +
+        "Party: " + partySize + ", Nights: " + nights +  "\n" + 
+        "Guest: " + g.toString() + '\n' +
+        "Payment due: $ " + String.format("%.2f", getPaymentDue()) + '\n' +
+        "Amount paid: $ " + String.format("%.2f", getAmountPaid()) + '\n' +
+        "= = = = = = = = = = = = = = = = = = = = = = = =";
     }
 }

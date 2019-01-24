@@ -180,10 +180,10 @@ public class Hotel
 
             //make a guest object
             guest = new Guest(firstName, lastName, phoneNumber, 
-                partySize, nights, isMilitary, isGov, isMember);
+                isMilitary, isGov, isMember);
             
             // make the reservation
-            reservation = new Reservation(room, guest, status);
+            reservation = new Reservation(room, guest, status, partySize, nights);
             
             this.addReservation(reservation);
         }
@@ -208,8 +208,8 @@ public class Hotel
             Guest g = r.getGuest();
             Room room = r.getRoom();
             output.println();
-            output.print(g.getPartySize() + " ");
-            output.print(g.getNights() + " ");
+            output.print(r.getPartySize() + " ");
+            output.print(r.getNights() + " ");
             output.print(room.getRoomNumber() + " ");
             output.print(g.getFirstName() + " ");
             output.print(g.getLastName() + " ");

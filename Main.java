@@ -245,7 +245,8 @@ public class Main
         boolean isGov;
         boolean isMember;
         Guest guest;
-        ArrayList<Room> availableRooms;
+        ArrayList<Room> availableRooms = hotel.getEmptyRooms();
+        Reservation reservation = null;
         
         // print a blank line followed by menu title
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
@@ -264,7 +265,11 @@ public class Main
         availableRooms = hotel.getEmptyRooms();
         
         System.out.println( " These rooms are available:");        
-        System.out.println(availableRooms); 
+        for (Room r : availableRooms)
+        {
+           System.out.println(r);
+        }
+        
         System.out.println( " Enter the roomNumber you want to reserve or 0 to cancel:");
         roomNumber = input.next();   
         room = hotel.getRoom(roomNumber);
@@ -308,15 +313,22 @@ public class Main
         in = getUserInputInt(0,1);
         isMember = (in == 1); 
         
-        // construct the Guest object
-        guest = new Guest(firstName, lastName, phoneNumber, 
-            partySize, nights, isMilitary, isGov, isMember);
-        
-        // construct the Reservation object (note: it's also possible to set status to waiting)
-        Reservation reservation = new Reservation(room, guest, Status.IN);
-        
-        // add the reservation to the hotel
-        hotel.addReservation(reservation);
+        //try to construct the objects and catch exceptions gracefully
+        try
+        {
+            guest = new Guest(firstName, lastName, phoneNumber, 
+                isMilitary, isGov, isMember);
+            
+            // construct the Reservation object (note: it's also possible to set status to waiting)
+            reservation = new Reservation(room, guest, Status.IN, partySize, nights);
+            
+            // add the reservation to the hotel
+            hotel.addReservation(reservation);
+        } catch(Exception e) {
+            System.out.println("Error: " + e);
+            System.out.println("Please try again");
+            makeReservationMenu();
+        }
         
         System.out.println( "Your reservation was successfully created:");         
         System.out.println(reservation);
@@ -377,18 +389,25 @@ public class Main
                 {
                     System.out.println(r);
                 }
-                System.out.println(" Enter the room number you want to change to (ie 301):");
+                System.out.println(" Enter the room number you want to change to (ie 301) or 0 to cancel:");
                 
                 //System.out.println(hotel.getEmptyRooms());
                 newRoomNumber = input.next();                
                 newRoom = hotel.getRoom(newRoomNumber);
-                while ( newRoom == null || !newRoom.isAvailable() )
+                if(newRoomNumber.equals("0")) {
+                    mainMenu();             
+                }
+                
+                while ( newRoom == null || !newRoom.isAvailable())
                 {
                     System.out.println(" Room not entered correctly or already reserved, try again");
                     newRoomNumber = input.next();                
                     newRoom = hotel.getRoom(newRoomNumber);
-                }
-                    
+                }if(newRoomNumber.equals("0")) {
+                    mainMenu();
+                    break;    
+                }                
+                
                 reservation.setRoom(newRoom);
                 System.out.println("Successfully changed room to room # " + newRoomNumber);
                 break;
@@ -530,17 +549,15 @@ public class Main
      * Menu to see all available rooms.
      */
     private static void availableRoomsMenu() throws FileNotFoundException 
-    {
-        ArrayList<Room> availableRooms = hotel.getEmptyRooms();
-        
+    {   
         // print a blank line followed by menu title
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         System.out.println(" AVAILABLE ROOMS MENU:");
         
         System.out.println( " These rooms are available:");
-        for (Room r: availableRooms)
+        for (Room r: hotel.getEmptyRooms())
         {
-            System.out.println('\t' + r.toString());
+            System.out.println(r);
         }
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         returnToMainMenuPrompt();
@@ -568,7 +585,7 @@ public class Main
         ArrayList<Reservation> checkedInRes = hotel.getCheckedInReservations();
         int totalGuestsIn = 0;
         for(Reservation res : checkedInRes) {
-            totalGuestsIn += res.getGuest().getPartySize();
+            totalGuestsIn += res.getPartySize();
         }
         
         ArrayList<Reservation> activeRes = hotel.getActiveReservations();

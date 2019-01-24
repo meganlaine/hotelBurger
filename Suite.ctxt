@@ -1,16 +1,16 @@
 #BlueJ class context
 comment0.target=Suite
-comment0.text=\n\ Class\ Suite\ for\ Hotel\ Burger.\n\ $40.00/night\ more\ than\ abstract\ class\ Room.\n\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\n\ @version\ 01/21/2019\n
+comment0.text=\r\n\ Class\ Suite\ for\ Hotel\ Burger.\r\n\ $40.00/night\ more\ than\ abstract\ class\ Room.\r\n\r\n\ @author\ Dale\ Berg,\ Nick\ Coyle,\ Megan\ Laine,\ Steven\ Liu\r\n\ @version\ 01/21/2019\r\n
 comment1.params=roomNum\ floor\ capacity\ bedType
 comment1.target=Suite(java.lang.String,\ int,\ int,\ java.lang.String)
-comment1.text=\n\ Constructor\ for\ Suite\ object\n\ Calls\ super\ method\ to\ construct\ Room\ object\n\ \n\ @param\ roomNum\ (String)\ the\ room\ number\ of\ the\ room\n\ @param\ floor\ (int)\ the\ floor\ where\ room\ located\n\ @param\ capacity\ (int)\ the\ human\ capacity\ of\ the\ room\n\ @param\ bedType\ (String)\ the\ bedtype\ of\ the\ room\n
+comment1.text=\r\n\ Constructor\ for\ Suite\ object\r\n\ Calls\ super\ method\ to\ construct\ Room\ object\r\n\ \r\n\ @param\ roomNum\ (String)\ the\ room\ number\ of\ the\ room\r\n\ @param\ floor\ (int)\ the\ floor\ where\ room\ located\r\n\ @param\ capacity\ (int)\ the\ human\ capacity\ of\ the\ room\r\n\ @param\ bedType\ (String)\ the\ bedtype\ of\ the\ room\r\n
 comment2.params=
 comment2.target=double\ getRate()
-comment2.text=\n\ Returns\ the\ price\ of\ the\ room\ per\ night,\ accounting\ for\ extra\ charge\ due\ to\ room\ \n\ size\ (Suite\ room\ costs\ 40.0/night\ more\ than\ base\ Room),\ and\ if\ the\ room\ is\ on\ a\ \n\ higher\ floor\ (3%\ extra\ charge\ if\ on\ floors\ 6-10).\ Overrides\ the\ \n\ abstract\ class\ Room's\ getRate()\ method.\n\ \n\ @return\ result\ (double)\ representing\ nightly\ price\ of\ Suite\n
+comment2.text=\r\n\ Returns\ the\ price\ of\ the\ room\ per\ night,\ accounting\ for\ extra\ charge\ due\ to\ room\ \r\n\ size\ (Suite\ room\ costs\ 40.0/night\ more\ than\ base\ Room),\ and\ if\ the\ room\ is\ on\ a\ \r\n\ higher\ floor\ (3%\ extra\ charge\ if\ on\ floors\ 6-10).\ Overrides\ the\ \r\n\ abstract\ class\ Room's\ getRate()\ method.\r\n\ \r\n\ @return\ result\ (double)\ representing\ nightly\ price\ of\ Suite\r\n
 comment3.params=
 comment3.target=java.lang.String\ getRoomType()
-comment3.text=\n\ Returns\ the\ Room's\ RoomType\ as\ a\ String.\n\ \n\ @return\ (String)\ the\ room's\ RoomType\n
+comment3.text=\r\n\ Returns\ the\ Room's\ RoomType\ as\ a\ String.\r\n\ \r\n\ @return\ (String)\ the\ room's\ RoomType\r\n
 comment4.params=
 comment4.target=java.lang.String\ toString()
-comment4.text=\n\ Overrides\ the\ abstract\ Room\ Class's\ toString()\ method.\ \n\ For\ example\:\ 'Suite\ Room\:\ 10SB,\ Floor\:\ 10,\ BedType\:\ KING,\ Capacity\:\ 6,\n\ Available?\:\ true,\ PricePerNight\:\ XXX.00'\n\ \n\ @return\ (String)\ representing\ information\ about\ this\ Room\n
+comment4.text=\r\n\ Overrides\ the\ abstract\ Room\ Class's\ toString()\ method.\ \r\n\ For\ example\:\ 'Suite\ Room\:\ 10SB,\ Floor\:\ 10,\ BedType\:\ KING,\ Capacity\:\ 6,\r\n\ Available?\:\ true,\ PricePerNight\:\ XXX.00'\r\n\ \r\n\ @return\ (String)\ representing\ information\ about\ this\ Room\r\n
 numComments=5

@@ -14,9 +14,7 @@ public class Guest
     /* INSTANCE VARIABLES */
     private String firstName;
     private String lastName;
-    private String phoneNumber;
-    private int partySize;
-    private int nights;
+    private String phoneNumber;    
     private boolean isMilitary;
     private boolean isGovernment;
     private boolean isMember;
@@ -33,9 +31,7 @@ public class Guest
     {
         setFirstName(first);
         setLastName(last);
-        phoneNumber = "";
-        partySize = -1;
-        nights = -1;
+        phoneNumber = "";        
         isMilitary = false;
         isGovernment = false;
         isMember = false;
@@ -54,15 +50,12 @@ public class Guest
      * @param isGov (boolean) true if the guest qualifies for government discount
      * @param member (boolean) true if the guest qualifies for membership discount
      */
-    public Guest( String first, String last, String phoneNum,
-                    int partySize, int nights, 
+    public Guest( String first, String last, String phoneNum,                    
                     boolean isMil, boolean isGov, boolean member )
     {
         setFirstName( first );
         setLastName( last );
-        setPhoneNum( phoneNum );
-        setPartySize( partySize );
-        setNights( nights );
+        setPhoneNum( phoneNum );        
         setMil( isMil );
         setGovt( isGov );
         setMembership( member );
@@ -109,27 +102,7 @@ public class Guest
     {
         return firstName + " " + lastName;
     }
-
-    /**
-     * Method getPartySize returns how many people are in the guest's party (including guest)
-     *
-     * @return (int) the size of the guest's party
-     */
-    public int getPartySize() 
-    {
-        return partySize;
-    }
-
-    /**
-     * Method getNights returns how many nights the guest is staying
-     *
-     * @return (int) the number of nights the guest is staying
-     */
-    public int getNights() 
-    {
-        return nights;
-    }
-
+    
     /**
      * Method isMilitary returns true if the guest qualifies for military discount
      *
@@ -213,46 +186,12 @@ public class Guest
         
         if (phoneNum.length() != 10)
         {
-            throw new IllegalArgumentException("Too many/ too few numbers");
+            throw new IllegalArgumentException("Phone number entered has too many/ too few numbers");
         }
 
         phoneNumber = phoneNum;
     }
-
-    /**
-     * Method setPartySize sets the guest's party size, if valid. a valid party size is 
-     * 1-6. The higher number, 6, could depend on the hotel's fire codes.
-     *
-     * @param num (int) representing how many people are in the reserving party
-     * @throw IllegalArgumentException if the party is smaller than 1 or bigger than 6
-     */
-    public void setPartySize(int num) 
-    {
-        if (num < 1 || num > 6)
-        {
-            throw new IllegalArgumentException("The number must be between 1 and 6");
-        }
-
-        partySize = num;
-    }
     
-    /**
-     * Method setNights sets the number of nights the guest is staying, if valid. a valid 
-     * stay cannot be less than 1 night, and cannot be more than 90 days.
-     *
-     * @param nights (int) representing how many nights the guest will stay
-     * @throw IllegalArgumentException if the number of nights is less than 1, more than 90.
-     */
-    public void setNights(int nights) 
-    {
-        if ( nights < 1 || nights > 90 ) 
-        {
-            throw new IllegalArgumentException("Night must be between 1 and 90");
-        }
-        
-        this.nights = nights;
-    }
-
     /**
      * Method setMil sets the military discount status of the guest.
      *
@@ -294,8 +233,7 @@ public class Guest
      */
     public String toString() 
     {
-        return this.getFullName() + " , Phone:" + phoneNumber + "\n" +
-            "Party: " + partySize + ", Nights: " + nights +  "\n" + 
+        return this.getFullName() + " , Phone: " + phoneNumber + "\n" +            
             "Military: " + isMilitary + ", " + 
                 "Government: " + isGovernment + ", " +
                     "Member: " + isMember;        
