@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 
 /**
  * Main class. Creates hotel object and has the console app.
