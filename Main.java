@@ -236,6 +236,7 @@ public class Main
         // variables needed to make reservations
         int partySize = 0;
         int nights = 0;
+        int priceRange = 0;
         String roomNumber;
         Room room;
         String firstName;
@@ -262,12 +263,23 @@ public class Main
         // get the number of nights, must be at least 1
         nights = getUserInputInt(1);
         
-        availableRooms = hotel.getEmptyRooms();
-        
+                // get price range of user
+        System.out.println("What is you price range?");
+        System.out.println("Enter you selection: 1. $150 - $175 or 2. greater than $175");
+        priceRange = getUserInputInt(1,2);
+
+        availableRooms = roomOptionsTrimmer(partySize, priceRange, hotel.getEmptyRooms());
+
         System.out.println( " These rooms are available:");        
-        for (Room r : availableRooms)
-        {
-           System.out.println(r);
+        // We want to a new line after printing 4 rooms, so we need a counter to keep track
+        int newLineCounter = 0;
+        for(Room r : availableRooms) {
+            System.out.print("[ " + r + " ]");
+            newLineCounter++;
+            if(newLineCounter == 2) {
+                System.out.println();
+                newLineCounter = 0;
+            }
         }
         
         System.out.println( " Enter the roomNumber you want to reserve or 0 to cancel:");
@@ -636,5 +648,49 @@ public class Main
             '\t' + "Floors 6-10: Additional 3% per night");
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         returnToMainMenuPrompt();
+    }
+    
+    
+    // this is going to trim our list of available rooms based on user input
+    private static ArrayList<Room> roomOptionsTrimmer(int partySize, int priceRange, ArrayList<Room> rooms) {
+        ArrayList<Room> returnList = rooms;
+
+        // this trims room by comparing party size with stated capacity 
+        for(int i = 0; i < rooms.size(); i++) {
+            Room room = rooms.get(i);
+            if(room.getCapacity() < partySize) {
+                returnList.remove(i);
+                if(i!=0) {
+                    i--;
+                }
+            }
+        }
+
+        // price trimmer for option 1
+        if(priceRange == 1) {
+            for(int i = 0; i < rooms.size(); i++) {
+                Room room = rooms.get(i);
+                if(room.getRate() >= 175) {
+                    returnList.remove(i);
+                    if(i!=0) {
+                        i--;
+                    }
+                }
+            }
+        }
+
+        // Price trimme for option 2
+        if(priceRange == 2) {
+            for(int i = 0; i < rooms.size(); i++) {
+                Room room = rooms.get(i);
+                if(room.getRate() < 175) {
+                    returnList.remove(i);
+                    if(i!=0) {
+                        i--;
+                    }
+                }
+            }
+        }
+        return returnList;
     }
 }
