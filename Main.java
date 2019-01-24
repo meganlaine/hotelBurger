@@ -273,12 +273,18 @@ public class Main
         System.out.println( " These rooms are available:");        
         // We want to a new line after printing 4 rooms, so we need a counter to keep track
         int newLineCounter = 0;
-        for(Room r : availableRooms) {
-            System.out.print("[ " + r + " ]");
-            newLineCounter++;
-            if(newLineCounter == 2) {
-                System.out.println();
-                newLineCounter = 0;
+        if(availableRooms.isEmpty()) {
+            System.out.println("Couldn't find any rooms matching this criteria, try again");
+            makeReservationMenu();
+        }
+        else{
+            for(Room r : availableRooms) {
+                System.out.print("[ " + r + " ]");
+                newLineCounter++;
+                if(newLineCounter == 2) {
+                    System.out.println();
+                    newLineCounter = 0;
+                }
             }
         }
         
@@ -663,43 +669,23 @@ public class Main
     
     // this is going to trim our list of available rooms based on user input
     private static ArrayList<Room> roomOptionsTrimmer(int partySize, int priceRange, ArrayList<Room> rooms) {
-        ArrayList<Room> returnList = rooms;
+        ArrayList<Room> returnList = new ArrayList<>();
+        //System.out.println(rooms.size());
+        Iterator<Room> itr = rooms.iterator();
 
-        // this trims room by comparing party size with stated capacity 
-        for(int i = 0; i < rooms.size(); i++) {
-            Room room = rooms.get(i);
-            if(room.getCapacity() < partySize) {
-                returnList.remove(i);
-                if(i!=0) {
-                    i--;
+        while(itr.hasNext()) {
+            Room rm = itr.next();
+            if(partySize < rm.getCapacity()) {
+                if(priceRange == 1 && rm.getRate() <= 175) {
+                    returnList.add(rm);
+                    System.out.println(returnList.size());
+                }
+                else if(priceRange == 2 && rm.getRate() > 175) {
+                    returnList.add(rm);
+                    System.out.println(returnList.size());
                 }
             }
-        }
 
-        // price trimmer for option 1
-        if(priceRange == 1) {
-            for(int i = 0; i < rooms.size(); i++) {
-                Room room = rooms.get(i);
-                if(room.getRate() >= 175) {
-                    returnList.remove(i);
-                    if(i!=0) {
-                        i--;
-                    }
-                }
-            }
-        }
-
-        // Price trimme for option 2
-        if(priceRange == 2) {
-            for(int i = 0; i < rooms.size(); i++) {
-                Room room = rooms.get(i);
-                if(room.getRate() < 175) {
-                    returnList.remove(i);
-                    if(i!=0) {
-                        i--;
-                    }
-                }
-            }
         }
         return returnList;
     }
