@@ -676,14 +676,12 @@ public class Main
 
         while(itr.hasNext()) {
             Room rm = itr.next();
-            if(partySize < rm.getCapacity()) {
+            if(partySize <= rm.getCapacity()) {
                 if(priceRange == 1 && rm.getRate() <= 175) {
                     returnList.add(rm);
-                    System.out.println(returnList.size());
                 }
                 else if(priceRange == 2 && rm.getRate() > 175) {
                     returnList.add(rm);
-                    System.out.println(returnList.size());
                 }
             }
 
