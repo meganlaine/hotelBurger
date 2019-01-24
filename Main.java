@@ -603,8 +603,8 @@ public class Main
         System.out.println(" Total checkouts: " + checkedOutRes.size());
         System.out.println(" Total cancellations: " + canceledRes.size());
         
-        System.out.println(" Total amount due on active unpaid reservations: " + "$" + totalAmountDue);
-        System.out.println(" Total sales: " + "$" + totalSales);
+        System.out.println(" Total amount due on active unpaid reservations: " + String.format("$ %.2f", totalAmountDue));
+        System.out.println(" Total sales: " + String.format("$ %.2f", totalSales));
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         returnToMainMenuPrompt();
     }
