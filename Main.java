@@ -497,18 +497,48 @@ public class Main
         
         returnToMainMenuPrompt();
     }
-    
+
     /** 
      * Menu to see an existing reservation's guest information.
      */
     private static void guestMenu() throws FileNotFoundException 
     { 
-        // print a blank line followed by menu title
-        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
-        System.out.println(" Guest Menu");
-        System.out.println(" What is the intended functionality of this menu supposed to be?");
-        System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
-        
+        System.out.println("please make a selection: ");
+        System.out.println("1. Look up a guest by name");
+        System.out.println("2. See all guest information in our system");
+        int selection = getUserInputInt(1,2);
+        ArrayList<Reservation> guestReservations = new ArrayList<>(); // this will hold all reservations the guest has ever made
+
+        if(selection == 1) {
+            System.out.println("Please enter the last name of the guest");
+            String name = input.next();
+            guestReservations = hotel.getReservationsByLastName(name); // fill the array
+            if(guestReservations.isEmpty()) {
+                // will be empty if we don't find the guest
+                System.out.println("We couldn't find any guests with that name");
+                returnToMainMenuPrompt();
+            }
+            else {
+                // the first print statement prints the guest (all the same guest, so idx 0)
+                System.out.println(guestReservations.get(0).getGuest());
+                //this prints their resrvation history
+                for(Reservation r : guestReservations) {
+                    System.out.println(guestReservations);
+                    System.out.println();
+                }
+            }
+        }
+        else {
+            // this saves us adding a method elsewhere
+            guestReservations = hotel.getInactiveReservations();
+            guestReservations.addAll(hotel.getActiveReservations());
+            for(Reservation r : guestReservations) {
+                Guest g = r.getGuest();
+                System.out.println(g);
+                System.out.println();
+            }
+        }
+
         returnToMainMenuPrompt();
     }
     
