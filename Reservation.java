@@ -68,7 +68,7 @@ public class Reservation
         setNights( nights );
 
         // initialize setPaymentDue; (applies discounts based on Guest's booleans)
-        if (this.status != Status.CANCELED) 
+        if (this.status == Status.WAITING || this.status == Status.IN) 
         {       
             setPaymentDue();
         }       

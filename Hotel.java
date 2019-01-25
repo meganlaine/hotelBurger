@@ -287,7 +287,7 @@ public class Hotel
         
         for (Reservation r: reservations) 
         {
-            if ( !r.getStatus().equals(Status.WAITING) ) 
+            if ( r.getStatus().equals(Status.WAITING) ) 
             {
                 rms.add(r.getRoom());
             }
@@ -682,16 +682,34 @@ public class Hotel
      */
     public static void test() throws FileNotFoundException {
         Hotel testHotel = new Hotel("hotelrooms.txt");
-        //do some stuff
-        if (!testHotel.getName().equals("Hotel Burger"))
-        {
-            System.out.println("Hotel name is supposed to be Hotel Burger, but is " + testHotel.getName());
-        }
+                       
+        //test basic fields and constructor
+        String name = "Hotel Burger";
+        String address = "2 Pattys Drive, Lettuceville WA";
+        String phone = "206-987-6543";
+        if (!testHotel.getName().equals(name)) System.out.println("Hotel name is supposed to be " + name + ", but is " + testHotel.getName());        
+        if (!testHotel.getAddress().equals(address)) System.out.println("Hotel address is supposed to be " + address + ", but is " + testHotel.getAddress());
+        if (!testHotel.getPhoneNumber().equals(phone)) System.out.println("Hotel phoneNum is supposed to be " + phone + ", but is " + testHotel.getPhoneNumber());
+        
+        // add 4 existing/saved test reservations (from a text file) to the Hotel object
+        testHotel.fillReservationArrayList("hotelreservations.txt");
+        if (testHotel.getAllRoomsCount() != 65) System.out.println("Hotel.getAllRoomsCount() is supposed to be 65, but is " + testHotel.getAllRoomsCount());
+        if (testHotel.getTotalOccupiedRooms() != 1) System.out.println("Hotel.getTotalOccupiedRooms() is supposed to be 1, but is " + testHotel.getTotalOccupiedRooms());
+        if (testHotel.getTotalReservedRooms() != 1) System.out.println("Hotel.getTotalReservedRooms() is supposed to be 1, but is " + testHotel.getTotalReservedRooms());
+        if (testHotel.getNumReservations() != 4) System.out.println("Hotel.getNumReservations() is supposed to be 4, but is " + testHotel.getNumReservations());
+        
+        if (testHotel.getTotalCanceledReservations() != 1) System.out.println("Hotel.getTotalCanceledReservations() is supposed to be 1, but is " + testHotel.getTotalCanceledReservations());
+        if (testHotel.getTotalCheckedOutReservations() != 1) System.out.println("Hotel.getTotalCheckedOutReservations() is supposed to be 1, but is " + testHotel.getTotalCheckedOutReservations());
+              
+        if (testHotel.getTotalGuestsInHotel() != 2) System.out.println("Hotel.getTotalGuestsInHotel() is supposed to be 2, but is " + testHotel.getTotalGuestsInHotel());
+
+        if (Math.floor(testHotel.getTotalPaymentDue()) != Math.floor(150.00 + 195.70)) System.out.println("Hotel.getTotalPaymentDue() is supposed to be 345.70, but is " + Math.floor(testHotel.getTotalPaymentDue()));
+        if (Math.floor(testHotel.getTotalSales()) != Math.floor(0.0)) System.out.println("Hotel.getTotalSales() is supposed to be 0.0, but is " + Math.floor(testHotel.getTotalSales()));
     }
     
     public Reservation findReservation(String roomNum){
         for(Reservation reserve: reservations) {
-            if(reserve.getRoom().getRoomNumber().equals(roomNum)&&(reserve.getStatus() == Status.IN || reserve.getStatus() == Status.WAITING)) {
+            if(reserve.getRoom().getRoomNumber().equals(roomNum) && (reserve.getStatus() == Status.IN || reserve.getStatus() == Status.WAITING)) {
                 return reserve;
             }
         }

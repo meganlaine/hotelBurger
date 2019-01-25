@@ -19,6 +19,7 @@ public class Main
     
     public static void main(String[] args) throws FileNotFoundException 
     {
+        Hotel.test();
         // instantiate a Hotel object using the constructor that takes a text file of Room info
         hotel = new Hotel("hotelrooms.txt");
         
