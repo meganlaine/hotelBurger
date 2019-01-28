@@ -58,7 +58,7 @@ public class UI_MakeReservation extends JFrame
         tf1 = new JTextField("First Name     ");
         tf2 = new JTextField("Middle Initial ");
         tf3 = new JTextField("Last Name      ");
-        tf4 = new JTextField("(123)456-7890  ");
+        tf4 = new JTextField("1234567890     ");
         //tf5 = new JTextField("Membership Number   ");
         //tf6 = new JTextField("DOB mm/dd/yyyy   ");
         //tf7 = new JTextField("E-mail address               ");
