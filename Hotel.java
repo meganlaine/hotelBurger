@@ -18,7 +18,7 @@ public class Hotel
     private String phoneNumber;
     private ArrayList<Reservation> reservations;
     private ArrayList<Room> rooms;
-    
+
     /**
      * Hotel Constructor 1/1 (Constructor used from Main client code.)
      * Reads data from the hotel text file, and populates the ArrayList<Room>
@@ -27,7 +27,7 @@ public class Hotel
     {     
         rooms = new ArrayList<Room>();
         reservations = new ArrayList<Reservation>();
-        
+
         File inFile = new File(fileName);
         input = new Scanner(inFile);
 
@@ -38,22 +38,22 @@ public class Hotel
 
         // We expect line 1 to have the name of the hotel
         String name = input.nextLine();
-        
+
         // We expect line 2 to have the address of the hotel
         String address = input.nextLine();
-        
+
         // We expect line 3 to have the phone number of the hotel
         String phoneNumber = input.nextLine();
-        
+
         // reset the name/address/phone number of the hotel
         setName(name);
         setAddress(address);
         setPhoneNumber(phoneNumber);
-        
+
         // 'fill' the room arraylist with different rooms available in the hotel
         fillRoomArrayList();
     }
-    
+
     /* METHODS UTILIZED BY THE CONSTRUCTORS */
 
     /**
@@ -72,15 +72,15 @@ public class Hotel
         String bedtype;
         String roomtype;
         Room room;
-        
+
         while (input.hasNextLine())
         {
             // We expect String roomNum.
             roomNum = input.next();
-            
+
             // We expect int floor.
             floor = input.nextInt();
-            
+
             // We expect int capacity.
             capacity = input.nextInt();
 
@@ -90,30 +90,30 @@ public class Hotel
 
             // We expect RoomType ROOMTYPE. SEE NOTE above for parsing Strings as enum values
             roomtype = input.next();
-            
+
             switch( roomtype )
             {
                 case "REGULAR":
-                    room = new RegularRoom(roomNum, floor, capacity, bedtype);
-                    break;
-                    
+                room = new RegularRoom(roomNum, floor, capacity, bedtype);
+                break;
+
                 case "LARGE":
-                    room = new LargeRoom(roomNum, floor, capacity, bedtype);
-                    break;
-                    
+                room = new LargeRoom(roomNum, floor, capacity, bedtype);
+                break;
+
                 case "SUITE":
-                    room = new Suite(roomNum, floor, capacity, bedtype);
-                    break;
-                    
+                room = new Suite(roomNum, floor, capacity, bedtype);
+                break;
+
                 default:
-                    room = new RegularRoom(roomNum, floor, capacity, bedtype);
-                    break;
+                room = new RegularRoom(roomNum, floor, capacity, bedtype);
+                break;
             }            
 
             this.addRoom(room);
         }
     }
-    
+
     public void addRoom(Room room)
     {
         rooms.add(room);
@@ -131,7 +131,7 @@ public class Hotel
     {
         File inFile = new File(fileName);
         input = new Scanner(inFile);
-        
+
         //variables needed to make reservations
         int partySize = 0;
         int nights = 0;
@@ -146,7 +146,7 @@ public class Hotel
         Room room;
         Guest guest;        
         Reservation reservation;
-        
+
         while(input.hasNextLine()) 
         {
             // We expect int partySize.
@@ -154,41 +154,41 @@ public class Hotel
 
             // We expect int nights.
             nights = input.nextInt();
-            
+
             // We expect String roomNum.
             roomNumber = input.next();            
-            
+
             // We expect String first name.
             firstName = input.next(); 
-            
+
             // We expect String last name.
             lastName = input.next(); 
-            
+
             // We expect String  phoneNumber.
             phoneNumber = input.next(); 
-            
+
             //next get discount statuses
             isMilitary = input.nextBoolean(); 
             isGov = input.nextBoolean(); 
             isMember = input.nextBoolean(); 
-            
+
             // We expect Status status.
             status = Status.valueOf( input.next() );
-            
+
             //get the room from the roomNumber
             room = this.getRoom(roomNumber);
 
             //make a guest object
             guest = new Guest(firstName, lastName, phoneNumber, 
                 isMilitary, isGov, isMember);
-            
+
             // make the reservation
             reservation = new Reservation(room, guest, status, partySize, nights);
-            
+
             this.addReservation(reservation);
         }
     }
-    
+
     /**
      * This method "saves" the hotel data back to the text files we read from every time the constructor is called.
      * 
@@ -203,7 +203,7 @@ public class Hotel
     public void save() throws FileNotFoundException 
     {
         // sortReservations();
-        PrintStream output = new PrintStream(new File("output.txt"));
+        PrintStream output = new PrintStream(new File("HotelBurgerReservations.txt"));
         for(Reservation r : reservations) {
             Guest g = r.getGuest();
             Room room = r.getRoom();
@@ -220,9 +220,9 @@ public class Hotel
             output.print(r.getStatus());
         }
     }
-    
+
     /* ACCESSOR METHODS */
-    
+
     /**
      * Returns the hotel's name
      *
@@ -263,7 +263,7 @@ public class Hotel
     public ArrayList<Room> getEmptyRooms() 
     {
         ArrayList<Room> rms = new ArrayList<Room>();
-        
+
         for (Room rm: rooms) 
         {
             if ( rm.isAvailable() ) 
@@ -273,7 +273,7 @@ public class Hotel
         }
         return rms;
     }
-    
+
     /**
      * Returns an arraylist of Room objects that are unavailable.
      * A reserved room is considered unavailable. 
@@ -284,7 +284,7 @@ public class Hotel
     public ArrayList<Room> getReservedRoomsList()
     {
         ArrayList<Room> rms = new ArrayList<Room>();
-        
+
         for (Reservation r: reservations) 
         {
             if ( r.getStatus().equals(Status.WAITING) ) 
@@ -306,7 +306,7 @@ public class Hotel
         return getReservedRoomsList().size();
     }
 
-     /**
+    /**
      * Returns the number of occupied rooms in the hotel. 
      * A room with a reservation with status IN is considered occupied. 
      * 
@@ -314,7 +314,7 @@ public class Hotel
      */
     public int getTotalOccupiedRooms() {
         int totalOccupied = 0;
-        
+
         for (Reservation r: reservations) 
         {
             if (r.getStatus().equals(Status.IN)) 
@@ -322,10 +322,10 @@ public class Hotel
                 ++totalOccupied;
             }
         }
-        
+
         return totalOccupied;
     }
-    
+
     /**
      * Returns the ArrayList<Room> that 'contains' all Room objects in this hotel.
      *
@@ -336,7 +336,7 @@ public class Hotel
         return rooms;
     }
 
-     /**
+    /**
      * Returns the ArrayList<Room> that 'contains' all Room objects in this hotel.
      *
      * @return rooms (ArrayList<Room>) representing all Room objects in the hotel.
@@ -345,7 +345,7 @@ public class Hotel
     {
         return rooms.size();
     }
-    
+
     /**
      * Returns a room object when the room number matches the argument.
      * 
@@ -363,7 +363,7 @@ public class Hotel
         }
         return null;
     }
-    
+
     /**
      * Returns an arraylist of all reservations matching a guest's last name from 
      * hotel's list of reservations.
@@ -374,7 +374,7 @@ public class Hotel
     public ArrayList<Reservation> getReservationsByLastName(String guestLastName) 
     {
         ArrayList<Reservation> reservationsByName = new ArrayList<Reservation>();
-        
+
         for (Reservation res: reservations) 
         {
             if (res.getGuest().getLastName().equals(guestLastName)) 
@@ -384,7 +384,7 @@ public class Hotel
         }
         return reservationsByName;
     }    
-    
+
     /**
      * Returns a Reservation object when the reservationIDs match. Returns null if no match.
      * 
@@ -402,7 +402,7 @@ public class Hotel
         }
         return null;
     }    
-    
+
     /**
      * Returns the number of all reservations that the Hotel has (includes all statuses).
      *
@@ -422,7 +422,7 @@ public class Hotel
     public ArrayList<Reservation> getActiveReservations() 
     {
         ArrayList<Reservation> arr = new ArrayList<Reservation>();
-        
+
         for (Reservation r : reservations) 
         {
             if (r.getStatus().equals(Status.IN) || r.getStatus().equals(Status.WAITING)) 
@@ -442,7 +442,7 @@ public class Hotel
     public ArrayList<Reservation> getInactiveReservations()
     {
         ArrayList<Reservation> arr = new ArrayList<Reservation>();
-        
+
         for (Reservation r : reservations) 
         {
             if (r.getStatus().equals(Status.OUT) || r.getStatus().equals(Status.CANCELED)) 
@@ -452,7 +452,7 @@ public class Hotel
         }
         return arr;
     }  
-  
+
     /**
      * Returns an ArrayList of strings representing 'invoices' in the hotel 
      * where there is NO balance due.
@@ -462,7 +462,7 @@ public class Hotel
     public ArrayList<String> getAllInvoicesPaid() 
     {
         ArrayList<String> invoices = new ArrayList<String>();
-        
+
         for (Reservation res : reservations) 
         {
             if ( res.getPaymentDue() == 0 ) 
@@ -472,7 +472,7 @@ public class Hotel
         }
         return invoices;
     }
-    
+
     /**
      * Returns an ArrayList of strings representing 'invoices' in the hotel 
      * where there is a balance due.
@@ -482,7 +482,7 @@ public class Hotel
     public ArrayList<String> getAllInvoicesUnpaid() 
     {
         ArrayList<String> invoices = new ArrayList<String>();
-        
+
         for (Reservation res : reservations) 
         {
             if (res.getPaymentDue() > 0)
@@ -492,7 +492,7 @@ public class Hotel
         }
         return invoices;
     }
-    
+
     public Reservation findReservation(Guest guest){
         for(Reservation reserve: reservations) {
             if(reserve.getGuest().equals(guest)) {
@@ -501,7 +501,7 @@ public class Hotel
         }
         return null;
     }
-    
+
     public ArrayList<Reservation> getReservations(Status status){
         ArrayList<Reservation> res = new ArrayList<>();
         for(Reservation reserve: reservations) {
@@ -511,7 +511,7 @@ public class Hotel
         }
         return res;
     }
-    
+
     public ArrayList<String> getOccupiedRoomNum() {
         ArrayList<String> rms = new ArrayList<>();
         for(Room rm: rooms) {
@@ -521,11 +521,11 @@ public class Hotel
         }
         return rms;
     }
-    
+
     /**
      *  methods used in GUI
      */
-    
+
     public ArrayList<String> getEmptyRoomNum() {
         ArrayList<String> rms = new ArrayList<>();
         for(Room rm: rooms) {
@@ -535,9 +535,19 @@ public class Hotel
         }
         return rms;
     }
-    
+
+    // this finds a reservation by roomNumber
+    public Reservation findReservation(String roomNum){
+        for(Reservation reserve: reservations) {
+            if(reserve.getRoom().getRoomNumber().equals(roomNum) && (reserve.getStatus() == Status.IN || reserve.getStatus() == Status.WAITING)) {
+                return reserve;
+            }
+        }
+        return null;
+    }
+
     /* MUTATOR METHODS */
-    
+
     /**
      * Method setName sets this hotel's name field.
      *
@@ -568,7 +578,7 @@ public class Hotel
         // no validation...
         this.phoneNumber = phoneNumber;
     }
-    
+
     /**
      * Adds a new Reservation object to the Hotel's arrayList of reservation objects
      * 
@@ -578,9 +588,9 @@ public class Hotel
     {
         reservations.add(r);
     }
-    
+
     /* OTHER METHODS */
-    
+
     public void sortReservations() {
         for(int i = 0; i < reservations.size(); i++) {
             Reservation res = reservations.get(i);
@@ -595,73 +605,73 @@ public class Hotel
 
         }
     }
-    
+
     /**
      * Calculates the total of all paid reservations.
      */
     public double getTotalSales() {     
         double totalSales = 0.0;
-        
+
         for(Reservation res : reservations) {
             totalSales += res.getAmountPaid();
         }   
-        
+
         return totalSales;
     }
-    
+
     /**
      * Calculates the total of all unpaid reservations
      */
     public double getTotalPaymentDue() {        
         double totalAmountDue = 0.0;
-        
+
         for(Reservation res : reservations) {
             totalAmountDue += res.getPaymentDue();
         }
-        
+
         return totalAmountDue;
     }
-    
+
     /**
      * Gets a count of all the guests currently checked into the hotel accounting for party size
      * 
      */
     public int getTotalGuestsInHotel() {
         int countGuests = 0;
-        
+
         for(Reservation res : reservations) {
             if(res.getStatus().equals(Status.IN)) countGuests += res.getPartySize();
         }
-        
+
         return countGuests;
     }
-    
-     /**
+
+    /**
      * Calculates how many reservations with Status OUT
      */
     public int getTotalCheckedOutReservations() {
         int totalCheckouts = 0;
-        
+
         for(Reservation res : reservations) {
             if(res.getStatus().equals(Status.OUT)) ++totalCheckouts;
         }
-        
+
         return totalCheckouts;
     }
-    
+
     /**
      * Calculates how many reservations with Status CANCELED
      */
     public int getTotalCanceledReservations() {
         int totalCancellations = 0;
-        
+
         for(Reservation res : reservations) {
             if(res.getStatus().equals(Status.CANCELED)) ++totalCancellations;
         }
-        
+
         return totalCancellations;
     }
-    
+
     /**
      * Method toString overrides Object class's toString method; returns info about the hotel.
      *
@@ -671,18 +681,18 @@ public class Hotel
     public String toString() 
     {
         return "=========================" + "\n" +
-            "Hotel: " + name + "\n" +
-            address + "\n" +
-            phoneNumber + "\n" +
-            "=========================" + "\n";
+        "Hotel: " + name + "\n" +
+        address + "\n" +
+        phoneNumber + "\n" +
+        "=========================" + "\n";
     }
-    
+
     /**
      * A method to test basic functionality of this class
      */
     public static void test() throws FileNotFoundException {
         Hotel testHotel = new Hotel("hotelrooms.txt");
-                       
+
         //test basic fields and constructor
         String name = "Hotel Burger";
         String address = "2 Pattys Drive, Lettuceville WA";
@@ -690,29 +700,21 @@ public class Hotel
         if (!testHotel.getName().equals(name)) System.out.println("Hotel name is supposed to be " + name + ", but is " + testHotel.getName());        
         if (!testHotel.getAddress().equals(address)) System.out.println("Hotel address is supposed to be " + address + ", but is " + testHotel.getAddress());
         if (!testHotel.getPhoneNumber().equals(phone)) System.out.println("Hotel phoneNum is supposed to be " + phone + ", but is " + testHotel.getPhoneNumber());
-        
+
         // add 4 existing/saved test reservations (from a text file) to the Hotel object
         testHotel.fillReservationArrayList("hotelreservations.txt");
         if (testHotel.getAllRoomsCount() != 65) System.out.println("Hotel.getAllRoomsCount() is supposed to be 65, but is " + testHotel.getAllRoomsCount());
         if (testHotel.getTotalOccupiedRooms() != 1) System.out.println("Hotel.getTotalOccupiedRooms() is supposed to be 1, but is " + testHotel.getTotalOccupiedRooms());
         if (testHotel.getTotalReservedRooms() != 1) System.out.println("Hotel.getTotalReservedRooms() is supposed to be 1, but is " + testHotel.getTotalReservedRooms());
         if (testHotel.getNumReservations() != 4) System.out.println("Hotel.getNumReservations() is supposed to be 4, but is " + testHotel.getNumReservations());
-        
+
         if (testHotel.getTotalCanceledReservations() != 1) System.out.println("Hotel.getTotalCanceledReservations() is supposed to be 1, but is " + testHotel.getTotalCanceledReservations());
         if (testHotel.getTotalCheckedOutReservations() != 1) System.out.println("Hotel.getTotalCheckedOutReservations() is supposed to be 1, but is " + testHotel.getTotalCheckedOutReservations());
-              
+
         if (testHotel.getTotalGuestsInHotel() != 2) System.out.println("Hotel.getTotalGuestsInHotel() is supposed to be 2, but is " + testHotel.getTotalGuestsInHotel());
 
         if (Math.floor(testHotel.getTotalPaymentDue()) != Math.floor(150.00 + 195.70)) System.out.println("Hotel.getTotalPaymentDue() is supposed to be 345.70, but is " + Math.floor(testHotel.getTotalPaymentDue()));
         if (Math.floor(testHotel.getTotalSales()) != Math.floor(0.0)) System.out.println("Hotel.getTotalSales() is supposed to be 0.0, but is " + Math.floor(testHotel.getTotalSales()));
     }
-    
-    public Reservation findReservation(String roomNum){
-        for(Reservation reserve: reservations) {
-            if(reserve.getRoom().getRoomNumber().equals(roomNum) && (reserve.getStatus() == Status.IN || reserve.getStatus() == Status.WAITING)) {
-                return reserve;
-            }
-        }
-        return null;
-    }
+
 }
