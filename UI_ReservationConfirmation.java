@@ -158,7 +158,8 @@ public class UI_ReservationConfirmation extends JFrame
                 }
             });
     }
-
+    
+    
     private static String yesOrNo(boolean b){
         if(b)
             return "Yes";

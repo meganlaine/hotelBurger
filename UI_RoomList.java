@@ -5,10 +5,10 @@ import javax.swing.event.*;
 import java.util.*;
 
 /**
- * Write a description of class UI_Exit here.
+ * Window for room list
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_RoomList extends JFrame
 {
@@ -29,6 +29,7 @@ public class UI_RoomList extends JFrame
 
     public UI_RoomList(Hotel h)
     {
+        //instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -55,7 +56,9 @@ public class UI_RoomList extends JFrame
 
         jb1 = new JButton("Back to main menu");
         jb2 = new JButton("Detail");
-
+        
+        
+        //setting the layout
         this.setLayout(new BorderLayout());
 
         js2.setViewportView(list1);
@@ -80,12 +83,15 @@ public class UI_RoomList extends JFrame
         this.add(jp6,BorderLayout.NORTH);
         this.add(jp2,BorderLayout.SOUTH);
         //this.add(jp2);
-
+        
+        this.setTitle("Rooms");
         this.setSize(800,600);
         this.setLocation(300,300);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
+        
+        //open main menu on close
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -94,6 +100,8 @@ public class UI_RoomList extends JFrame
                     dispose();
                 }
             });
+            
+        //open a room info window
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -105,7 +113,8 @@ public class UI_RoomList extends JFrame
                     }
                 }
             });
-
+            
+        //clear the selection for the other list on selection for the current one
         list1.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     list2.clearSelection();
@@ -117,6 +126,8 @@ public class UI_RoomList extends JFrame
                     list1.clearSelection();
                 }
             });
+            
+        //return to main on close
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)

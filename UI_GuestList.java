@@ -5,10 +5,10 @@ import javax.swing.event.*;
 import java.util.*;
 
 /**
- * Write a description of class UI_Exit here.
+ * Window which shows a list of all guest in the hotel
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_GuestList extends JFrame
 {
@@ -29,13 +29,15 @@ public class UI_GuestList extends JFrame
 
     public UI_GuestList(Hotel h)
     {
+        // instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
         jp4 = new JPanel();
         jp5 = new JPanel();
         jp6 = new JPanel();
-
+        
+        //get the list of guests 
         in = getStatusOf(h, Status.IN);
         waiting = getStatusOf(h, Status.WAITING);
         out = getStatusOf(h, Status.OUT);
@@ -45,7 +47,8 @@ public class UI_GuestList extends JFrame
 
         jl2 = new JLabel("Checked in");
         jl1 = new JLabel("Not yet checked in");
-
+        
+        //adding scroll bar for list
         js1 = new JScrollPane();
         js1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         js1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -53,19 +56,21 @@ public class UI_GuestList extends JFrame
         js2 = new JScrollPane();
         js2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         js2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
+        
+        //buttons
         jb1 = new JButton("Back to main menu");
         jb2 = new JButton("Detail");
 
-        
+        //set font for every components
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
         list1.setFont(list1.getFont ().deriveFont (16.0f));
         list2.setFont(list2.getFont ().deriveFont (16.0f));
         jb1.setFont(jb1.getFont ().deriveFont (14.0f));
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
-
         
+        
+        //setting layouts
         this.setLayout(new BorderLayout());
 
         js1.setViewportView(list1);
@@ -90,12 +95,16 @@ public class UI_GuestList extends JFrame
         this.add(jp6,BorderLayout.NORTH);
         this.add(jp2,BorderLayout.SOUTH);
         //this.add(jp2);
-
+        
+        //setting window constants
         this.setSize(800,600);
         this.setLocation(300,300);
         this.setResizable(false);
         this.setVisible(true);
+        this.setTitle("Guest List");
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        
+        //return to main menu
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -104,6 +113,8 @@ public class UI_GuestList extends JFrame
                     dispose();
                 }
             });
+            
+        //get the selected item of the list and oprn the guest info window
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -115,7 +126,8 @@ public class UI_GuestList extends JFrame
                     }
                 }
             });
-
+            
+        //clear selection of the other list get selected
         list1.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     list2.clearSelection();
@@ -127,6 +139,8 @@ public class UI_GuestList extends JFrame
                     list1.clearSelection();
                 }
             });
+            
+        //setting the exit action when X button is clicked
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)
@@ -139,7 +153,13 @@ public class UI_GuestList extends JFrame
                 }
             });
     }
-
+    
+    /**
+     * Gets an arraylist of guests and return there full names in another arraylist of strings
+     * 
+     * @param guests the list of guest objects
+     * @return list of names
+     */
     private static ArrayList<String> toLabel(ArrayList<Guest> guests){
         ArrayList<String> list = new ArrayList<>();
 
@@ -149,7 +169,13 @@ public class UI_GuestList extends JFrame
         Collections.sort(list);
         return list;
     }
-
+    
+    /**
+     * get an arraylist of guests which are in the given status
+     * 
+     * @param h the hotel object
+     * @param status the status of the reservation
+     */
     private static ArrayList<Guest> getStatusOf(Hotel h, Status status){
         ArrayList<Guest> list = new ArrayList<>();
         ArrayList<Reservation> reservations = h.getReservations(status);

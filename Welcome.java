@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class Welcome here.
+ * The Welcome page for GUI
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class Welcome extends JFrame
 {
@@ -26,6 +26,7 @@ public class Welcome extends JFrame
     }
 
     Welcome(){
+        //instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -37,11 +38,13 @@ public class Welcome extends JFrame
         jb = new JButton("Continue");
         jb.setFont(jb.getFont ().deriveFont (16.0f));
         
+        //setting up layout
         this.setLayout(new GridLayout(4,1));
         jp1.add(jl1);
         //jp2.add(jl2);
         jp3.add(jb);
-
+        
+        this.setTitle("Welcome");
         this.add(jp2);
         this.add(jp1);
         //this.add(jp2);
@@ -52,7 +55,8 @@ public class Welcome extends JFrame
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-
+        
+        //proceed to login
         jb.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){

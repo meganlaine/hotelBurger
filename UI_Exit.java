@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.io.FileNotFoundException;
 
 /**
- * Write a description of class UI_Exit here.
+ * The Exit page for GUI
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_Exit extends JFrame
 {

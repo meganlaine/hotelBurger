@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Write a description of class UI here.
+ * The log in page for the GUI
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI extends JFrame
 {
@@ -27,7 +27,7 @@ public class UI extends JFrame
     }
 
     UI(){
-
+        //instantiate components
         panel1=new JPanel();
         panel2=new JPanel();
         panel3=new JPanel();        
@@ -41,14 +41,16 @@ public class UI extends JFrame
         button1=new JButton("log in");
         button2=new JButton("cancel");
         button3=new JButton("cheat");
-
+        
+        //setting up fonts for components
         label1.setFont(label1.getFont ().deriveFont (16.0f));
         label2.setFont(label2.getFont ().deriveFont (16.0f));
         label3.setFont(label3.getFont ().deriveFont (16.0f));
         button1.setFont(button1.getFont ().deriveFont (14.0f));
         button2.setFont(button2.getFont ().deriveFont (14.0f));
         button3.setFont(button3.getFont ().deriveFont (14.0f));
-
+        
+        //setting layout
         textField = new JTextField(10);
         textField2 = new JTextField(10);
         this.setLayout(new GridLayout(3,1));
@@ -66,7 +68,7 @@ public class UI extends JFrame
         panel5.add(panel1);
         panel5.add(panel2);
         panel5.add(panel3);
-
+        
         this.add(panel5);
         this.add(panel4);
         this.setTitle("Log in");
@@ -75,7 +77,8 @@ public class UI extends JFrame
         this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-
+        
+        //log in when the user name and password matches.
         button1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -98,7 +101,8 @@ public class UI extends JFrame
                 }
             }
         );
-
+        
+        //clear the content in textfiled
         button2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -107,6 +111,8 @@ public class UI extends JFrame
                 }
             }
         );
+        
+        //bypass the log in page
         button3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
