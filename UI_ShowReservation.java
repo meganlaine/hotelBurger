@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.lang.IllegalArgumentException;
 
 /**
- * Write a description of class UI_ReservationConfirmation here.
+ * Show the information for the reservation object
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_ShowReservation extends JFrame
 {
@@ -26,8 +26,11 @@ public class UI_ShowReservation extends JFrame
     }
 
     public UI_ShowReservation(Hotel h, Reservation reservation){
+        //get guest and room object from reservation
         Guest guest = reservation.getGuest();
         Room room = reservation.getRoom();       
+
+        //instantiate components
         jb1 = new JButton("Close");
         jb2 = new JButton("Refresh");
         jb3 = new JButton("Check in/ Check out");
@@ -66,6 +69,7 @@ public class UI_ShowReservation extends JFrame
         jl15 = new JLabel("Payment Due: $" +  String.format("%.2f",reservation.getPaymentDue()));
         jl13 = new JLabel("Room information");
 
+        //set fonts for components
         jl0.setFont(jl0.getFont ().deriveFont (16.0f));
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
@@ -90,6 +94,7 @@ public class UI_ShowReservation extends JFrame
         jb5.setFont(jb5.getFont ().deriveFont (12.0f));
         jb6.setFont(jb6.getFont ().deriveFont (12.0f));
 
+        //setting up layout
         jp11.setLayout(new GridLayout(7,1));
         jp11.add(jl13);
         jp11.add(jl9);
@@ -111,7 +116,7 @@ public class UI_ShowReservation extends JFrame
         jp3.add(jp14);
         jp3.add(jp12);
         jp3.add(jp15);
-        
+
         jp4.setLayout(new GridLayout(7,1));
 
         jp4.add(jl0);
@@ -135,7 +140,8 @@ public class UI_ShowReservation extends JFrame
         jp8.add(jp5, BorderLayout.CENTER);
         jp8.add(jp13, BorderLayout.WEST);
         jp8.add(jp3, BorderLayout.SOUTH);
-
+        
+        this.setTitle("Reservation " + guest.getFullName() + " " + room.getRoomNumber());
         this.add(jp8);
         this.setSize(800,600);
         this.setLocation(300,300);
@@ -143,20 +149,25 @@ public class UI_ShowReservation extends JFrame
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
+        //close the window
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
                     dispose();
                 }});
-
-
+                
+        //refresh the window by close the current one and reopen a new one
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
                     dispose();
                     main(h, reservation);
                 }});                
-                
+
+        /*
+         * check in & check out the reservation 
+         * cannot check out unless the reservation is paid
+         **/
         jb3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -176,13 +187,18 @@ public class UI_ShowReservation extends JFrame
                     else if(reservation.getStatus() == Status.IN){
                         int temp = JOptionPane.showConfirmDialog(null, "Are you sure you want to check out ?", "Warning", JOptionPane.YES_NO_OPTION);
                         if(temp == 0){
-                            try{
-                                reservation.setStatus(Status.OUT);
-                                room.setAvailable(true);
-                                JOptionPane.showMessageDialog(null, "Check out successful", "Message", JOptionPane.PLAIN_MESSAGE);
-                            }
-                            catch(IllegalArgumentException ex){
+                            if(reservation.getPaymentDue() == 0.0){
+                                try{
+                                    reservation.setStatus(Status.OUT);
+                                    room.setAvailable(true);
+                                    JOptionPane.showMessageDialog(null, "Check out successful", "Message", JOptionPane.PLAIN_MESSAGE);
+                                }
+                                catch(IllegalArgumentException ex){
 
+                                }
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Must be paid before checking out", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         }
                     }
@@ -191,12 +207,17 @@ public class UI_ShowReservation extends JFrame
                     }
 
                 }});
+                
+       
+        //open the guest information window
+        
         jb5.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
                     UI_Guest.main(h, reservation.getGuest());
                 }});
-
+                
+        // cancel a reservation
         jb4.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -218,6 +239,7 @@ public class UI_ShowReservation extends JFrame
 
                 }});
 
+        //pay the bill
         jb6.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -235,6 +257,12 @@ public class UI_ShowReservation extends JFrame
                 }});
     }
 
+    /**
+     * converts boolean to string
+     * 
+     * @param b the given boolean value
+     * @return yes for true, no for false
+     */
     private static String yesOrNo(boolean b){
         if(b)
             return "Yes";
@@ -242,6 +270,12 @@ public class UI_ShowReservation extends JFrame
             return "No";
     }
 
+    /**
+     * convert the status of reservation to String
+     * 
+     * @param reservation the reservation object
+     * @return the string of the status of the reservation
+     */
     private static String getStatus(Reservation reservation){
         Status status = reservation.getStatus();
         String str = "";
