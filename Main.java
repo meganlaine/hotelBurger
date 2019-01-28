@@ -291,12 +291,14 @@ public class Main
         int newLineCounter = 0;
         if(availableRooms.isEmpty()) {
             System.out.println("Couldn't find any rooms matching this criteria, try again");
+            // if we can't find any room, the user may return to main menu
             makeReservationMenu();
         }
         else{
             for(Room r : availableRooms) {
-                System.out.print("[ " + r + " ]");
+                System.out.print("[ Room number: " + r.getRoomNumber() + " room type: " + r.getRoomType() + ", price: " + r.getRate() + " ]");
                 newLineCounter++;
+                // we want to print a new line after 2 rooms for readability
                 if(newLineCounter == 2) {
                     System.out.println();
                     newLineCounter = 0;
