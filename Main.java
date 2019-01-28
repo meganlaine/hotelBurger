@@ -35,6 +35,20 @@ public class Main
         // show the main menu for the console app to the user
         mainMenu();        
     }
+    
+    /** 
+     * The starter for GUI.
+     */
+    public static Hotel GUI_Starter(String[] args) throws FileNotFoundException 
+    {
+        // instantiate a Hotel object using the constructor that takes a text file of Room info
+        hotel = new Hotel("hotelrooms.txt");
+
+        // add all existing/saved reservations (from a text file) to the Hotel object
+        hotel.fillReservationArrayList("HotelBurgerReservations.txt");
+
+        return hotel;
+    }
 
     /* HELPER METHODS */
     
