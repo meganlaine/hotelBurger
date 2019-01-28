@@ -190,8 +190,8 @@ public class Hotel
     }
     
     /**
-     * This method "saves" persists the hotel data back to the text files from where the 
-     * construction data were first read.
+     * This method "saves" the hotel data back to the text files we read from every time the constructor is called.
+     * 
      * 
      * ArrayList of reservations needs to be sorted with canceled ones first before we save.
      * This is because when the program starts and reservations 
