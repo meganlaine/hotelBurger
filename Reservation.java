@@ -141,6 +141,33 @@ public class Reservation
     {
         return nights;
     }
+    
+    /**
+     * Returns the discount of the guest.
+     */
+    public double getDiscount(){
+        double result = 1.0;
+        if ( g.isGovernment() ) {
+
+            result = 0.91;
+
+        }
+
+        // if guest is not government but military, apply second highest discount: 7%
+        else if (g.isMilitary() ) {
+
+            result =  0.93;
+
+        }
+
+        // if guest is member only (not govt, not mil), apply the lowest discount (5%)
+        else if (g.isMember() ) {
+
+            result = 0.95;
+
+        }
+        return result;
+    }
 
     /* MUTATOR METHODS */
 
