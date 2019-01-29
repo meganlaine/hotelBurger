@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class UI_MakeReservation here.
+ * Collect guest's personal information for reservation
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_MakeReservation extends JFrame
 {
@@ -32,6 +32,7 @@ public class UI_MakeReservation extends JFrame
      */
     public UI_MakeReservation(String roomNum, int guestNum, int nights, Hotel h)
     {
+        //instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -69,6 +70,7 @@ public class UI_MakeReservation extends JFrame
         jc3 = new JCheckBox("Government");
         jc4 = new JCheckBox("Check in at the same time");
 
+        //setting the fonts for the components
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
         jl3.setFont(jl3.getFont ().deriveFont (16.0f));
@@ -83,6 +85,7 @@ public class UI_MakeReservation extends JFrame
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
         jb3.setFont(jb3.getFont ().deriveFont (14.0f));
 
+        //setting up the layout
         jp2.add(jl2);
         jp2.add(tf1);
         //jp2.add(tf2);
@@ -147,12 +150,14 @@ public class UI_MakeReservation extends JFrame
         // jb4.setVisible(false);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
+        //geetting the focus away from the textfield
         this.addWindowFocusListener(new WindowAdapter() {
                 public void windowGainedFocus(WindowEvent e) {
                     jb1.requestFocusInWindow();
                 }
             });
 
+        //is member if selected and vice versa
         jc1.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -171,6 +176,7 @@ public class UI_MakeReservation extends JFrame
                 }
             });
 
+        //is military if selected and vice versa    
         jc2.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -185,6 +191,7 @@ public class UI_MakeReservation extends JFrame
                 }
             });
 
+        //is government if selected and vice versa
         jc3.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -199,6 +206,7 @@ public class UI_MakeReservation extends JFrame
                 }
             });
 
+        //check in if selected and vice versa
         jc4.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -212,6 +220,8 @@ public class UI_MakeReservation extends JFrame
                     }
                 }
             });
+            
+        //get all information from the textfields
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -228,9 +238,13 @@ public class UI_MakeReservation extends JFrame
                             validPhoneNum = true;
                         }
                     }
+                    
+                    //Name validation check
                     if(!(first.equals("")||last.equals(""))){
                         validName = true;
                     }
+                    
+                    //phone number validation check
                     if(validName){
                         if(validPhoneNum){
                             guest = new Guest(first, last, phone, isMili, isGov, isMem);
@@ -244,10 +258,10 @@ public class UI_MakeReservation extends JFrame
                     else{
                         JOptionPane.showMessageDialog(null, "Not a valid Name", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-
                 }
             });
 
+        //back to the main menu
         jb3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -259,6 +273,8 @@ public class UI_MakeReservation extends JFrame
 
                 }
             });
+        
+        //back to the main menu on close    
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)
@@ -271,6 +287,7 @@ public class UI_MakeReservation extends JFrame
                 }
             });
 
+        //clear the text field upon first selection 
         tf1.addFocusListener(new FocusListener(){
                 @Override
                 public void focusGained(FocusEvent e){
@@ -289,6 +306,7 @@ public class UI_MakeReservation extends JFrame
                 }
             });
 
+        //clear the text field upon first selection
         tf3.addFocusListener(new FocusListener(){
                 @Override
                 public void focusGained(FocusEvent e){
@@ -304,6 +322,7 @@ public class UI_MakeReservation extends JFrame
                 }
             });
 
+        //clear the text field upon first selection    
         tf4.addFocusListener(new FocusListener(){
                 @Override
                 public void focusGained(FocusEvent e){
@@ -321,6 +340,12 @@ public class UI_MakeReservation extends JFrame
 
     }
 
+    /**
+     * see if the string is a number
+     * 
+     * @param s the string to be test
+     * @return ture if the string is a number and false if not
+     */
     private static boolean isInt(String s) 
     {
         try {

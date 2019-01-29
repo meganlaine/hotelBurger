@@ -5,10 +5,10 @@ import javax.swing.event.*;
 import java.util.*;
 
 /**
- * Write a description of class UI_Exit here.
+ * show the guest's history reservations
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_ShowGuestReservations extends JFrame
 {
@@ -29,6 +29,7 @@ public class UI_ShowGuestReservations extends JFrame
 
     public UI_ShowGuestReservations(Hotel h, Guest guest)
     {
+        //instatiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -73,8 +74,8 @@ public class UI_ShowGuestReservations extends JFrame
         jb1 = new JButton("Back to reservation page");
         jb2 = new JButton("Detail");
         jb3 = new JButton("Refresh");
-        
-        
+
+        //setting up the fonts for the components
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
         jl3.setFont(jl3.getFont ().deriveFont (16.0f));
@@ -87,6 +88,7 @@ public class UI_ShowGuestReservations extends JFrame
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
         jb3.setFont(jb3.getFont ().deriveFont (14.0f));
 
+        //setting layout of the window
         this.setLayout(new BorderLayout());
 
         js1.setViewportView(list1);
@@ -120,11 +122,13 @@ public class UI_ShowGuestReservations extends JFrame
         this.add(jp2,BorderLayout.SOUTH);
         //this.add(jp2);
 
+        this.setTitle("History Reservation for guest: " + guest.getFullName());
         this.setSize(1000,750);
         this.setLocation(200,200);
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        //close the window
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -132,6 +136,8 @@ public class UI_ShowGuestReservations extends JFrame
                     dispose();
                 }
             });
+
+        //get the detail of the selected reservation    
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -150,6 +156,7 @@ public class UI_ShowGuestReservations extends JFrame
                 }
             });
 
+        //refresh the page
         jb3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -158,6 +165,7 @@ public class UI_ShowGuestReservations extends JFrame
                 }
             });
 
+        //clear selection of other lists on selection of the list    
         list1.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     list2.clearSelection();
@@ -189,17 +197,23 @@ public class UI_ShowGuestReservations extends JFrame
                     list2.clearSelection();
                 }
             });
-        
-        
+
+        //close
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)
                 {       
-                        dispose();
+                    dispose();
                 }
             });
     }
 
+    /**
+     * convert the list of reservations 
+     * 
+     * @param reservations the list of reservations is being converted
+     * @return list of string of the reservations
+     */
     private static ArrayList<String> toLabel(ArrayList<Reservation> reservations){
         ArrayList<String> list = new ArrayList<>();
 
@@ -209,7 +223,16 @@ public class UI_ShowGuestReservations extends JFrame
         Collections.sort(list);
         return list;
     }
-    
+
+    /**
+     * get the reservations based on the conditions
+     * 
+     * @param h the hotel of the instance
+     * @param guest the guest of the search
+     * @param status the status of the reservation
+     * 
+     * @return the array list of reservations which has the same guest and status
+     */
     private ArrayList<Reservation> getReservations(Hotel h, Guest guest, Status status){
         ArrayList<Reservation> res = h.getReservations(status);
         ArrayList<Reservation> res2 = new ArrayList<>();

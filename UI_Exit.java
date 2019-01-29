@@ -27,6 +27,7 @@ public class UI_Exit extends JFrame
 
     public UI_Exit(Hotel h)
     {
+        //instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -37,6 +38,7 @@ public class UI_Exit extends JFrame
         jb1 = new JButton("OK");
         jb2 = new JButton("Cancel");
 
+        //setting up the layout of the window
         this.setLayout(new GridLayout(4,1));
 
         jp2.add(jl1);
@@ -53,6 +55,8 @@ public class UI_Exit extends JFrame
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
+        
+        //exit the whole program
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -68,6 +72,8 @@ public class UI_Exit extends JFrame
                     }
                 }
             });
+            
+        //do nothing
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){

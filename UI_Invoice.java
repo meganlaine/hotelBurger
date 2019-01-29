@@ -3,14 +3,14 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class UI_Invoice here.
+ * THe invoice page after the reservation
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_Invoice extends JFrame
 {
-    // instance variables - replace the example below with your own
+
     private JPanel jp1, jp2, jp3, jp4, jp5, jp6, jp7;
     private JLabel jl1, jl2, jl3, jl4, jl5, jl6, jl7, jl8;
     private JButton jb1, jb2, jb3;
@@ -32,6 +32,7 @@ public class UI_Invoice extends JFrame
      */
     public UI_Invoice(Hotel h, Reservation reservation)
     {
+        //instantiate components 
         Guest guest= reservation.getGuest();
         Room room = reservation.getRoom();
         jl1 = new JLabel("Invoice #" + reservation.getReservationID());
@@ -53,7 +54,9 @@ public class UI_Invoice extends JFrame
         jp4 = new JPanel();
         jp5 = new JPanel();
         jp7 = new JPanel();
-
+        
+        
+        //setting the fonts of the components
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
         jl3.setFont(jl3.getFont ().deriveFont (16.0f));
@@ -65,6 +68,7 @@ public class UI_Invoice extends JFrame
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
         jb3.setFont(jb3.getFont ().deriveFont (14.0f));
 
+        //setting layout for the window
         jp4.add(jb1);
         jp5.add(jb2);
         jp7.add(jb3);
@@ -88,6 +92,7 @@ public class UI_Invoice extends JFrame
         c.fill = GridBagConstraints.VERTICAL;
         c.weightx = 5.0;
         c.weighty = 10.0;
+        this.setTitle("Invoice");
         this.add(jp3,c);
         this.setSize(800,600);
         this.setLocation(300,300);
@@ -95,6 +100,7 @@ public class UI_Invoice extends JFrame
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
+        //back to main menu
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -106,6 +112,7 @@ public class UI_Invoice extends JFrame
                 }
             });
 
+        //reserve and pay
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -120,6 +127,7 @@ public class UI_Invoice extends JFrame
             }
         );
 
+        //reserve and do not pay
         jb3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -132,6 +140,8 @@ public class UI_Invoice extends JFrame
                 }
             }
         );
+        
+        //back to main menu on close
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)
@@ -145,6 +155,12 @@ public class UI_Invoice extends JFrame
             });
     }
 
+    /**
+     * returns string for the discount the guest have
+     * 
+     * @param guest the guest object
+     * @return the discount catagory the guest belongs
+     */
     private static String discountString(Guest guest){
         String str = "No";
         if ( guest.isGovernment() ) {

@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class UI_Reservation here.
+ * The menu for the reservations
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_Reservation extends JFrame
 {
@@ -24,6 +24,7 @@ public class UI_Reservation extends JFrame
      */
     public UI_Reservation(Hotel h)
     {
+        //instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -35,11 +36,12 @@ public class UI_Reservation extends JFrame
         jb3 = new JButton("Back to main menu");
         
         
-        
+        //setting up the fonts of the components
         jb1.setFont(jb1.getFont ().deriveFont (14.0f));
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
         jb3.setFont(jb3.getFont ().deriveFont (14.0f));
         
+        //setting up the layout of the window
         jp2.add(jb1);
         jp2.add(jb2);
         jp3.add(jb3);
@@ -52,13 +54,14 @@ public class UI_Reservation extends JFrame
         this.add(jp4);
         this.add(jp5);
 
-        this.setTitle("Exit Reservation");
+        this.setTitle("Reservation Menu");
         this.setSize(600,500);
         this.setLocation(200,200);
         this.setResizable(true);
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
+        //make a new reservation
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -67,6 +70,7 @@ public class UI_Reservation extends JFrame
                 }
             });
 
+        //see current reservations
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -75,6 +79,7 @@ public class UI_Reservation extends JFrame
                 }
             });
 
+        //back to main menu
         jb3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -82,6 +87,8 @@ public class UI_Reservation extends JFrame
                     dispose();
                 }
             });
+            
+        //back to main menu on close    
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)
@@ -94,5 +101,4 @@ public class UI_Reservation extends JFrame
                 }
             });
     }
-
 }

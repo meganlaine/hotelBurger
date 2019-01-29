@@ -91,7 +91,7 @@ public class UI extends JFrame
                             Menu.main(h);
                         }
                         else{
-                            PopUp.main("Wrong username or password");
+                            JOptionPane.showMessageDialog(null, "Wrong user name or password", "Message", JOptionPane.PLAIN_MESSAGE);;
                         }
                     }
                     catch(FileNotFoundException ex){

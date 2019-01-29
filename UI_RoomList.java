@@ -5,7 +5,7 @@ import javax.swing.event.*;
 import java.util.*;
 
 /**
- * Window for room list
+ * Window which shows a list of all rooms in the hotel
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
  * @version 1/28/2019
@@ -82,7 +82,6 @@ public class UI_RoomList extends JFrame
         this.add(jp1,BorderLayout.CENTER);
         this.add(jp6,BorderLayout.NORTH);
         this.add(jp2,BorderLayout.SOUTH);
-        //this.add(jp2);
         
         this.setTitle("Rooms");
         this.setSize(800,600);

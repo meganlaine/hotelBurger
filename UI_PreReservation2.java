@@ -4,6 +4,12 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.util.*;
 
+/**
+ * the window collects the informations for reservation, including a room filter.
+ * 
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
+ */
 public class UI_PreReservation2 extends JFrame
 {
 
@@ -29,6 +35,7 @@ public class UI_PreReservation2 extends JFrame
     }
 
     public UI_PreReservation2(Hotel h){
+        //instantiate components
         jl1 = new JLabel("Number of Guests");
         jl2 = new JLabel("Nights");
         jp1 = new JPanel();
@@ -57,6 +64,7 @@ public class UI_PreReservation2 extends JFrame
         jp12.setLayout(new BorderLayout());
         jp12.add(js1);
 
+        //setting up two button groups
         bg1 = new ButtonGroup();
         bg2 = new ButtonGroup();
 
@@ -83,13 +91,15 @@ public class UI_PreReservation2 extends JFrame
         jp9.add(jr4); //jp9.add(jl5);
         jp10.add(jr5); //jp10.add(jl6);
         jp11.add(jr6); //jp11.add(jl7);
-
+        
+        //setting up the combo box
         String selections[] = {"","1","2","3","4","5","6"};
         jc = new JComboBox(selections);
 
         String nights[] = {"","1","2","3","4","5","6","7","8"};
         jc2 = new JComboBox(nights);
 
+        //setting the fonts for components 
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
         list.setFont(list.getFont ().deriveFont (16.0f));
@@ -104,6 +114,7 @@ public class UI_PreReservation2 extends JFrame
         jb1.setFont(jb1.getFont ().deriveFont (14.0f));
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
 
+        //setting up the layout of the window
         this.setLayout(new GridLayout(1,4));
         jp1.add(jl1);
         jp1.add(jc);
@@ -133,22 +144,21 @@ public class UI_PreReservation2 extends JFrame
         jp2.add(jp6);
         jp2.add(jp7);
         jp2.add(jp8);
-        // jp2.add(jp9);
-        // jp2.add(jp10);
-        // jp2.add(jp11);
         jp13.add(jp5);
+        
 
         this.add(jp3);
         this.add(jp2);
         this.add(jp13);
         this.add(jp12);
-        this.setTitle("Main Menu");
+        this.setTitle("Pre-Reservation");
         this.setSize(800,600);
         this.setLocation(200,200);
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
+        //hide the room filter before the selection of the guest num and nights
         jp5.setVisible(false);
         jp6.setVisible(false);      
         jp7.setVisible(false);
@@ -158,6 +168,7 @@ public class UI_PreReservation2 extends JFrame
 
         js1.setVisible(false);
 
+        //get the nights stay, and show the choices for the guest num
         jc2.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     String item = e.getItem().toString();
@@ -191,15 +202,13 @@ public class UI_PreReservation2 extends JFrame
                 }
             });
 
+        //get the guest num, and show the corresponding room type that matches the capacity
         jc.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     jp5.setVisible(false);
                     jp6.setVisible(false);
                     jp7.setVisible(false);
                     jp8.setVisible(false);
-                    // jp9.setVisible(false);
-                    // jp10.setVisible(false);
-                    // jp11.setVisible(false);
                     jp13.setVisible(false);
                     js1.setVisible(false);
                     list.clearSelection();
@@ -237,20 +246,13 @@ public class UI_PreReservation2 extends JFrame
                         jp8.setVisible(true);
                         guestNum = 6;
                         break;
-                        // case "7":
-                        // jp8.setVisible(true);
-                        // guestNum = 7;
-                        // break;
-                        // case "8":
-                        // jp8.setVisible(true);
-                        // guestNum = 8;
-                        // break;
                     }
                     bg1.clearSelection();
                     jp5.setVisible(true);
                 }
             });
-
+            
+        //shows the available bedtype for the room type
         jr1.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -269,6 +271,7 @@ public class UI_PreReservation2 extends JFrame
                 }
             });    
 
+        //shows the available bedtype for the room type
         jr2.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -287,6 +290,7 @@ public class UI_PreReservation2 extends JFrame
                 }
             });    
 
+        //shows the available bedtype for the room type    
         jr3.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -307,6 +311,7 @@ public class UI_PreReservation2 extends JFrame
                 }
             });    
 
+        //shows the available rooms for the given room type, bed type, and capacity    
         jr4.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -324,6 +329,7 @@ public class UI_PreReservation2 extends JFrame
                 }
             });    
 
+        //shows the available rooms for the given room type, bed type, and capacity  
         jr5.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -341,6 +347,7 @@ public class UI_PreReservation2 extends JFrame
                 }
             });    
 
+        //shows the available rooms for the given room type, bed type, and capacity      
         jr6.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     int state = e.getStateChange();
@@ -356,13 +363,14 @@ public class UI_PreReservation2 extends JFrame
                         break;
                     }
                 }
-            });    
-
+            });
+            
+        //continue to the make reservation page and show a message if no room is selected
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
                     if (list.getSelectedIndex() == -1){
-                        PopUp.main("Please Select a room!");
+                        JOptionPane.showMessageDialog(null, "Please select a room!", "Message", JOptionPane.PLAIN_MESSAGE);
                     }
                     else{
 
@@ -372,6 +380,7 @@ public class UI_PreReservation2 extends JFrame
                 }
             });
 
+        //back to main menu    
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -383,6 +392,8 @@ public class UI_PreReservation2 extends JFrame
 
                 }
             });
+         
+        //back to main menu on close    
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)
@@ -396,6 +407,16 @@ public class UI_PreReservation2 extends JFrame
             });
     }
 
+    /**
+     * search for rooms based on the condition
+     * 
+     * @param rms the arraylist of rooms to search
+     * @param rt the room type of the room
+     * @param bt the bed type of the room
+     * @param isAval the avalability of the room
+     * @param guestNum the number of guests
+     * @return the room which satisfy all conditions
+     */
     private static Object[] searchRoom(ArrayList<Room> rms, String rt, String bt, boolean isAval, int guestNum){
         ArrayList<String> strings = new ArrayList<>();
         for(Room rm: rms){

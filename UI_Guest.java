@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class UI_Guest here.
+ * Shows the information of the guest
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_Guest extends JFrame
 {
@@ -23,10 +23,10 @@ public class UI_Guest extends JFrame
 
     public UI_Guest(Hotel h, Guest guest)
     {
+        //instantiate components
         jl0 = new JLabel("Guest Information");
         jl1 = new JLabel("Name: " + guest.getFullName());
         jl2 = new JLabel("Phone Number: " + guest.getPhoneNum());
-
         jl4 = new JLabel("Room reserved: " + guest.getRoomReserved(h)); 
         jl8 = new JLabel("Party Size: " + h.findReservation(guest).getPartySize());
         jl5 = new JLabel("Checked In: " + yesOrNo(guest.isCheckedIn(h)));
@@ -40,6 +40,7 @@ public class UI_Guest extends JFrame
         jp3.add(jb1);
         jp3.add(jb2);
 
+        //setting the fonts for the components
         jl0.setFont(jl0.getFont ().deriveFont (16.0f));
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
@@ -49,13 +50,12 @@ public class UI_Guest extends JFrame
         jl6.setFont(jl6.getFont ().deriveFont (16.0f));
         jl7.setFont(jl7.getFont ().deriveFont (16.0f));
         jl8.setFont(jl8.getFont ().deriveFont (16.0f));
-
         jb1.setFont(jb1.getFont ().deriveFont (14.0f));
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
 
+        //setting the layout for the window
         jp4 = new JPanel();
         jp4.setLayout(new GridLayout(10,1));
-
         jp4.add(jl0);
         jp4.add(jl1);
         jp4.add(jl2);
@@ -66,6 +66,8 @@ public class UI_Guest extends JFrame
         jp4.add(jl7);
         jp4.add(jl3);
         jp4.add(jp3);
+        
+        this.setTitle("Guest: " + guest.getFullName());
         this.setLayout(new GridLayout(1,3));
         this.add(new JPanel());
         this.add(jp4);
@@ -76,6 +78,7 @@ public class UI_Guest extends JFrame
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
+        //close the window
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -83,6 +86,8 @@ public class UI_Guest extends JFrame
 
                 }
             });
+        
+        //open the history reservation for the guest    
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -92,6 +97,12 @@ public class UI_Guest extends JFrame
             });
     }
 
+    /**
+     * return yes for true, no for false
+     * 
+     * @param b the boolean which to be converted
+     * @return yes for true, no for false
+     */
     private static String yesOrNo(boolean b){
         if(b)
             return "Yes";

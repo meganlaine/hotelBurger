@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class UI_Guest here.
+ * the window for hotel report 
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_Report extends JFrame
 {
@@ -23,6 +23,7 @@ public class UI_Report extends JFrame
 
     public UI_Report(Hotel h)
     {
+        //instantiate the components
         jl0 = new JLabel(h.getName());
         jl1 = new JLabel("PhoneNumber: " + h.getPhoneNumber());
         jl2 = new JLabel("Address: " + h.getAddress());
@@ -35,6 +36,7 @@ public class UI_Report extends JFrame
         jp3 = new JPanel();
         jp3.add(jb1);
         
+        //setting up the fonts of components
         jl0.setFont(jl0.getFont ().deriveFont (16.0f));
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));       
@@ -43,6 +45,7 @@ public class UI_Report extends JFrame
 
         jb1.setFont(jb1.getFont ().deriveFont (14.0f));
 
+        //setting up the layout
         jp4 = new JPanel();
         jp4.setLayout(new GridLayout(7,1));
         
@@ -63,6 +66,7 @@ public class UI_Report extends JFrame
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
+        //close
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -71,12 +75,4 @@ public class UI_Report extends JFrame
                 }
             });
     }
-
-    private static String yesOrNo(boolean b){
-        if(b)
-            return "Yes";
-        else
-            return "No";
-    }
-
 }

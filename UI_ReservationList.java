@@ -5,10 +5,10 @@ import javax.swing.event.*;
 import java.util.*;
 
 /**
- * Write a description of class UI_Exit here.
+ * the window which shows the list of all reservations
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_ReservationList extends JFrame
 {
@@ -29,6 +29,7 @@ public class UI_ReservationList extends JFrame
 
     public UI_ReservationList(Hotel h)
     {
+        //instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -73,7 +74,9 @@ public class UI_ReservationList extends JFrame
         jb1 = new JButton("Back to reservation page");
         jb2 = new JButton("Detail");
         jb3 = new JButton("Refresh");
-
+        
+        
+        //setting fonts for components
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
         jl3.setFont(jl3.getFont ().deriveFont (16.0f));
@@ -86,6 +89,7 @@ public class UI_ReservationList extends JFrame
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
         jb3.setFont(jb3.getFont ().deriveFont (14.0f));
 
+        //setting layout
         this.setLayout(new BorderLayout());
         js1.setViewportView(list1);
         js2.setViewportView(list2);
@@ -116,13 +120,14 @@ public class UI_ReservationList extends JFrame
         this.add(jp1,BorderLayout.CENTER);
         this.add(jp6,BorderLayout.NORTH);
         this.add(jp2,BorderLayout.SOUTH);
-        //this.add(jp2);
         this.setTitle("Reservation List");
         this.setSize(1000,750);
         this.setLocation(200,200);
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        
+        //back to reservation menu
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -131,6 +136,8 @@ public class UI_ReservationList extends JFrame
                     dispose();
                 }
             });
+            
+        //get the selected element and open the reservation detail wiondow    
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -149,6 +156,7 @@ public class UI_ReservationList extends JFrame
                 }
             });
 
+        //back to main menu
         jb3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -156,7 +164,8 @@ public class UI_ReservationList extends JFrame
                     main(h);
                 }
             });
-
+            
+        //clear selections of other lists when the current list is selected    
         list1.addListSelectionListener(new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     list2.clearSelection();
@@ -189,6 +198,7 @@ public class UI_ReservationList extends JFrame
                 }
             });
 
+        //back to main menu on close
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)
@@ -202,6 +212,12 @@ public class UI_ReservationList extends JFrame
             });
     }
 
+    /**
+     * convert the list of reservations 
+     * 
+     * @param reservations the list of reservations is being converted
+     * @return list of string of the reservations
+     */
     private static ArrayList<String> toLabel(ArrayList<Reservation> reservations){
         ArrayList<String> list = new ArrayList<>();
 

@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class UI_ReservationConfirmation here.
+ * show the reservation confirmation page with all information for reservation
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_ReservationConfirmation extends JFrame
 {
@@ -25,6 +25,7 @@ public class UI_ReservationConfirmation extends JFrame
     }
 
     public UI_ReservationConfirmation(Hotel h, int guestNum, Guest guest, Room room, boolean isChk, int nights){
+        //instantiate components
         jp1 = new JPanel();
         jp2 = new JPanel();
         jp3 = new JPanel();
@@ -40,7 +41,6 @@ public class UI_ReservationConfirmation extends JFrame
 
         jb1 = new JButton("Proceed to Invoice");
         jb2 = new JButton("Back to Main Menu");
-        jb3 = new JButton();
 
         jl0 = new JLabel("Guest Information");
         jl1 = new JLabel("Name: " + guest.getFullName());
@@ -59,6 +59,7 @@ public class UI_ReservationConfirmation extends JFrame
         jl12 = new JLabel("Capacity: " + room.getCapacity());
         jl13 = new JLabel("Room information");
 
+        //setting the fonts for components
         jl0.setFont(jl0.getFont ().deriveFont (16.0f));
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
@@ -77,6 +78,7 @@ public class UI_ReservationConfirmation extends JFrame
         jb1.setFont(jb1.getFont ().deriveFont (14.0f));
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
 
+        //setting the layout for the window
         jp11.setLayout(new GridLayout(10,1));
         jp11.add(jl13);
         jp11.add(jl9);
@@ -104,7 +106,6 @@ public class UI_ReservationConfirmation extends JFrame
         
         jp12.add(new JPanel());
          jp5.setLayout(new GridLayout(1,2));
-        // jp5.add(jp10);
          jp5.add(jp4);
          jp5.add(jp11);
 
@@ -115,6 +116,7 @@ public class UI_ReservationConfirmation extends JFrame
         jp8.add(jp12, BorderLayout.WEST);
         jp8.add(jp3, BorderLayout.SOUTH);
 
+        this.setTitle("ReservationConfirmation");
         this.add(jp8);
         this.setSize(800,600);
         this.setLocation(300,300);
@@ -160,6 +162,12 @@ public class UI_ReservationConfirmation extends JFrame
     }
     
     
+    /**
+     * return yes for true, no for false
+     * 
+     * @param b the boolean which to be converted
+     * @return yes for true, no for false
+     */
     private static String yesOrNo(boolean b){
         if(b)
             return "Yes";

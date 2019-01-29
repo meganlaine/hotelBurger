@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Menu extends JFrame{
     private JPanel panel1,panel2,panel3,panel4, panel5, panel6;
-    private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
+    private JButton b1, b2, b3, b4, b5, b6;
     private JLabel l1;
 
     public static void main(Hotel h) {
@@ -13,6 +13,7 @@ public class Menu extends JFrame{
     }
 
     public Menu(Hotel h) {
+        //instantiate components
         panel1 = new JPanel();
         panel2 = new JPanel();
         panel3 = new JPanel();
@@ -27,11 +28,8 @@ public class Menu extends JFrame{
         b5 = new JButton("About");
         b6 = new JButton("Exit");
         l1 = new JLabel("Main Menu");
-        // b7 = new JButton();
-        // b8 = new JButton();
-        // b9 = new JButton();
-        // b10 = new JButton();
 
+        //set fonts for components
         b1.setFont(b1.getFont ().deriveFont (14.0f));
         b2.setFont(b2.getFont ().deriveFont (14.0f));
         b3.setFont(b3.getFont ().deriveFont (14.0f));
@@ -40,6 +38,7 @@ public class Menu extends JFrame{
         b6.setFont(b6.getFont ().deriveFont (14.0f));
         l1.setFont(l1.getFont ().deriveFont (18.0f));
 
+        //set layouts
         this.setLayout(new GridLayout(3,1));
         panel5.setLayout(new GridLayout(3,1));
         panel1.add(l1);
@@ -63,6 +62,7 @@ public class Menu extends JFrame{
         this.setResizable(true);
         this.setVisible(true);
 
+        //open reservation menu
         b1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -70,6 +70,8 @@ public class Menu extends JFrame{
                     UI_Reservation.main(h);
                 }
             });
+            
+        //open room list
         b2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -77,6 +79,8 @@ public class Menu extends JFrame{
                     UI_RoomList.main(h);
                 }
             });
+        
+        //open guest list    
         b3.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -84,13 +88,16 @@ public class Menu extends JFrame{
                     UI_GuestList.main(h);
                 }
             });
+            
+        //open report window
         b4.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
                     UI_Report.main(h);
                 }
             });
-
+            
+        //show about dialog
         b5.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -98,6 +105,7 @@ public class Menu extends JFrame{
                 }
             });
 
+        //exit the program
         b6.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -105,6 +113,7 @@ public class Menu extends JFrame{
                 }
             });
 
+        //close action exit the program
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we)

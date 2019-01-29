@@ -3,10 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Write a description of class UI_Room here.
+ * The window which shows the information for the room
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
+ * @version 1/28/2019
  */
 public class UI_Room extends JFrame
 {
@@ -26,6 +26,7 @@ public class UI_Room extends JFrame
      */
     public UI_Room(Hotel h, String roomNum)
     {
+        //instantiate the components
         Room room = h.getRoom(roomNum);
         jl1 = new JLabel("Room: "+roomNum);
         jl2 = new JLabel("Room type: " + room.getRoomType());
@@ -40,6 +41,7 @@ public class UI_Room extends JFrame
         jp1.add(jb1);
         jp1.add(jb2);
 
+        //setting up the fonts of the components
         jl1.setFont(jl1.getFont ().deriveFont (16.0f));
         jl2.setFont(jl2.getFont ().deriveFont (16.0f));
         jl3.setFont(jl3.getFont ().deriveFont (16.0f));
@@ -49,6 +51,7 @@ public class UI_Room extends JFrame
         jb1.setFont(jl1.getFont ().deriveFont (14.0f));
         jb2.setFont(jb2.getFont ().deriveFont (14.0f));
 
+        //setting up the layout
         jp2.setLayout(new GridLayout(6,1));
         this.setLayout(new GridLayout(1,3));
         jp2.add(jl1);
@@ -57,6 +60,8 @@ public class UI_Room extends JFrame
         jp2.add(jl4);
         jp2.add(jl5);
         jp2.add(jp1);
+
+        this.setTitle("Room: " + room.getRoomNumber());
         this.add(new JPanel());
         this.add(jp2);
         this.add(new JPanel());
@@ -66,6 +71,7 @@ public class UI_Room extends JFrame
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
+        //close
         jb1.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -74,6 +80,7 @@ public class UI_Room extends JFrame
                 }
             });
 
+        //open the guest info window of the guest in the room
         jb2.addActionListener(new ActionListener(){
                 @Override    
                 public void actionPerformed(ActionEvent e){
@@ -87,6 +94,12 @@ public class UI_Room extends JFrame
             });
     }
 
+    /**
+     * return available for true, occupied for false
+     * 
+     * @param b the boolean which to be converted
+     * @return available for true, occupied for false
+     */
     private static String yesOrNo(boolean b){
         if(b)
             return "Available";
