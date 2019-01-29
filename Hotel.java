@@ -113,7 +113,12 @@ public class Hotel
             this.addRoom(room);
         }
     }
-
+    
+    /**
+    * Adds room object to our rooms list
+    *
+    * @param room(Room) represents a room object.
+    */
     public void addRoom(Room room)
     {
         rooms.add(room);
@@ -502,6 +507,11 @@ public class Hotel
         return null;
     }
 
+    /**
+    * Gets a list of reservations with a given status
+    *
+    * @param status(Status) gets reservations with a certain parameterized status.
+    */
     public ArrayList<Reservation> getReservations(Status status){
         ArrayList<Reservation> res = new ArrayList<>();
         for(Reservation reserve: reservations) {
@@ -591,6 +601,9 @@ public class Hotel
 
     /* OTHER METHODS */
 
+    /**
+     * This method sorts reservations with a cencelled status so that they appear first in our .txt file
+     */
     public void sortReservations() {
         for(int i = 0; i < reservations.size(); i++) {
             Reservation res = reservations.get(i);
