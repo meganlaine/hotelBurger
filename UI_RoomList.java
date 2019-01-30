@@ -43,8 +43,8 @@ public class UI_RoomList extends JFrame
         list1 = new JList(empty.toArray());
         list2 = new JList(occupied.toArray());
 
-        jl1 = new JLabel("Empty");
-        jl2 = new JLabel("Occupied");
+        jl2 = new JLabel("Empty");
+        jl1 = new JLabel("Occupied");
 
         js1 = new JScrollPane();
         js1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
