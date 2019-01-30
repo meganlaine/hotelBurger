@@ -153,8 +153,7 @@ public class Guest
      * Method setPhoneNum sets the guest's phone number, if valid. a valid phone number is
      * 10 digits, like 2061234567.
      *
-     * @param phoneNum (String) representing guest's phone number
-     * @throw IllegalArgumentException if the phone number does not match a 10digit string.
+     * @param phoneNum (String) representing guest's phone number 
      */
     public void setPhoneNum(String phoneNum) 
     {
@@ -163,6 +162,13 @@ public class Guest
         }
     }
     
+     /**
+     * Method isValidPhone checks if the guest's phone number is valid. a valid phone number is
+     * 10 digits, like 2061234567.
+     *
+     * @param phoneNum (String) representing guest's phone number
+     * @throw IllegalArgumentException if the phone number does not match a 10digit int.
+     */
     public static boolean isValidPhone(String phoneNum) {
         for (char c : phoneNum.toCharArray())
         {
