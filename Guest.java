@@ -7,7 +7,7 @@ import java.lang.IllegalArgumentException;
  * hotel or status as a veteran or government employee so we have fields for those data.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/19/2019
+ * @version 1/29/2019
  */
 public class Guest
 {
@@ -113,29 +113,6 @@ public class Guest
     public boolean isMember() 
     {
         return isMember;
-    }
-    
-    /**
-     *  "Methods used in GUI"
-     */
-    public String getRoomReserved(Hotel h)
-    {
-        return h.findReservation(this).getRoom().getRoomNumber();
-    }
-    
-    /**
-     *  "Methods used in GUI"
-     */
-    public boolean isCheckedIn(Hotel h)
-    {
-        Status status = h.findReservation(this).getStatus();
-        
-        if (status == Status.IN)
-        {
-            return true;
-        }
-        
-        return false;
     }
     
     /* MUTATOR METHODS */
@@ -246,13 +223,17 @@ public class Guest
     }
     
     /**
-     *  "Methods used in GUI"
+     * Returns true if this Guest has the same full name and phone number as other Guest.
+     * 
+     * @param guest (Guest) the other guest to compare with
+     * @return equals (boolean) true if the guests have the same full name and phone num.
      */
     public boolean equals(Guest guest)
     {
         boolean equals = false;
         
-        if (this.getFullName().equals(guest.getFullName()) && this.getPhoneNum().equals(guest.getPhoneNum()))
+        if (this.getFullName().equals(guest.getFullName()) && 
+            this.getPhoneNum().equals(guest.getPhoneNum()))
         {
             equals = true;
         }

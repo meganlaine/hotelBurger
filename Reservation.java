@@ -16,9 +16,7 @@ import java.text.SimpleDateFormat;
  * In = reservation made, and guest is in the hotel.
  * Out = reservation completed, and guest is out of hotel.
  * Canceled = reservation canceled.
- * 
- * The best way to access objects of Type Reservation is thru its unique ID.
- * 
+ *  
  * NOTE: you can't change a Guest on the reservation at this moment.
  * The logic behind that is you would cancel the reservation and 
  * create a new one for a new guest. (of course the goodness of this is debatable)
@@ -33,7 +31,7 @@ public class Reservation
     private static int counter = 100;
 
     /* INSTANCE VARIABLES */
-    private int reservationID; // should this be a String?? we might not want people to be able to alter this.
+    private int reservationID; // could be a String instead if we do not want people to be able to alter this.
     private Room r;
     private Guest g;
     private Status status;
@@ -143,31 +141,47 @@ public class Reservation
     }
     
     /**
-     * Returns the discount of the guest.
+     * Method to get invoice-like info on this reservation
+     * 
+     * @return (String) representing invoice information from the reservation.
      */
-    public double getDiscount(){
-        double result = 1.0;
-        if ( g.isGovernment() ) {
+    public String getInvoice() 
+    {
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
 
-            result = 0.91;
-
-        }
-
-        // if guest is not government but military, apply second highest discount: 7%
-        else if (g.isMilitary() ) {
-
-            result =  0.93;
-
-        }
-
-        // if guest is member only (not govt, not mil), apply the lowest discount (5%)
-        else if (g.isMember() ) {
-
-            result = 0.95;
-
-        }
-        return result;
+        return "\n" +
+        "= = = = = = = = = = = = = = = = =" + "\n" +
+        "Invoice# " + getReservationID() + 
+        " Reservation ID#: " + getReservationID() + "\n" +   
+        "= = = = = = = = = = = = = = = = =" + "\n" +
+        "Invoice Date: " + dateFormat.format(date) + "\n" +                           
+        "Guest: " + g.getLastName() + "\n" +
+        "Reservation status: " + status + "\n" + 
+        "Payment due: $ " + String.format("%.2f", getPaymentDue()) + '\n' +
+        "Amount paid: $ " + String.format("%.2f", getAmountPaid()) + '\n' +
+        "= = = = = = = = = = = = = = = = =";
+    } 
+    
+    /**
+     * This method returns the room object of this reservation.
+     * 
+     * @return (Room) the room on the reservation
+     */
+    public Room getRoom() 
+    {
+        return this.r;
     }
+
+    /**
+     * This method returns the guest object of this reservation.
+     * 
+     * @return (Guest) the guest on the reservation
+     */
+    public Guest getGuest() 
+    {
+        return this.g;
+    }  
 
     /* MUTATOR METHODS */
 
@@ -182,8 +196,8 @@ public class Reservation
     }
 
     /**
-     * setPaymentDue 1/2: overloaded method; Calculates and sets what payment is due based on 
-     * this Reservation's Room type and Guest discounts. 
+     * setPaymentDue 1/2: (overloaded method) calculates and sets what payment is due based 
+     * on this Reservation's Room type and Guest discounts. 
      * Assumptions: govt=9%, mil=7%, member=5%; only highest rate applied.
      */
     public void setPaymentDue() 
@@ -334,22 +348,6 @@ public class Reservation
     }
 
     /**
-     * This method returns the room object of this reservation.
-     */
-    public Room getRoom() 
-    {
-        return this.r;
-    }
-
-    /**
-     * This method returns the guest object of this reservation.
-     */
-    public Guest getGuest() 
-    {
-        return this.g;
-    }    
-
-    /**
      * Sets the Reservation's room. Validates that the room in question is available. 
      * Sets the room availability to false.
      * 
@@ -402,34 +400,10 @@ public class Reservation
         this.amountPaid = paymentDue;
         this.paymentDue = 0.0;
 
-        return "Thank you, payment received. Balance is 0.0.";
+        return "Thank you, payment received. Balance is $0.00.";
     }
 
     /* OTHER METHODS */
-
-    /**
-     * Method to get invoice-like info on this reservation
-     * 
-     * @return (String) representing invoice information from the reservation.
-     */
-    public String getInvoice() 
-    {
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        Date date = new Date();
-
-        return "\n" +
-        "= = = = = = = = = = = = = = = = =" + "\n" +
-        "Invoice# " + getReservationID() + 
-        " Reservation ID#: " + getReservationID() + "\n" +   
-        "= = = = = = = = = = = = = = = = =" + "\n" +
-        "Invoice Date: " + dateFormat.format(date) + "\n" +                           
-        "Guest: " + g.getLastName() + "\n" +
-        "Reservation status: " + status + "\n" + 
-        "Payment due: $ " + String.format("%.2f", getPaymentDue()) + '\n' +
-        "Amount paid: $ " + String.format("%.2f", getAmountPaid()) + '\n' +
-        "= = = = = = = = = = = = = = = = =";
-    }   
-
     /**
      * Returns a String with information about this Reservation instance.
      * Shows all aspects about the reservation: 

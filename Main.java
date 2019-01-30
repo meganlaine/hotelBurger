@@ -7,7 +7,7 @@ import java.util.Iterator;
  * Main class. Creates hotel object and has the console app.
  *
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/21/2019
+ * @version 1/29/2019
  */
 public class Main
 {
@@ -20,6 +20,7 @@ public class Main
     public static void main(String[] args) throws FileNotFoundException 
     {
         Hotel.test();
+        
         // instantiate a Hotel object using the constructor that takes a text file of Room info
         hotel = new Hotel("hotelrooms.txt");
         
@@ -34,20 +35,6 @@ public class Main
         
         // show the main menu for the console app to the user
         mainMenu();        
-    }
-    
-    /** 
-     * The starter for GUI.
-     */
-    public static Hotel GUI_Starter(String[] args) throws FileNotFoundException 
-    {
-        // instantiate a Hotel object using the constructor that takes a text file of Room info
-        hotel = new Hotel("hotelrooms.txt");
-
-        // add all existing/saved reservations (from a text file) to the Hotel object
-        hotel.fillReservationArrayList("HotelBurgerReservations.txt");
-
-        return hotel;
     }
 
     /* HELPER METHODS */
@@ -189,7 +176,7 @@ public class Main
     //** MENU METHODS **/
     
     /**
-     * Main Menu (0) to show main options.
+     * Main Menu to show main options.
      */
     private static void mainMenu() throws FileNotFoundException 
     {
@@ -279,34 +266,45 @@ public class Main
         // get the number of nights, must be at least 1
         nights = getUserInputInt(1);
         
-                // get price range of user
+        // get price range of user
         System.out.println("What is you price range?");
-        System.out.println("Enter you selection: 1. $150 - $175 or 2. greater than $175");
+        System.out.println("Enter your selection:" + '\n' +
+                           '\t' + "1. within $150-175/night" + '\n' +
+                           '\t' + "2. more than $175/night");
         priceRange = getUserInputInt(1,2);
 
         availableRooms = roomOptionsTrimmer(partySize, priceRange, hotel.getEmptyRooms());
 
-        System.out.println( " These rooms are available:");        
+        System.out.println("These rooms match: (RoomNumber | RoomType | BedType | PricePerNight)");
+        
         // We want to a new line after printing 4 rooms, so we need a counter to keep track
         int newLineCounter = 0;
-        if(availableRooms.isEmpty()) {
+        if (availableRooms.isEmpty()) 
+        {
             System.out.println("Couldn't find any rooms matching this criteria, try again");
+            
             // if we can't find any room, the user may return to main menu
             makeReservationMenu();
         }
-        else{
-            for(Room r : availableRooms) {
-                System.out.print("[ Room number: " + r.getRoomNumber() + " room type: " + r.getRoomType() + ", price: " + r.getRate() + " ]");
+        else
+        {
+            for (Room r : availableRooms)
+            {
+                System.out.print("[ " + r.getRoomNumber() + " | " + r.getRoomType() + " | " + 
+                    r.getBedType() + " | " + String.format("$%.2f", r.getRate()) + " ]    ");
+                
                 newLineCounter++;
+                
                 // we want to print a new line after 2 rooms for readability
-                if(newLineCounter == 2) {
+                if (newLineCounter == 2) 
+                {
                     System.out.println();
                     newLineCounter = 0;
                 }
             }
         }
         
-        System.out.println( " Enter the roomNumber you want to reserve or 0 to cancel:");
+        System.out.println( " Enter the roomNumber you want to reserve -or- 0 to cancel:");
         roomNumber = input.next();   
         room = hotel.getRoom(roomNumber);
         
@@ -315,7 +313,7 @@ public class Main
          * -- just need guest info to make the reservation */
         while ( !availableRooms.contains(room) && !roomNumber.equals("0") ) 
         {
-            System.out.println(" Input not recognized, please try again, or press 0 to exit");
+            System.out.println(" Input not recognized. Please try again, -or- press 0 to exit");
             roomNumber = input.next();
             room = hotel.getRoom(roomNumber);
         }
@@ -326,36 +324,34 @@ public class Main
         }          
         
         /* get the guest's personal info. 
-         * I don't think we need to perform any validation on name fields
-         * because, remember, the hotel staff ask this questions and enter the data, 
-         * so if the guest says a weird name, the hotel staff can figure it out */
+         * we are making an assumption that the user only enters valid names at this time. */
         System.out.println(" What is your first name?");
         firstName = input.next();
         System.out.println(" What is your last name?");  
         lastName = input.next();
-        System.out.println(" What is your cellphone number?");
+        System.out.println(" What is your cellphone number? (please enter 10 digits, ie 1234567890)");
         phoneNumber = input.next();
         
         // next get discount statuses
-        System.out.println(" Are you active military? Enter 1 for yes, or 0 for no");        
+        System.out.println(" Are you active military? Enter 1 for yes, -or- 0 for no");        
         int in = getUserInputInt(0,1);
         isMilitary = (in == 1);
         
-        System.out.println(" Are you an active government employee? Enter 1 for yes, or 0 for no");
+        System.out.println(" Are you an active government employee? Enter 1 for yes, -or- 0 for no");
         in = getUserInputInt(0,1);
         isGov = (in == 1); 
         
-        System.out.println(" Are you a rewards member? Enter 1 for yes, or 0 for no"); 
+        System.out.println(" Are you a rewards member? Enter 1 for yes, -or- 0 for no"); 
         in = getUserInputInt(0,1);
         isMember = (in == 1); 
         
-        //try to construct the objects and catch exceptions gracefully
+        // try to construct the objects and catch exceptions gracefully
         try
         {
-            guest = new Guest(firstName, lastName, phoneNumber, 
-                isMilitary, isGov, isMember);
+            guest = new Guest(firstName, lastName, phoneNumber, isMilitary, isGov, isMember);
             
-            // construct the Reservation object (note: it's also possible to set status to waiting)
+            // construct the Reservation object 
+            // (note: it's also possible to set status to waiting)
             reservation = new Reservation(room, guest, Status.IN, partySize, nights);
             
             // add the reservation to the hotel
@@ -533,15 +529,17 @@ public class Main
         System.out.println("1. Look up a guest by name");
         System.out.println("2. See all guest information in our system");
         int selection = getUserInputInt(1,2);
-        ArrayList<Reservation> guestReservations = new ArrayList<>(); // this will hold all reservations the guest has ever made
+        
+        // this will hold all reservations the guest has ever made
+        ArrayList<Reservation> guestReservations = new ArrayList<>();
 
-        if(selection == 1)
+        if (selection == 1)
         {
             System.out.println("Please enter the last name of the guest");
             String name = input.next();
             guestReservations = hotel.getReservationsByLastName(name); // fill the array
         
-            if(guestReservations.isEmpty())
+            if (guestReservations.isEmpty())
             {
                 // will be empty if we don't find the guest
                 System.out.println("We couldn't find any guests with that name");
@@ -657,8 +655,7 @@ public class Main
         System.out.println(" Total rooms checked in: " + hotel.getTotalOccupiedRooms());
         System.out.println(" Total guests checked into hotel: " + hotel.getTotalGuestsInHotel());
         System.out.println(" Total checkouts: " + hotel.getTotalCheckedOutReservations());
-        System.out.println(" Total cancellations: " + hotel.getTotalCanceledReservations());
-        
+        System.out.println(" Total cancelations: " + hotel.getTotalCanceledReservations());
         System.out.println(" Total amount due on active unpaid reservations: " + String.format("$ %.2f", hotel.getTotalPaymentDue()));
         System.out.println(" Total sales: " + String.format("$ %.2f", hotel.getTotalSales()));
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
@@ -686,8 +683,10 @@ public class Main
             "\t\t" + "OUT = reservation completed, and guest is checked out" + '\n' +
             "\t\t" + "CANCELED = reservation canceled" + '\n' +
             '\t' + "If a guest has multiple reservations with us, then access it by room number.");
-            // this only works if the guest hasn't stayed in the same room each time.
-            // what about by reservation ID, is that too difficult to set up?
+            /* we hope to implement guest reservation history at a later time, in the event
+             * that a guest has multiple reservations, or there are multiple guests with the
+             * same name.
+             */
         
         System.out.println(" 3. Discounts: (only the highest rate is applied)" + '\n' +
             '\t' + "Active duty military: 7% discount" + '\n' +
@@ -703,12 +702,18 @@ public class Main
         returnToMainMenuPrompt();
     }
     
-    // this is going to trim our list of available rooms based on user input
+    /**
+     * Returns an edited/modified ArrayList of Rooms that match user criteria.
+     *
+     * @param partySize (int) number of people in the group
+     * @param priceRange (int) a price point
+     * @param rooms (ArrayList<Room>) an array list of rooms
+     * @return returnList (ArrayList<Room>) an array list of rooms matching the criteria.
+     */
     private static ArrayList<Room> roomOptionsTrimmer(int partySize, int priceRange, ArrayList<Room> rooms)
     {
         ArrayList<Room> returnList = new ArrayList<>();
         
-        //System.out.println(rooms.size());
         Iterator<Room> itr = rooms.iterator();
 
         while (itr.hasNext()) {
@@ -716,16 +721,18 @@ public class Main
             
             if (partySize <= rm.getCapacity()) 
             {
-                if(priceRange == 1 && rm.getRate() <= 175) 
+                if (priceRange == 1 && rm.getRate() <= 175) 
                 {
                     returnList.add(rm);
                 }
-                else if(priceRange == 2 && rm.getRate() > 175)
+                else if (priceRange == 2 && rm.getRate() > 175)
                 {
                     returnList.add(rm);
                 }
             }
         }
+        
+        // String.format("$ %.2f", String)
         return returnList;
     }
 }

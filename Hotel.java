@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Class Hotel represents a hotel. It has (ArrayLists) for Rooms and Reservations.
  * 
  * @author Dale Berg, Nick Coyle, Megan Laine, Steven Liu
- * @version 1/22/2019
+ * @version 1/29/2019
  */
 public class Hotel
 {
@@ -498,8 +498,8 @@ public class Hotel
     }
 
     /**
-     * Returns a reservation object if the Guest object passed in matches the Guest object on the reservation, 
-     * or NULL if no such match exists.
+     * (overloaded method) Returns a reservation object if the Guest object passed in 
+     * matches the Guest object on the reservation, or NULL if no such match exists.
      *
      * @param guest (Guest) a hotel guest
      * @return result (Reservation) matching a Guest object; or NULL if no such match exists.
@@ -515,6 +515,29 @@ public class Hotel
                 result = r;
             }
         }
+        return result;
+    }
+    
+    /**
+     * (overloaded method) Returns a reservation object if the room number matches a 
+     * reservation that has IN OR WAITING status.
+     *
+     * @param roomNum (String) the room number
+     * @return result (Reservation) the reservation matching
+     */
+    public Reservation findReservation(String roomNum)
+    {
+        Reservation result = null;
+        
+        for (Reservation r: reservations) 
+        {
+            if (r.getRoom().getRoomNumber().equals(roomNum) && 
+                        (r.getStatus() == Status.IN || r.getStatus() == Status.WAITING))
+            {
+                result = r;
+            }
+        }
+        
         return result;
     }
 
@@ -536,67 +559,6 @@ public class Hotel
             }
         }
         return res;
-    }
-
-    /**
-     * Returns an ArrayList of Strings representing room number if the room in ArrayList rooms is occupied.
-     * "methods used in GUI"
-     *
-     * @return rms (ArrayList<String>) an Arraylist of strings of room numbers if the room is occupied.
-     */
-    public ArrayList<String> getOccupiedRoomNum()
-    {
-        ArrayList<String> rms = new ArrayList<>();
-        for (Room rm: rooms) 
-        {
-            if (!rm.isAvailable()) 
-            {
-                rms.add(rm.getRoomNumber());
-            }
-        }
-        return rms;
-    }
-
-    /**
-     * Returns an ArrayList of Strings representing room number if the room in ArrayList rooms is occupied.
-     * "methods used in GUI"
-     * 
-     * @return rms (ArrayList<String>) an Arraylist of strings of room numbers if the room is available.
-     */
-
-    public ArrayList<String> getEmptyRoomNum()
-    {
-        ArrayList<String> rms = new ArrayList<>();
-        for (Room rm: rooms)
-        {
-            if (rm.isAvailable())
-            {
-                rms.add(rm.getRoomNumber());
-            }
-        }
-        return rms;
-    }
-
-    /**
-     * Returns a reservation object if the room number matches a reservation that has IN OR WAITING status.
-     *
-     * @param roomNum (String) the room number
-     * @return result (Reservation) the reservation matching
-     */
-    public Reservation findReservation(String roomNum)
-    {
-        Reservation result = null;
-        
-        for (Reservation r: reservations) 
-        {
-            if (r.getRoom().getRoomNumber().equals(roomNum) && 
-                            (r.getStatus() == Status.IN || r.getStatus() == Status.WAITING))
-            {
-                result = r;
-            }
-        }
-        
-        return result;
     }
     
     /**
@@ -658,7 +620,8 @@ public class Hotel
      * 
      * @return totalCheckouts (int) representing number of reservations with status 'checked out'
      */
-    public int getTotalCheckedOutReservations() {
+    public int getTotalCheckedOutReservations()
+    {
         int totalCheckouts = 0;
 
         for (Reservation res : reservations) 
@@ -738,7 +701,8 @@ public class Hotel
     /* OTHER METHODS */
 
     /**
-     * This method sorts reservations with a cencelled status so that they appear first in our .txt file
+     * This method sorts reservations with a cancelled status so that they appear first 
+     * in our .txt file
      */
     public void sortReservations() {
         for(int i = 0; i < reservations.size(); i++)
@@ -757,7 +721,8 @@ public class Hotel
     }
 
     /**
-     * Method toString overrides Object class's toString method; returns info about the hotel.
+     * Method toString overrides Object class's toString method; 
+     * returns info about the hotel.
      *
      * @return (String) with info about name, address, and phone number.
      */
