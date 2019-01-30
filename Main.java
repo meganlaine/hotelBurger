@@ -439,7 +439,9 @@ public class Main
                     System.out.println(" Room not entered correctly or already reserved, try again");
                     newRoomNumber = input.next();                
                     newRoom = hotel.getRoom(newRoomNumber);
-                }if(newRoomNumber.equals("0")) {
+                }
+                if(newRoomNumber.equals("0"))
+                {
                     mainMenu();
                     break;    
                 }                
@@ -533,36 +535,44 @@ public class Main
         int selection = getUserInputInt(1,2);
         ArrayList<Reservation> guestReservations = new ArrayList<>(); // this will hold all reservations the guest has ever made
 
-        if(selection == 1) {
+        if(selection == 1)
+        {
             System.out.println("Please enter the last name of the guest");
             String name = input.next();
             guestReservations = hotel.getReservationsByLastName(name); // fill the array
-            if(guestReservations.isEmpty()) {
+        
+            if(guestReservations.isEmpty())
+            {
                 // will be empty if we don't find the guest
                 System.out.println("We couldn't find any guests with that name");
                 returnToMainMenuPrompt();
             }
-            else {
+            else
+            {
                 // the first print statement prints the guest (all the same guest, so idx 0)
                 System.out.println(guestReservations.get(0).getGuest());
+                
                 //this prints their resrvation history
-                for(Reservation r : guestReservations) {
+                for(Reservation r : guestReservations)
+                {
                     System.out.println(guestReservations);
                     System.out.println();
                 }
             }
         }
-        else {
+        else
+        {
             // this saves us adding a method elsewhere
             guestReservations = hotel.getInactiveReservations();
             guestReservations.addAll(hotel.getActiveReservations());
-            for(Reservation r : guestReservations) {
+            
+            for(Reservation r : guestReservations)
+            {
                 Guest g = r.getGuest();
                 System.out.println(g);
                 System.out.println();
             }
         }
-
         returnToMainMenuPrompt();
     }
     
@@ -663,18 +673,27 @@ public class Main
         // print a blank line followed by menu title
         System.out.println("= = = = = = = = = = = = = = = = = = = = = = = =");
         System.out.println(" HELP MENU:");
+        
         System.out.println(" 1. Reserving a room: " + '\n' +
             '\t' + "You cannot reserve a room unless it is available (no one else has reserved it). " + '\n' +
             '\t' + "At this time, dates are not factored into our program.");
+        
         System.out.println(" 2. Changing a reservation: " + '\n' +
             '\t' + "To locate an existing reservation, access it by the Guest's last name." + '\n' +
+            '\t' + "4 reservation statuses:" + '\n' +
+            "\t\t" + "WAITING = reservation booked, but not checked in" + '\n' +
+            "\t\t" + "IN = reservation booked, and guest is checked in" + '\n' +
+            "\t\t" + "OUT = reservation completed, and guest is checked out" + '\n' +
+            "\t\t" + "CANCELED = reservation canceled" + '\n' +
             '\t' + "If a guest has multiple reservations with us, then access it by room number.");
             // this only works if the guest hasn't stayed in the same room each time.
             // what about by reservation ID, is that too difficult to set up?
+        
         System.out.println(" 3. Discounts: (only the highest rate is applied)" + '\n' +
             '\t' + "Active duty military: 7% discount" + '\n' +
             '\t' + "Government employees: 9% discount" + '\n' +
             '\t' + "Hotel members: 5% discount");
+        
         System.out.println(" 4. Room Types:" + '\n' +
             '\t' + "Regular Room: $150.00/night" + '\n' +
             '\t' + "Large Room: $170.00/night" + '\n' +
@@ -684,24 +703,28 @@ public class Main
         returnToMainMenuPrompt();
     }
     
-    
     // this is going to trim our list of available rooms based on user input
-    private static ArrayList<Room> roomOptionsTrimmer(int partySize, int priceRange, ArrayList<Room> rooms) {
+    private static ArrayList<Room> roomOptionsTrimmer(int partySize, int priceRange, ArrayList<Room> rooms)
+    {
         ArrayList<Room> returnList = new ArrayList<>();
+        
         //System.out.println(rooms.size());
         Iterator<Room> itr = rooms.iterator();
 
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             Room rm = itr.next();
-            if(partySize <= rm.getCapacity()) {
-                if(priceRange == 1 && rm.getRate() <= 175) {
+            
+            if (partySize <= rm.getCapacity()) 
+            {
+                if(priceRange == 1 && rm.getRate() <= 175) 
+                {
                     returnList.add(rm);
                 }
-                else if(priceRange == 2 && rm.getRate() > 175) {
+                else if(priceRange == 2 && rm.getRate() > 175)
+                {
                     returnList.add(rm);
                 }
             }
-
         }
         return returnList;
     }

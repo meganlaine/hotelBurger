@@ -497,34 +497,60 @@ public class Hotel
         return invoices;
     }
 
-    public Reservation findReservation(Guest guest){
-        for(Reservation reserve: reservations) {
-            if(reserve.getGuest().equals(guest)) {
-                return reserve;
+    /**
+     * Returns a reservation object if the Guest object passed in matches the Guest object on the reservation, 
+     * or NULL if no such match exists.
+     *
+     * @param guest (Guest) a hotel guest
+     * @return result (Reservation) matching a Guest object; or NULL if no such match exists.
+     */
+    public Reservation findReservation(Guest guest)
+    {
+        Reservation result = null;
+        
+        for (Reservation r: reservations)
+        {
+            if (r.getGuest().equals(guest))
+            {
+                result = r;
             }
         }
-        return null;
+        return result;
     }
 
     /**
-    * Gets a list of reservations with a given status
+    * Returns an array list of reservations with a given status.
     *
-    * @param status(Status) gets reservations with a certain parameterized status.
+    * @param status (Status) gets reservations with a certain parameterized status.
+    * @return res (ArrayList<Reservation>) an ArrayList of reservations matching a certain status.
     */
-    public ArrayList<Reservation> getReservations(Status status){
+    public ArrayList<Reservation> getReservations(Status status)
+    {
         ArrayList<Reservation> res = new ArrayList<>();
-        for(Reservation reserve: reservations) {
-            if(reserve.getStatus() == status) {
+        
+        for (Reservation reserve: reservations)
+        {
+            if (reserve.getStatus() == status)
+            {
                 res.add(reserve);
             }
         }
         return res;
     }
 
-    public ArrayList<String> getOccupiedRoomNum() {
+    /**
+     * Returns an ArrayList of Strings representing room number if the room in ArrayList rooms is occupied.
+     * "methods used in GUI"
+     *
+     * @return rms (ArrayList<String>) an Arraylist of strings of room numbers if the room is occupied.
+     */
+    public ArrayList<String> getOccupiedRoomNum()
+    {
         ArrayList<String> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(rm.isAvailable()) {
+        for (Room rm: rooms) 
+        {
+            if (!rm.isAvailable()) 
+            {
                 rms.add(rm.getRoomNumber());
             }
         }
@@ -532,27 +558,138 @@ public class Hotel
     }
 
     /**
-     *  methods used in GUI
+     * Returns an ArrayList of Strings representing room number if the room in ArrayList rooms is occupied.
+     * "methods used in GUI"
+     * 
+     * @return rms (ArrayList<String>) an Arraylist of strings of room numbers if the room is available.
      */
 
-    public ArrayList<String> getEmptyRoomNum() {
+    public ArrayList<String> getEmptyRoomNum()
+    {
         ArrayList<String> rms = new ArrayList<>();
-        for(Room rm: rooms) {
-            if(!rm.isAvailable()) {
+        for (Room rm: rooms)
+        {
+            if (rm.isAvailable())
+            {
                 rms.add(rm.getRoomNumber());
             }
         }
         return rms;
     }
 
-    // this finds a reservation by roomNumber
-    public Reservation findReservation(String roomNum){
-        for(Reservation reserve: reservations) {
-            if(reserve.getRoom().getRoomNumber().equals(roomNum) && (reserve.getStatus() == Status.IN || reserve.getStatus() == Status.WAITING)) {
-                return reserve;
+    /**
+     * Returns a reservation object if the room number matches a reservation that has IN OR WAITING status.
+     *
+     * @param roomNum (String) the room number
+     * @return result (Reservation) the reservation matching
+     */
+    public Reservation findReservation(String roomNum)
+    {
+        Reservation result = null;
+        
+        for (Reservation r: reservations) 
+        {
+            if (r.getRoom().getRoomNumber().equals(roomNum) && 
+                            (r.getStatus() == Status.IN || r.getStatus() == Status.WAITING))
+            {
+                result = r;
             }
         }
-        return null;
+        
+        return result;
+    }
+    
+    /**
+     * Returns the total of all paid reservations.
+     * 
+     * @return totalSales (double) the total amount paid to the hotel thru reservations.
+     */
+    public double getTotalSales()
+    {
+        double totalSales = 0.0;
+
+        for (Reservation res : reservations)
+        {
+            totalSales += res.getAmountPaid();
+        }   
+
+        return totalSales;
+    }
+
+    /**
+     * Returns the total of all unpaid reservations.
+     * 
+     * @return totalAmountDue (double) the total amount still due to the hotel for reservations.
+     */
+    public double getTotalPaymentDue()
+    {   
+        double totalAmountDue = 0.0;
+
+        for (Reservation res : reservations)
+        {
+            totalAmountDue += res.getPaymentDue();
+        }
+
+        return totalAmountDue;
+    }
+
+    /**
+     * Returns a count of all the guests currently checked into the hotel accounting for party size
+     * 
+     * @return countGuests (int) representing how many human guests are supposedly checked into hotel.
+     */
+    public int getTotalGuestsInHotel()
+    {
+        int countGuests = 0;
+
+        for (Reservation res : reservations)
+        {
+            if (res.getStatus().equals(Status.IN))
+            {
+                countGuests += res.getPartySize();
+            }
+        }
+
+        return countGuests;
+    }
+
+    /**
+     * Returns how many reservations with Status OUT
+     * 
+     * @return totalCheckouts (int) representing number of reservations with status 'checked out'
+     */
+    public int getTotalCheckedOutReservations() {
+        int totalCheckouts = 0;
+
+        for (Reservation res : reservations) 
+        {
+            if (res.getStatus().equals(Status.OUT))
+            {
+                ++totalCheckouts;
+            }
+        }
+
+        return totalCheckouts;
+    }
+
+    /**
+     * Returns how many reservations with Status CANCELED
+     * 
+     * @return totalCancellations (int) representing number of reservations with status 'canceled'
+     */
+    public int getTotalCanceledReservations()
+    {
+        int totalCancellations = 0;
+
+        for (Reservation res : reservations)
+        {
+            if (res.getStatus().equals(Status.CANCELED))
+            {
+                ++totalCancellations;
+            }
+        }
+
+        return totalCancellations;
     }
 
     /* MUTATOR METHODS */
@@ -604,84 +741,19 @@ public class Hotel
      * This method sorts reservations with a cencelled status so that they appear first in our .txt file
      */
     public void sortReservations() {
-        for(int i = 0; i < reservations.size(); i++) {
+        for(int i = 0; i < reservations.size(); i++)
+        {
             Reservation res = reservations.get(i);
-            if(res.getStatus().equals(Status.CANCELED)) {
+            if (res.getStatus().equals(Status.CANCELED))
+            {
                 reservations.remove(i); // removes from the list
                 reservations.add(0, res); // adds back to list at position 0
-                if(i > 0) {
+                if (i > 0)
+                {
                     i--;
                 }
-
             }
-
         }
-    }
-
-    /**
-     * Calculates the total of all paid reservations.
-     */
-    public double getTotalSales() {     
-        double totalSales = 0.0;
-
-        for(Reservation res : reservations) {
-            totalSales += res.getAmountPaid();
-        }   
-
-        return totalSales;
-    }
-
-    /**
-     * Calculates the total of all unpaid reservations
-     */
-    public double getTotalPaymentDue() {        
-        double totalAmountDue = 0.0;
-
-        for(Reservation res : reservations) {
-            totalAmountDue += res.getPaymentDue();
-        }
-
-        return totalAmountDue;
-    }
-
-    /**
-     * Gets a count of all the guests currently checked into the hotel accounting for party size
-     * 
-     */
-    public int getTotalGuestsInHotel() {
-        int countGuests = 0;
-
-        for(Reservation res : reservations) {
-            if(res.getStatus().equals(Status.IN)) countGuests += res.getPartySize();
-        }
-
-        return countGuests;
-    }
-
-    /**
-     * Calculates how many reservations with Status OUT
-     */
-    public int getTotalCheckedOutReservations() {
-        int totalCheckouts = 0;
-
-        for(Reservation res : reservations) {
-            if(res.getStatus().equals(Status.OUT)) ++totalCheckouts;
-        }
-
-        return totalCheckouts;
-    }
-
-    /**
-     * Calculates how many reservations with Status CANCELED
-     */
-    public int getTotalCanceledReservations() {
-        int totalCancellations = 0;
-
-        for(Reservation res : reservations) {
-            if(res.getStatus().equals(Status.CANCELED)) ++totalCancellations;
-        }
-
-        return totalCancellations;
     }
 
     /**
@@ -693,16 +765,17 @@ public class Hotel
     public String toString() 
     {
         return "=========================" + "\n" +
-        "Hotel: " + name + "\n" +
-        address + "\n" +
-        phoneNumber + "\n" +
-        "=========================" + "\n";
+                "Hotel: " + name + "\n" +
+                address + "\n" +
+                phoneNumber + "\n" +
+                "=========================" + "\n";
     }
 
     /**
      * A method to test basic functionality of this class
      */
-    public static void test() throws FileNotFoundException {
+    public static void test() throws FileNotFoundException
+    {
         Hotel testHotel = new Hotel("hotelrooms.txt");
 
         //test basic fields and constructor
@@ -728,5 +801,4 @@ public class Hotel
         if (Math.floor(testHotel.getTotalPaymentDue()) != Math.floor(150.00 + 195.70)) System.out.println("Hotel.getTotalPaymentDue() is supposed to be 345.70, but is " + Math.floor(testHotel.getTotalPaymentDue()));
         if (Math.floor(testHotel.getTotalSales()) != Math.floor(0.0)) System.out.println("Hotel.getTotalSales() is supposed to be 0.0, but is " + Math.floor(testHotel.getTotalSales()));
     }
-
 }

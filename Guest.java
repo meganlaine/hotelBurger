@@ -20,25 +20,7 @@ public class Guest
     private boolean isMember;
 
     /**
-     * Guest Constructor 1/2: "this is a version for testing, so we don't have to create a 
-     * full guest object everytime we make a new reservation. 
-     * we can take it out before submission. -dale"
-     *
-     * @param first (String) guest's first name
-     * @param last (String) guest's last name
-     */
-    public Guest(String first, String last)
-    {
-        setFirstName(first);
-        setLastName(last);
-        phoneNumber = "";        
-        isMilitary = false;
-        isGovernment = false;
-        isMember = false;
-    }
-    
-    /**
-     * Guest Constructor 2/2: The full Guest constructor that takes into account all 
+     * Guest Constructor 1/1: The full Guest constructor that takes into account all 
      * parameters about a Guest.
      *
      * @param first (String) guest's first name
@@ -131,6 +113,29 @@ public class Guest
     public boolean isMember() 
     {
         return isMember;
+    }
+    
+    /**
+     *  "Methods used in GUI"
+     */
+    public String getRoomReserved(Hotel h)
+    {
+        return h.findReservation(this).getRoom().getRoomNumber();
+    }
+    
+    /**
+     *  "Methods used in GUI"
+     */
+    public boolean isCheckedIn(Hotel h)
+    {
+        Status status = h.findReservation(this).getStatus();
+        
+        if (status == Status.IN)
+        {
+            return true;
+        }
+        
+        return false;
     }
     
     /* MUTATOR METHODS */
@@ -231,6 +236,7 @@ public class Guest
      *
      * @return (String) with information about the guest.
      */
+    @Override
     public String toString() 
     {
         return this.getFullName() + " , Phone: " + phoneNumber + "\n" +            
@@ -240,26 +246,17 @@ public class Guest
     }
     
     /**
-     *  Methods used in GUI
+     *  "Methods used in GUI"
      */
-    
-    
-    public boolean equals(Guest guest){
+    public boolean equals(Guest guest)
+    {
         boolean equals = false;
-        if(this.getFullName().equals(guest.getFullName()) && this.getPhoneNum().equals(guest.getPhoneNum()))
+        
+        if (this.getFullName().equals(guest.getFullName()) && this.getPhoneNum().equals(guest.getPhoneNum()))
+        {
             equals = true;
+        }
+        
         return equals;
     }
-
-    public String getRoomReserved(Hotel h){
-        return h.findReservation(this).getRoom().getRoomNumber();
-    }
-
-    public boolean isCheckedIn(Hotel h){
-        Status status = h.findReservation(this).getStatus();
-        if(status == Status.IN)
-            return true;
-        return false;
-    }
-    
 }
