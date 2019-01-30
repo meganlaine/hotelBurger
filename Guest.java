@@ -158,20 +158,27 @@ public class Guest
      */
     public void setPhoneNum(String phoneNum) 
     {
+        if(isValidPhone(phoneNum)) {          
+            phoneNumber = phoneNum; 
+        }
+    }
+    
+    public static boolean isValidPhone(String phoneNum) {
         for (char c : phoneNum.toCharArray())
         {
             if (!Character.isDigit(c))
             {
-                throw new IllegalArgumentException("String is not numeric");
+                throw new IllegalArgumentException("The phone number entered is not numeric");
             }
         }
-        
-        if (phoneNum.length() != 10)
+       
+        int length = phoneNum.length();
+        if (length != 10)
         {
-            throw new IllegalArgumentException("Phone number entered has too many/ too few numbers");
-        }
-
-        phoneNumber = phoneNum;
+            throw new IllegalArgumentException("The phone number entered must be 10 digits. You entered " + length + " digits");
+        }  
+        
+        return true;
     }
     
     /**

@@ -240,16 +240,16 @@ public class Main
         int partySize = 0;
         int nights = 0;
         int priceRange = 0;
-        String roomNumber;
-        Room room;
-        String firstName;
-        String lastName;
-        String phoneNumber;
-        boolean isMilitary;
-        boolean isGov;
-        boolean isMember;
-        Guest guest;
-        ArrayList<Room> availableRooms = hotel.getEmptyRooms();
+        String roomNumber = "";
+        Room room = null;
+        String firstName = "";
+        String lastName = "";
+        String phoneNumber = "";
+        boolean isMilitary = false;
+        boolean isGov = false;
+        boolean isMember = false;
+        Guest guest = null;
+        ArrayList<Room> availableRooms = new ArrayList<Room>();
         Reservation reservation = null;
         
         // print a blank line followed by menu title
@@ -329,8 +329,18 @@ public class Main
         firstName = input.next();
         System.out.println(" What is your last name?");  
         lastName = input.next();
-        System.out.println(" What is your cellphone number? (please enter 10 digits, ie 1234567890)");
-        phoneNumber = input.next();
+        
+        boolean isValidPhone = false;
+        while(!isValidPhone) {
+            try {
+                System.out.println(" What is your cellphone number? (please enter 10 digits, ie 1234567890)");
+                phoneNumber = input.next();                
+                isValidPhone = Guest.isValidPhone(phoneNumber);                
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+                System.out.println("Please try again");      
+            }
+        }
         
         // next get discount statuses
         System.out.println(" Are you active military? Enter 1 for yes, -or- 0 for no");        
