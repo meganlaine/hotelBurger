@@ -2,7 +2,7 @@
 
 _PROJECT TITLE_: Hotel Burger  
 _PURPOSE OF PROJECT_: A hotel reservation software program.  
-_VERSION or DATE_: 1/29/2019, CSC 143 Winter 2019  
+_VERSION or DATE_: 1/30/2019, CSC 143 Winter 2019  
 _AUTHORS_: Dale Berg, Steven Liu, Megan Laine, Nick Coyle  
 _GITHUB LINK_: <https://github.com/meganlaine/hotelBurger/> :octocat:
 
