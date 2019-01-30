@@ -741,7 +741,7 @@ public class Hotel
      */
     public static void test() throws FileNotFoundException
     {
-        Hotel testHotel = new Hotel("hotelrooms.txt");
+        Hotel testHotel = new Hotel("testfilehotelrooms.txt");
 
         //test basic fields and constructor
         String name = "Hotel Burger";
@@ -752,7 +752,7 @@ public class Hotel
         if (!testHotel.getPhoneNumber().equals(phone)) System.out.println("Hotel phoneNum is supposed to be " + phone + ", but is " + testHotel.getPhoneNumber());
 
         // add 4 existing/saved test reservations (from a text file) to the Hotel object
-        testHotel.fillReservationArrayList("hotelreservations.txt");
+        testHotel.fillReservationArrayList("testfilehotelreservations.txt");
         if (testHotel.getAllRoomsCount() != 65) System.out.println("Hotel.getAllRoomsCount() is supposed to be 65, but is " + testHotel.getAllRoomsCount());
         if (testHotel.getTotalOccupiedRooms() != 1) System.out.println("Hotel.getTotalOccupiedRooms() is supposed to be 1, but is " + testHotel.getTotalOccupiedRooms());
         if (testHotel.getTotalReservedRooms() != 1) System.out.println("Hotel.getTotalReservedRooms() is supposed to be 1, but is " + testHotel.getTotalReservedRooms());

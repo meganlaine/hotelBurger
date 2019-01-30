@@ -22,7 +22,7 @@ public class Main
         Hotel.test();
         
         // instantiate a Hotel object using the constructor that takes a text file of Room info
-        hotel = new Hotel("hotelrooms.txt");
+        hotel = new Hotel("HotelBurgerRooms.txt");
         
         // add all existing/saved reservations (from a text file) to the Hotel object
         hotel.fillReservationArrayList("HotelBurgerReservations.txt");

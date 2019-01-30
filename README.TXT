@@ -1,4 +1,4 @@
------------------------------------------------------------------------
+﻿-----------------------------------------------------------------------
 CSC143 Project 1 Hotel Software
 -----------------------------------------------------------------------
 
@@ -33,12 +33,10 @@ To run the GUI version:
 
 Text files needed:
 -----------------
---hotelrooms.txt: stores hotel information and room information
+--HotelBurgerRooms.txt: stores hotel information and room information
 --HotelBurgerReservations.txt: stores existing reservations, 
 and is the same file that reservations are saved to.
-
---hotelrooms.txt???
---output.txt???
-
+--testfilehotelrooms.txt: for unit testing. Stores hotel info and rooms used in the test() method in class Hotel. Do not change it.
+--testfilehotelreservations.txt: for unit testing. Stores hotel reservations used in the test() method in class Hotel. Do not change it.
 
 Burger Hotel is open for business!
