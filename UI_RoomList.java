@@ -61,8 +61,8 @@ public class UI_RoomList extends JFrame
         //setting the layout
         this.setLayout(new BorderLayout());
 
-        js1.setViewportView(list1);
-        js2.setViewportView(list2);
+        js2.setViewportView(list1);
+        js1.setViewportView(list2);
 
         jp1.setLayout(new GridLayout(1,2));
         jp1.add(js1);
