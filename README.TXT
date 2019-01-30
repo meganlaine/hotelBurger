@@ -12,7 +12,7 @@ Welcome to our CSC143 Hotel project. To run the console i/o program, simply run 
 
 The menu system is built on a loop, so the program will continue running until you exit (by pressing 9) from the main menu. At the conclusion of every procedure or sub menu you will see a prompt to return to the main menu by pressing 0. The only way to exit the program is by entering ‘9’ in the main menu. This saves the state of our hotel on every exit by overwriting the .txt file which we use to populate the hotel on start up. 
 
-In addition to our text based console i/o program, we’ve built an interactive GUI version of the program. *****STEVEN TELL US HOW YOU WANT THIS EXPLAINED***********
+In addition to our text based console i/o program, we’ve built an interactive GUI version of the program. *****
 
 For simplicity and clarity, we've chosen to present the GUI and text based console versions program seperately. The only difference between the programs is their method of presentation - the objects they utilize are identical otherwise. 
 
