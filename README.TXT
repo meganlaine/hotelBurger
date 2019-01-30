@@ -10,7 +10,7 @@ GITHUB LINK: https://github.com/meganlaine/hotelBurger/
 
 Welcome! 
 
-We've chosen to present the CLI and GUI versions of our program seperately.
+We've chosen to present the CLI and GUI versions of our program separately.
 
 The hotel has pre-existing reservations to work with
 (some sample guests are ‘Fields’ and ‘Folds’).
