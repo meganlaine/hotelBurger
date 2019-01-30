@@ -170,14 +170,11 @@ public class Guest
      * @throw IllegalArgumentException if the phone number does not match a 10digit int.
      */
     public static boolean isValidPhone(String phoneNum) {
-        for (char c : phoneNum.toCharArray())
+        if (!phoneNum.matches("^[0-9]*$"))
         {
-            if (!Character.isDigit(c))
-            {
-                throw new IllegalArgumentException("The phone number entered is not numeric");
-            }
+            throw new IllegalArgumentException("The phone number entered is not numeric");
         }
-       
+               
         int length = phoneNum.length();
         if (length != 10)
         {
